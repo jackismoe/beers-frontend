@@ -1,0 +1,43 @@
+@media screen {
+  /* --- Reset Styles --- */
+  * {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* --- Welcome Page Styles --- */
+  body {
+    background-color: white;
+    background-image: url('../images/iceColdBeer.jpg');
+    background-size: fill;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+  }
+
+  header {
+    background-color: white;
+    height: 12%;
+    position: fixed;
+    width: 100%;
+  }
+  
+  h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-size: 4em;
+    padding-top: 2%;
+  }
+
+  img#logo {
+    float: right;
+    margin-top: 1%;
+  }
+}
