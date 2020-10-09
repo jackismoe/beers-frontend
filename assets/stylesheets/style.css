@@ -27,17 +27,95 @@
     height: 12%;
     position: fixed;
     width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    min-height: 135px;
   }
   
   h1 {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 4em;
-    padding-top: 2%;
+    padding-top: .7em;
+    padding-left: 5%;
+    position: relative;
+    margin-left: auto;
+    text-align: center;
   }
 
   img#logo {
     float: right;
+    height: auto;
+    width: auto;
     margin-top: 1%;
+    padding-right: 2% ;
   }
+
+  .menu-container {
+    float: left;
+    width: auto;
+    height: 100%;
+    position: absolute;
+    padding: 40px 10px; 
+  }
+
+  div.menu-icons:hover {
+    background-color: lightgray;
+  }
+
+  .menu-icons {
+    display: grid;
+    place-items: center;
+    height: 55px;
+    width: 50px;
+  }
+  
+  span {
+    width: 50px;
+    height: 3px;
+    background: black;
+    display: block;
+  }
+  /* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
 }
