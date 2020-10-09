@@ -22,15 +22,6 @@
     height: 100%;
   }
 
-  header {
-    background-color: white;
-    height: 12%;
-    position: fixed;
-    width: 100%;
-    overflow: hidden;
-    display: inline-block;
-    min-height: 135px;
-  }
   
   h1 {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -41,21 +32,53 @@
     margin-left: auto;
     text-align: center;
   }
+  
+  header {
+    float: left;
+    background-color: white;
+    height: 12%;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+    min-height: 135px;
+    box-shadow: 5px 5px 5px 5px black;
+  }
 
-  img#logo {
-    float: right;
-    height: auto;
-    width: auto;
-    margin-top: 1%;
-    padding-right: 2% ;
+  #con3 {
+    float:left;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  #con2 {
+    float:left;
+    width: 100%;
+    position: relative;
+    right: 12%
+  }
+  #con1 {
+    float:left;
+    width: 80%;
+    position: relative;
+    right: 58%;
   }
 
   .menu-container {
     float: left;
-    width: auto;
-    height: 100%;
-    position: absolute;
-    padding: 40px 10px; 
+    width: 26%;
+    position: relative;
+    left: 89.5%;
+    overflow: hidden;  
+    padding: 40px 0;
+  }
+  
+  .title {
+    float: left;
+    width: 60%;
+    left: 86%;
+    overflow: hidden;
+    text-align: right;
+    padding-left: 10px;
   }
 
   div.menu-icons:hover {

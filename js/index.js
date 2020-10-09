@@ -3,12 +3,12 @@
 //   console.log(obj)
 // }
 
-let menu = document.querySelector('.menu-container')
+let menuIcons = document.querySelector('.menu-icons')
 let closeBtn = document.querySelector('.closeBtn')
 let body = document.querySelector('body')
 
 document.addEventListener('click', (e) => {
-  if (e.target === menu) {
+  if (e.target === menuIcons) {
     openNav()
   } else if (e.target === undefined) {
     closeNav()
