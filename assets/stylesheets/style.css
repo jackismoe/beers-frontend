@@ -75,14 +75,16 @@
   .title {
     float: left;
     width: 60%;
+    position: relative;
     left: 86%;
     overflow: hidden;
-    text-align: right;
+    text-align: center;
     padding-left: 10px;
   }
 
   div.menu-icons:hover {
     background-color: lightgray;
+    cursor: pointer;
   }
 
   .menu-icons {
