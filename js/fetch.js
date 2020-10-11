@@ -1,6 +1,13 @@
-// let fetchUsersUrl = 'http://localhost:3000/users'
-// document.addEventListener('DOMContentLoaded', () => {
-//   fetch(fetchUsersUrl)
-//     .then(response => response.json())
-//     .then(jsonResponse => render(jsonResponse))
-// })
+let fetchUrl = 'http://localhost:3000/'
+document.addEventListener('DOMContentLoaded', () => {
+  // users
+  fetch(fetchUrl + `users`)
+    .then(response => response.json())
+    .then(jsonResponse => render(jsonResponse))
+
+  // beers
+    fetch(fetchUrl + `beers`)
+      .then(response => response.json())
+      .then(jsonResponse => render(jsonResponse))
+})
+
