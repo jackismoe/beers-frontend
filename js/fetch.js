@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // users
   fetch(fetchUrl + `users`)
     .then(response => response.json())
-    .then(jsonResponse => render(jsonResponse))
+    .then(jsonResponse => {
+      let allUsers = jsonResponse
+      render(jsonResponse)
+    })
 
   // beers
     fetch(fetchUrl + `beers`)

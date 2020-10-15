@@ -10,6 +10,17 @@ document.addEventListener('click', (e) => {
   }
 })
 
+document.addEventListener('DOMContentLoaded', () => {
+  let randomBtn = document.createElement('button')
+  randomBtn.innerText = 'Click Me'
+  randomBtn.className = 'button'
+  randomBtn.addEventListener('click', showRandom())
+
+  body.appendChild(randomBtn)
+
+
+})
+
 function closeNav() {
   document.getElementById("mySideNav").style.width = "0";
 }
@@ -17,7 +28,10 @@ function closeNav() {
 function openNav() {
   document.getElementById("mySideNav").style.width = "250px";
 }
+function showRandom() {
+  console.log()
+}
 
-const render = (obj) => {
+function render(obj) {
   console.log(obj)
 }
