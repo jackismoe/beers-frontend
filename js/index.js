@@ -26,20 +26,13 @@ function openNav() {
   document.getElementById("mySideNav").style.width = "250px";
 }
 
-let beerHistory = []
 
 function showRandom() {
-  console.log(beerHistory)
-  let number = Math.floor((Math.random() * 500) + 1)
-  if (beerHistory.includes(number)) {
-    showRandom()
-  } else {
-    beerHistory.push(number)
-    fetch(`http://localhost:3000/beers/${number}`)
-      .then(response => response.json())
-      .then(jsonResponse => console.log(jsonResponse))
-  }
-  console.log(beerHistory)
+  let beer = Math.floor((Math.random() * 500) + 1)
+  
+  fetch(`http://localhost:3000/beers/${beer}`)
+    .then(response => response.json())
+    .then(fetchedBeer => createBeerObj(fetchedBeer))
 }
 
 function render(obj) {
