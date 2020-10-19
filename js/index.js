@@ -15,7 +15,7 @@ document.addEventListener('click', (e) => {
 let clickBtn = document.createElement('button')
 clickBtn.innerText = 'Click Me'
 clickBtn.className = 'button'
-clickBtn.addEventListener('click', showRandom)
+clickBtn.addEventListener('click', userPortal)
 
 main.appendChild(clickBtn)
 
@@ -35,6 +35,46 @@ function showRandom() {
     .then(response => response.json())
     .then(fetchedBeer => createBeerObj(fetchedBeer))
 }
+
+function userPortal() {
+  let mainContainer = document.querySelector('.main')
+  let signUpForm = document.createElement('form')
+  mainContainer.appendChild(signUpForm)
+
+  let emailInput = document.createElement('input')
+  let phoneInput = document.createElement('input')
+  let passwordInput = document.createElement('input')
+  let submit = document.createElement('button')
+
+  emailInput.class = 'email'
+  phoneInput.class = 'phone'
+  passwordInput.class = 'password'
+  submit.class = 'submit'
+
+  emailInput.placeholder = 'Enter Email'
+  phoneInput.placeholder = 'Enter Phone'
+  passwordInput.placeholder = 'Enter Password'
+
+  passwordInput.type = 'password'
+  submit.innerText = 'Submit'
+
+  signUpForm.appendChild(emailInput)
+  signUpForm.appendChild(phoneInput)
+  signUpForm.appendChild(passwordInput)
+  signUpForm.appendChild(submit)
+
+  submit.addEventListener('click', (e) => {
+    e.preventDefault()
+    let newUser = new User(emailInput.value, phoneInput.value, passwordInput.value)
+    console.log(newUser)
+    emailInput.value = ''
+    phoneInput.value = ''
+    passwordInput.value = ''
+  })
+}
+
+
+
 
 function render(obj) {
   console.log(obj)
