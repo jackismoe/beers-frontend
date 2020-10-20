@@ -5,12 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(jsonResponse => {
       let allUsers = jsonResponse
-      // render(jsonResponse)
+      console.log(allUsers)
     })
-
-  // beers
-    fetch(fetchUrl + `beers`)
-      .then(response => response.json())
-      // .then(jsonResponse => render(jsonResponse))
 })
-

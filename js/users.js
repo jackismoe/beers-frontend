@@ -1,5 +1,6 @@
 class User {
-  constructor(email, phone, password) {
+  constructor(name, email, phone, password) {
+    this.name = name
     this.email = email
     this.phone = phone
     this.password = password
@@ -16,6 +17,7 @@ async function createUserObj(user) {
       "Access-Control-Allow-Credentials" : true 
     },
     body: JSON.stringify({
+      name: user.name,
       email: user.email,
       phone: user.phone,
       password_digest: user.password
