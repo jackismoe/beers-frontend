@@ -66,16 +66,12 @@ function userPortal() {
   submit.addEventListener('click', (e) => {
     e.preventDefault()
     let newUser = new User(emailInput.value, phoneInput.value, passwordInput.value)
-    console.log(newUser)
-    emailInput.value = ''
-    phoneInput.value = ''
-    passwordInput.value = ''
+    createUserObj(newUser)
+    showUser(newUser)
+    function showUser(user) {
+      clickBtn.replaceWith()
+      signUpForm.replaceWith()
+      
+    }
   })
-}
-
-
-
-
-function render(obj) {
-  console.log(obj)
 }
