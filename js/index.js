@@ -8,13 +8,12 @@ let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 
-let clickBtn = document.createElement('button')
-clickBtn.innerText = 'Click Me'
-clickBtn.className = 'button'
-clickBtn.addEventListener('click', userPortal)
+let signUpForm = document.createElement('form')
+let mainContainer = document.querySelector('.main')
 
-main.appendChild(clickBtn)
-
+let signInBtn = document.createElement('button')
+let signUpBtn = document.createElement('button')
+let generateBtn = document.createElement('button')
 
 function closeNav() {
   document.getElementById("mySideNav").style.width = "0";
@@ -26,59 +25,13 @@ function openNav() {
 
 
 function showRandom() {
-  let beer = Math.floor((Math.random() * 500))
+  let beerId = Math.floor((Math.random() * 25 + 1))
   
-  fetch(`http://localhost:3000/beers/${beer}`)
-  .then(response => response.json())
-  .then(fetchedBeer => createBeerObj(fetchedBeer))
+  fetch(`http://localhost:3000/beers/${beerId}`)
+    .then(response => response.json())
+    .then(fetchedBeer => console.log(fetchedBeer))
 }
-
-function userPortal() {
-  let mainContainer = document.querySelector('.main')
-  let signUpForm = document.createElement('form')
-  mainContainer.appendChild(signUpForm)
-  
-  let nameInput = document.createElement('input')
-  let emailInput = document.createElement('input')
-  let phoneInput = document.createElement('input')
-  let passwordInput = document.createElement('input')
-  let submit = document.createElement('button')
-  
-  nameInput.class = 'name'
-  emailInput.class = 'email'
-  phoneInput.class = 'phone'
-  passwordInput.class = 'password'
-  submit.class = 'submit'
-  
-  nameInput.placeholder = 'Enter Name'
-  emailInput.placeholder = 'Enter Email'
-  phoneInput.placeholder = 'Enter Phone (Optional)'
-  passwordInput.placeholder = 'Enter Password'
-  
-  passwordInput.type = 'password'
-  submit.innerText = 'Submit'
-  
-  signUpForm.appendChild(nameInput)
-  signUpForm.appendChild(emailInput)
-  signUpForm.appendChild(phoneInput)
-  signUpForm.appendChild(passwordInput)
-  signUpForm.appendChild(submit)
-  
-  submit.addEventListener('click', (e) => {
-    e.preventDefault()
-    let newUser = new User(nameInput.value, emailInput.value, phoneInput.value, passwordInput.value)
-    createUserObj(newUser)
-    showUser(newUser)
-    function showUser(user) {
-      clickBtn.replaceWith()
-      signUpForm.replaceWith()
-      
-      let nameH2 = document.createElement('h2')
-      nameH2.innerText = user.name
-      mainContainer.appendChild(nameH2)
-    }
-  })
-}
+// profileLink.addEventListener('click', showUser(currentUser))
 
 
 function renderAll() {
@@ -176,9 +129,19 @@ function renderAll() {
   })
 }
 
-function renderProfile() {
-  
-}
+document.addEventListener("DOMContentLoaded", () => {
+  signInBtn.class = 'signin'
+  signUpBtn.class = 'signup'
+  generateBtn.class = 'generate'
+
+  signInBtn.innerText = 'Sign-In'
+  signUpBtn.innerText = 'Sign-Up'
+  generateBtn.innerText = 'Generate'
+
+  mainContainer.appendChild(signInBtn)
+  mainContainer.appendChild(signUpBtn)
+  mainContainer.appendChild(generateBtn)
+})
 
 browseLink.addEventListener('click', () => {  
   renderAll()
@@ -189,7 +152,6 @@ homeLink.addEventListener('click', () => {
   location.reload()
 })
 
-profileLink.addEventListener('click', renderProfile)
 
 document.addEventListener('click', (e) => {
   if (e.target === menuIcons) {
@@ -197,4 +159,25 @@ document.addEventListener('click', (e) => {
   } else if (e.target === closeBtn || e.target === body) {
     closeNav()
   }
+})
+
+signInBtn.addEventListener('click', () => {
+  signInBtn.replaceWith()
+  signUpBtn.replaceWith()
+  generateBtn.replaceWith()
+  userSignInPortal()
+})
+
+signUpBtn.addEventListener('click', () => {
+  signInBtn.replaceWith()
+  signUpBtn.replaceWith()
+  generateBtn.replaceWith()
+  userSignUpPortal()
+})
+
+generateBtn.addEventListener('click', () => {
+  signInBtn.replaceWith()
+  signUpBtn.replaceWith()
+  generateBtn.replaceWith()
+  showRandom()
 })
