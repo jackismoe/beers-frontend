@@ -20,18 +20,15 @@ let generateBtn = document.createElement('button')
 function closeNav() {
   document.getElementById("mySideNav").style.width = "0";
 }
-
 function openNav() {
   document.getElementById("mySideNav").style.width = "250px";
 }
-
-
 function showRandom(beer) {  
   console.log(beer)
   createBeerTable()
   setBeerRow(beer)
 }
-
+// show buttons for sign up/ sign in
 document.addEventListener("DOMContentLoaded", () => {
   signInBtn.class = 'signin'
   signUpBtn.class = 'signup'
@@ -45,17 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   mainContainer.appendChild(signUpBtn)
   mainContainer.appendChild(generateBtn)
 })
-
-browseLink.addEventListener('click', () => {  
-  renderAll()
-  closeNav()
-})
-
-homeLink.addEventListener('click', () => {
-  location.reload()
-})
-
-
+// menu links
 document.addEventListener('click', (e) => {
   if (e.target === menuIcons) {
     openNav()
@@ -63,21 +50,26 @@ document.addEventListener('click', (e) => {
     closeNav()
   }
 })
-
+browseLink.addEventListener('click', () => {  
+  renderAll()
+  closeNav()
+})
+homeLink.addEventListener('click', () => {
+  location.reload()
+})
+// home page links
 signInBtn.addEventListener('click', () => {
   signInBtn.replaceWith()
   signUpBtn.replaceWith()
   generateBtn.replaceWith()
   userSignInPortal()
 })
-
 signUpBtn.addEventListener('click', () => {
   signInBtn.replaceWith()
   signUpBtn.replaceWith()
   generateBtn.replaceWith()
   userSignUpPortal()
 })
-
 generateBtn.addEventListener('click', () => {
   signInBtn.replaceWith()
   signUpBtn.replaceWith()

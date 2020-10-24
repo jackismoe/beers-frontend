@@ -136,6 +136,18 @@ function renderAll() {
   })
 }
 
+function fetchGenerateBeer() {
+    fetch(`http://localhost:3000/beers`, { 
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(fetchedBeer => showRandom(fetchedBeer))
+}
+
 function setBeerRow(beer) {
       let newRow = document.createElement('tr')
       let idCell = document.createElement('td')
