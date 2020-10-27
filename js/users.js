@@ -29,6 +29,7 @@ function createUserObj(user) {
 }
 
 function showUser(user) {
+  console.log(user)
   profileLink.style.color = 'white'
 
   userSignInForm.remove()
@@ -42,10 +43,11 @@ function showUser(user) {
   profileLink.style.visibility = 'visible'
   homeLink.style.visibility = 'visible'
   aboutLink.style.visibility = 'visible'
+  fetchUserBeers(user)
 }
 
-function fetchUserBeers() {
-    fetch(`http://localhost:3000/users_beers`)
+function fetchUserBeers(user) {
+    fetch(`http://localhost:3000/users/${user.id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
       console.log(jsonResponse)
@@ -260,9 +262,7 @@ function userSignInPortal() {
       
       fetch('http://localhost:3000/', configObject)
         .then(response => response.json())
-        .then(jsonResponse => { 
-          showUser(jsonResponse)
-        })
+        .then(jsonResponse => showUser(jsonResponse))
         .catch(error => {
           console.log(error.message)
           passwordInput.value = ''
