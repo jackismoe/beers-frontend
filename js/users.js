@@ -46,7 +46,7 @@ function showUser(user) {
       id: user.id,
     })
   }
-  fetch(`http://localhost:3000/`, configObject)
+  // fetch(`http://localhost:3000/`, configObject)
   // fetch(`http://localhost:3000/`)
   //   .then(response => response.json())
   //   .then(jsonResponse => {
@@ -137,8 +137,9 @@ function showUser(user) {
     // }
 }
 
-function userSignUpPortal() {  
-  mainContainer.appendChild(userForm)
+function userSignUpPortal() {
+  userSignUpForm.id = 'sign-up'
+  mainContainer.appendChild(userSignUpForm)
   
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -155,7 +156,7 @@ function userSignUpPortal() {
   passwordInput.id = 'password-confirm'
   submit.id = 'submit'
   signInButton.id = 'sign-in'
-  
+
   nameInput.placeholder = 'Enter Name'
   emailInput.placeholder = 'Enter Email'
   phoneInput.placeholder = 'Enter Phone (Optional)'
@@ -168,16 +169,24 @@ function userSignUpPortal() {
   signInButton.innerText = 'Already Registered? Sign In Here.'
 
   signInButton.addEventListener('click', () => {
+    nameInput.remove()
+    emailInput.remove()
+    phoneInput.remove()
+    passwordInput.remove()
+    passwordInput.remove()
+    submit.remove()
+    signInButton.remove()
+    userSignUpForm.remove()
     userSignInPortal()
   })
     
-  userForm.appendChild(nameInput)
-  userForm.appendChild(emailInput)
-  userForm.appendChild(phoneInput)
-  userForm.appendChild(passwordInput)
-  userForm.appendChild(passwordConfirm)
-  userForm.appendChild(submit)
-  userForm.appendChild(signInButton)
+  userSignUpForm.appendChild(nameInput)
+  userSignUpForm.appendChild(emailInput)
+  userSignUpForm.appendChild(phoneInput)
+  userSignUpForm.appendChild(passwordInput)
+  userSignUpForm.appendChild(passwordConfirm)
+  userSignUpForm.appendChild(submit)
+  userSignUpForm.appendChild(signInButton)
 
   
   submit.addEventListener('click', (e) => {
@@ -197,7 +206,8 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() {  
-  mainContainer.appendChild(userForm)
+  userSignInForm.id = 'sign-in'
+  mainContainer.appendChild(userSignInForm)
   
   let emailInput = document.createElement('input')
   let passwordInput = document.createElement('input')
@@ -216,12 +226,17 @@ function userSignInPortal() {
   submit.innerText = 'Submit'
   signUpButton.innerText = "Not Registered Yet? Sign Up Here"
   
-  userForm.appendChild(emailInput)
-  userForm.appendChild(passwordInput)
-  userForm.appendChild(submit)
-  userForm.appendChild(signUpButton)
+  userSignInForm.appendChild(emailInput)
+  userSignInForm.appendChild(passwordInput)
+  userSignInForm.appendChild(submit)
+  userSignInForm.appendChild(signUpButton)
 
   signUpButton.addEventListener('click', () => {
+    emailInput.remove()
+    passwordInput.remove()
+    submit.remove()
+    signUpButton.remove()
+    userSignInForm.remove()
     userSignUpPortal()
   })
 

@@ -3,12 +3,15 @@ let body = document.querySelector('body')
 let closeBtn = document.querySelector('.closeBtn')
 let main = document.querySelector('.main')
 
+let loginLink = document.querySelector('#login')
 let browseLink = document.querySelector('#browse')
 let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 
-let userForm = document.createElement('form')
+
+let userSignInForm = document.createElement('form')
+let userSignUpForm = document.createElement('form')
 let mainContainer = document.querySelector('.main')
 let beersTable = document.createElement('table')
 
@@ -75,4 +78,11 @@ generateBtn.addEventListener('click', () => {
   signUpBtn.replaceWith()
   generateBtn.replaceWith()
   fetchGenerateBeer()
+})
+loginLink.addEventListener('click', () => {
+  signInBtn.replaceWith()
+  signUpBtn.replaceWith()
+  generateBtn.replaceWith()
+  closeNav()
+  userSignInPortal()
 })
