@@ -29,7 +29,7 @@ function createUserObj(user) {
 }
 
 function showUser(user) {
-  signUpForm.replaceWith()
+  userForm.replaceWith()
 
   let nameH2 = document.createElement('h2')
   nameH2.innerText = user.name
@@ -138,7 +138,7 @@ function showUser(user) {
 }
 
 function userSignUpPortal() {  
-  mainContainer.appendChild(signUpForm)
+  mainContainer.appendChild(userForm)
   
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -146,13 +146,15 @@ function userSignUpPortal() {
   let passwordInput = document.createElement('input')
   let passwordConfirm = document.createElement('input')
   let submit = document.createElement('button')
+  let signInButton = document.createElement('button')
   
-  nameInput.class = 'name'
-  emailInput.class = 'email'
-  phoneInput.class = 'phone'
-  passwordInput.class = 'password'
-  passwordInput.class = 'password-confirm'
-  submit.class = 'submit'
+  nameInput.id = 'name'
+  emailInput.id = 'email'
+  phoneInput.id = 'phone'
+  passwordInput.id = 'password'
+  passwordInput.id = 'password-confirm'
+  submit.id = 'submit'
+  signInButton.id = 'sign-in'
   
   nameInput.placeholder = 'Enter Name'
   emailInput.placeholder = 'Enter Email'
@@ -163,13 +165,20 @@ function userSignUpPortal() {
   passwordInput.type = 'password'
   passwordConfirm.type = 'password'
   submit.innerText = 'Submit'
-  
-  signUpForm.appendChild(nameInput)
-  signUpForm.appendChild(emailInput)
-  signUpForm.appendChild(phoneInput)
-  signUpForm.appendChild(passwordInput)
-  signUpForm.appendChild(passwordConfirm)
-  signUpForm.appendChild(submit)
+  signInButton.innerText = 'Already Registered? Sign In Here.'
+
+  signInButton.addEventListener('click', () => {
+    userSignInPortal()
+  })
+    
+  userForm.appendChild(nameInput)
+  userForm.appendChild(emailInput)
+  userForm.appendChild(phoneInput)
+  userForm.appendChild(passwordInput)
+  userForm.appendChild(passwordConfirm)
+  userForm.appendChild(submit)
+  userForm.appendChild(signInButton)
+
   
   submit.addEventListener('click', (e) => {
     e.preventDefault()
@@ -188,26 +197,34 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() {  
-  mainContainer.appendChild(signUpForm)
+  mainContainer.appendChild(userForm)
   
   let emailInput = document.createElement('input')
   let passwordInput = document.createElement('input')
   let submit = document.createElement('button')
+  let signUpButton = document.createElement('button')
   
-  emailInput.class = 'email'
-  passwordInput.class = 'password'
-  submit.class = 'submit'
+  emailInput.id = 'email'
+  passwordInput.id = 'password'
+  submit.id = 'submit'
+  signUpButton.id = 'sign-up'
   
   emailInput.placeholder = 'Enter Email'
   passwordInput.placeholder = 'Enter Password'
   
   passwordInput.type = 'password'
   submit.innerText = 'Submit'
+  signUpButton.innerText = "Not Registered Yet? Sign Up Here"
   
-  signUpForm.appendChild(emailInput)
-  signUpForm.appendChild(passwordInput)
-  signUpForm.appendChild(submit)
-  
+  userForm.appendChild(emailInput)
+  userForm.appendChild(passwordInput)
+  userForm.appendChild(submit)
+  userForm.appendChild(signUpButton)
+
+  signUpButton.addEventListener('click', () => {
+    userSignUpPortal()
+  })
+
   submit.addEventListener('click', (e) => {
     e.preventDefault()
     // fetch to sessions#new and get user id. set user id to session id

@@ -8,14 +8,12 @@
   }
 
   html, body {
-    height: 100%;
     width: 100%;
   }
 
   /* --- Welcome Page Styles --- */
   body {
     background-image: url('../images/iceColdBeer.jpg');
-    background-size: fill;
     background-repeat: no-repeat;
     background-position: center;
     height: 100%;
@@ -24,10 +22,20 @@
     justify-content: center;
   }
 
-  .button {
-    display: flex;
-    justify-content: center;
-    position: fixed;
+  button {
+    margin: 5px;
+    background-color: gray;
+    border: none;
+    padding: 15px 32px;  
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+    
+  }
+
+  button:hover {
+    color: white;
   }
 
   #id, #profile, #home, #about {

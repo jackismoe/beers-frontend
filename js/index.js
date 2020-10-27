@@ -8,7 +8,7 @@ let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 
-let signUpForm = document.createElement('form')
+let userForm = document.createElement('form')
 let mainContainer = document.querySelector('.main')
 let beersTable = document.createElement('table')
 
@@ -30,9 +30,9 @@ function showRandom(beer) {
 }
 // show buttons for sign up/ sign in
 document.addEventListener("DOMContentLoaded", () => {
-  signInBtn.class = 'signin'
-  signUpBtn.class = 'signup'
-  generateBtn.class = 'generate'
+  signInBtn.class = '.button'
+  signUpBtn.class = '.button'
+  generateBtn.class = '.button'
 
   signInBtn.innerText = 'Sign-In'
   signUpBtn.innerText = 'Sign-Up'
