@@ -81,9 +81,12 @@ function createBeerTable() {
 }
 
 function renderAll() {
+  signInBtn.replaceWith()
+  signUpBtn.replaceWith() 
+  generateBtn.replaceWith()
   createBeerTable()
   // beers
-  fetch(`http://localhost:3000/beers`)
+  fetch(`http://localhost:3000/all_beers`)
   .then(response => response.json())
   .then(jsonResponse => {
     for (let x of jsonResponse) {
