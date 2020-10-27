@@ -29,11 +29,20 @@ function createUserObj(user) {
 }
 
 function showUser(user) {
-  userForm.replaceWith()
+  profileLink.style.color = 'white'
+
+  userSignInForm.remove()
+  userSignUpForm.remove()
 
   let nameH2 = document.createElement('h2')
   nameH2.innerText = user.name
   mainContainer.appendChild(nameH2)
+
+  loginLink.style.visibility = 'hidden'
+  browseLink.style.visibility = 'visible'
+  profileLink.style.visibility = 'visible'
+  homeLink.style.visibility = 'visible'
+  aboutLink.style.visibility = 'visible'
 
   //fetch beers of current user
   let configObject = {
@@ -173,7 +182,7 @@ function userSignUpPortal() {
     emailInput.remove()
     phoneInput.remove()
     passwordInput.remove()
-    passwordInput.remove()
+    passwordConfirm.remove()
     submit.remove()
     signInButton.remove()
     userSignUpForm.remove()
