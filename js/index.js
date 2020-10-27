@@ -3,8 +3,8 @@ let body = document.querySelector('body')
 let closeBtn = document.querySelector('.closeBtn')
 let main = document.querySelector('.main')
 
+let browseButton = document.querySelector('#browse')
 let loginLink = document.querySelector('#login')
-let browseLink = document.querySelector('#browse')
 let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
@@ -53,7 +53,7 @@ document.addEventListener('click', (e) => {
     closeNav()
   }
 })
-browseLink.addEventListener('click', () => {  
+browseButton.addEventListener('click', () => {  
   renderAll()
   closeNav()
 })

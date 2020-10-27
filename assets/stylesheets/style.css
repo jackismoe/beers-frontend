@@ -30,7 +30,6 @@
     font-size: 16px;
     border-radius: 4px;
     transition-duration: 0.4s;
-    
   }
 
   button:hover {
@@ -65,51 +64,61 @@
   
   header {
     background-color: white;
-    height: 12%;
     position: fixed;
     top: 0;
     width: 100%;
+    height: 5%;
     overflow: hidden;
-    min-height: 135px;
     box-shadow: 5px 5px 5px 5px black;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #browse {
+    height: 75%;
+    width: 10%;
+    text-align: center;
   }
   
   #con3 {
     float:left;
     width: 100%;
+    height: 100%;
     overflow: hidden;
+    display: flex;
+    align-items: center;
   }
   #con2 {
     float:left;
     width: 100%;
+    height: 100%;
     position: relative;
-    right: 12%
+    right: 12%;
+    display: flex;
+    align-items: center;
   }
   #con1 {
     float:left;
     width: 80%;
+    height: 100%;
     position: relative;
     right: 58%;
+    display: flex;
+    align-items: center;
   }
 
   .menu-container {
     float: left;
     width: 26%;
+    height: 100%;
     position: relative;
     left: 89.5%;
     overflow: hidden;  
     padding: 40px 0;
   }
   
-  .title {
-    width: 60%;
-    position: relative;
-    left: 86%;
-    overflow: hidden;
-    margin: 0 auto;
-  }
-
   div.menu-icons:hover {
     background-color: lightgray;
     cursor: pointer;
@@ -166,12 +175,6 @@
     margin-left: 50px;
   }
 
-  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-  #main {
-    transition: margin-left .5s;
-    padding: 20px;
-  }
-
   .main {
     width: 65%;
     height: auto;
@@ -184,12 +187,13 @@
     position: fixed;
     z-index: 1;
     justify-content: center;
+    overflow-y: auto;
   }
 
   .footer {
     background-color: white;
     width: 100%;
-    height: 75px;
+    height: 30px;
     position: fixed;
     bottom: 0;
     box-shadow: 25px 25px 25px 25px black;
