@@ -169,6 +169,7 @@ function userSignUpPortal() {
   signInButton.innerText = 'Already Registered? Sign In Here.'
 
   signInButton.addEventListener('click', () => {
+    beersTable.remove()
     nameInput.remove()
     emailInput.remove()
     phoneInput.remove()
@@ -232,6 +233,7 @@ function userSignInPortal() {
   userSignInForm.appendChild(signUpButton)
 
   signUpButton.addEventListener('click', () => {
+    beersTable.remove()
     emailInput.remove()
     passwordInput.remove()
     submit.remove()
@@ -262,7 +264,10 @@ function userSignInPortal() {
       
       fetch('http://localhost:3000/', configObject)
         .then(response => response.json())
-        .then(jsonResponse => showUser(jsonResponse))
+        .then(jsonResponse => {
+          sessionStorage.setItem('user_id', jsonResponse.id)
+          showUser(jsonResponse)
+        })
         .catch(error => {
           console.log(error.message)
           passwordInput.value = ''

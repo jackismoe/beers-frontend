@@ -9,12 +9,10 @@ let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 
-
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
 let mainContainer = document.querySelector('.main')
 let beersTable = document.createElement('table')
-
 
 let signInBtn = document.createElement('button')
 let signUpBtn = document.createElement('button')
@@ -83,6 +81,7 @@ loginLink.addEventListener('click', () => {
   signInBtn.replaceWith()
   signUpBtn.replaceWith()
   generateBtn.replaceWith()
+  beersTable.remove()
   closeNav()
   userSignInPortal()
 })

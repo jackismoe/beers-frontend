@@ -81,6 +81,8 @@ function createBeerTable() {
 }
 
 function renderAll() {
+  userSignUpForm.replaceWith()
+  userSignInForm.replaceWith()
   signInBtn.replaceWith()
   signUpBtn.replaceWith() 
   generateBtn.replaceWith()
@@ -140,7 +142,7 @@ function renderAll() {
 }
 
 function fetchGenerateBeer() {
-    fetch(`http://localhost:3000/beers`, { 
+    fetch(`http://localhost:3000/user_beers`, { 
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',
