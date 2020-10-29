@@ -37,7 +37,8 @@ function showUser(user) {
 
   let nameH2 = document.createElement('h2')
   nameH2.innerText = user.name
-  mainContainer.appendChild(nameH2)
+  mainContainer.appendChild(profileContainer)
+  profileContainer.appendChild(nameH2)
 
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
@@ -51,95 +52,103 @@ function fetchUserBeers(user) {
     .then(response => response.json())
     .then(jsonResponse => {
       console.log(jsonResponse)
-      let beersTable = document.createElement('table')
-      let idHeader = document.createElement('th')
-      let brandHeader = document.createElement('th')
-      let nameHeader = document.createElement('th')
-      let styleHeader = document.createElement('th')
-      let hopHeader = document.createElement('th')
-      let yeastHeader = document.createElement('th')
-      let maltsHeader = document.createElement('th')
-      let ibuHeader = document.createElement('th')
-      let abvHeader = document.createElement('th')
-      let blgHeader = document.createElement('th') 
+      if (jsonResponse.length < 1) {
+        let welcome = document.createElement('p')
+        welcome.id = 'welcome-message'
+        welcome.innerText = `Welcome ${user.name}! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above.`
+        profileContainer.appendChild(welcome)
+      } else {
+        let beersTable = document.createElement('table')
+        let idHeader = document.createElement('th')
+        let brandHeader = document.createElement('th')
+        let nameHeader = document.createElement('th')
+        let styleHeader = document.createElement('th')
+        let hopHeader = document.createElement('th')
+        let yeastHeader = document.createElement('th')
+        let maltsHeader = document.createElement('th')
+        let ibuHeader = document.createElement('th')
+        let abvHeader = document.createElement('th')
+        let blgHeader = document.createElement('th') 
 
-      idHeader.innerText = 'Beer ID'
-      brandHeader.innerText = 'Brand' 
-      nameHeader.innerText = 'Name'
-      styleHeader.innerText = 'Style' 
-      hopHeader.innerText = 'Hop' 
-      yeastHeader.innerText = 'Yeast' 
-      maltsHeader.innerText = 'Malts' 
-      ibuHeader.innerText = 'IBU' 
-      abvHeader.innerText = 'ABV%' 
-      blgHeader.innerText = 'BLG°'
+        idHeader.innerText = 'Beer ID'
+        brandHeader.innerText = 'Brand' 
+        nameHeader.innerText = 'Name'
+        styleHeader.innerText = 'Style' 
+        hopHeader.innerText = 'Hop' 
+        yeastHeader.innerText = 'Yeast' 
+        maltsHeader.innerText = 'Malts' 
+        ibuHeader.innerText = 'IBU' 
+        abvHeader.innerText = 'ABV%' 
+        blgHeader.innerText = 'BLG°'
 
-      beersTable.appendChild(idHeader)
-      beersTable.appendChild(brandHeader)
-      beersTable.appendChild(nameHeader)
-      beersTable.appendChild(styleHeader)
-      beersTable.appendChild(hopHeader)
-      beersTable.appendChild(yeastHeader)
-      beersTable.appendChild(maltsHeader)
-      beersTable.appendChild(ibuHeader)
-      beersTable.appendChild(abvHeader)
-      beersTable.appendChild(blgHeader)
+        beersTable.appendChild(idHeader)
+        beersTable.appendChild(brandHeader)
+        beersTable.appendChild(nameHeader)
+        beersTable.appendChild(styleHeader)
+        beersTable.appendChild(hopHeader)
+        beersTable.appendChild(yeastHeader)
+        beersTable.appendChild(maltsHeader)
+        beersTable.appendChild(ibuHeader)
+        beersTable.appendChild(abvHeader)
+        beersTable.appendChild(blgHeader)
 
-      main.appendChild(beersTable)
-      for (let x of jsonResponse) {
-        let newRow = document.createElement('tr')
-        beersTable.appendChild(newRow)
-        
-        let idCell = document.createElement('td')
-        let brandCell = document.createElement('td')
-        let nameCell = document.createElement('td')
-        let styleCell = document.createElement('td')
-        let hopCell = document.createElement('td')
-        let yeastCell = document.createElement('td')
-        let maltsCell = document.createElement('td')
-        let ibuCell = document.createElement('td')
-        let abvCell = document.createElement('td')
-        let blgCell = document.createElement('td')
-        
-        idCell.className = 'beer-id'
-        brandCell.className = 'beer-brand'
-        nameCell.className = 'beer-name'
-        styleCell.className = 'beer-style'
-        hopCell.className = 'beer-hop'
-        yeastCell.className = 'beer-yeast'
-        maltsCell.className = 'beer-malts'
-        ibuCell.className = 'beer-ibu'
-        abvCell.className = 'beer-abv'
-        blgCell.className = 'beer-blg'
-        
-        idCell.innerText = x.id
-        brandCell.innerText = x.brand
-        nameCell.innerText = x.name
-        styleCell.innerText = x.style
-        hopCell.innerText = x.hop
-        yeastCell.innerText = x.yeast
-        maltsCell.innerText = x.malts
-        ibuCell.innerText = x.ibu
-        abvCell.innerText = x.alcohol
-        blgCell.innerText = x.blg
-        
-        newRow.appendChild(idCell)
-        newRow.appendChild(brandCell) 
-        newRow.appendChild(nameCell) 
-        newRow.appendChild(styleCell) 
-        newRow.appendChild(hopCell) 
-        newRow.appendChild(yeastCell) 
-        newRow.appendChild(maltsCell) 
-        newRow.appendChild(ibuCell)
-        newRow.appendChild(abvCell) 
-        newRow.appendChild(blgCell)
+        profileContainer.appendChild(beersTable)
+        for (let x of jsonResponse) {
+          let newRow = document.createElement('tr')
+          beersTable.appendChild(newRow)
+          
+          let idCell = document.createElement('td')
+          let brandCell = document.createElement('td')
+          let nameCell = document.createElement('td')
+          let styleCell = document.createElement('td')
+          let hopCell = document.createElement('td')
+          let yeastCell = document.createElement('td')
+          let maltsCell = document.createElement('td')
+          let ibuCell = document.createElement('td')
+          let abvCell = document.createElement('td')
+          let blgCell = document.createElement('td')
+          
+          idCell.className = 'beer-id'
+          brandCell.className = 'beer-brand'
+          nameCell.className = 'beer-name'
+          styleCell.className = 'beer-style'
+          hopCell.className = 'beer-hop'
+          yeastCell.className = 'beer-yeast'
+          maltsCell.className = 'beer-malts'
+          ibuCell.className = 'beer-ibu'
+          abvCell.className = 'beer-abv'
+          blgCell.className = 'beer-blg'
+          
+          idCell.innerText = x.id
+          brandCell.innerText = x.brand
+          nameCell.innerText = x.name
+          styleCell.innerText = x.style
+          hopCell.innerText = x.hop
+          yeastCell.innerText = x.yeast
+          maltsCell.innerText = x.malts
+          ibuCell.innerText = x.ibu
+          abvCell.innerText = x.alcohol
+          blgCell.innerText = x.blg
+          
+          newRow.appendChild(idCell)
+          newRow.appendChild(brandCell) 
+          newRow.appendChild(nameCell) 
+          newRow.appendChild(styleCell) 
+          newRow.appendChild(hopCell) 
+          newRow.appendChild(yeastCell) 
+          newRow.appendChild(maltsCell) 
+          newRow.appendChild(ibuCell)
+          newRow.appendChild(abvCell) 
+          newRow.appendChild(blgCell)
+        }
       }
     })
 }
 
 function userSignUpPortal() {
   userSignUpForm.id = 'sign-up'
-  mainContainer.appendChild(userSignUpForm)
+  mainContainer.appendChild(profileContainer)
+  profileContainer.appendChild(userSignUpForm)
   
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -169,15 +178,7 @@ function userSignUpPortal() {
   signInButton.innerText = 'Already Registered? Sign In Here.'
 
   signInButton.addEventListener('click', () => {
-    beersTable.remove()
-    nameInput.remove()
-    emailInput.remove()
-    phoneInput.remove()
-    passwordInput.remove()
-    passwordConfirm.remove()
-    submit.remove()
-    signInButton.remove()
-    userSignUpForm.remove()
+    profileContainer.remove()
     userSignInPortal()
   })
     
@@ -207,73 +208,71 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() {  
-  userSignInForm.id = 'sign-in'
-  mainContainer.appendChild(userSignInForm)
-  
-  let emailInput = document.createElement('input')
-  let passwordInput = document.createElement('input')
-  let submit = document.createElement('button')
-  let signUpButton = document.createElement('button')
-  
-  emailInput.id = 'email'
-  passwordInput.id = 'password'
-  submit.id = 'submit'
-  signUpButton.id = 'sign-up'
-  
-  emailInput.placeholder = 'Enter Email'
-  passwordInput.placeholder = 'Enter Password'
-  
-  passwordInput.type = 'password'
-  submit.innerText = 'Submit'
-  signUpButton.innerText = "Not Registered Yet? Sign Up Here"
-  
-  userSignInForm.appendChild(emailInput)
-  userSignInForm.appendChild(passwordInput)
-  userSignInForm.appendChild(submit)
-  userSignInForm.appendChild(signUpButton)
+  if (userSignInForm.innerHTML != '') {
+    mainContainer.appendChild(profileContainer)
+    userSignInForm.id = 'sign-in'
+    profileContainer.appendChild(userSignInForm)
+    
+    let emailInput = document.createElement('input')
+    let passwordInput = document.createElement('input')
+    let submit = document.createElement('button')
+    let signUpButton = document.createElement('button')
+    
+    emailInput.id = 'email'
+    passwordInput.id = 'password'
+    submit.id = 'submit'
+    signUpButton.id = 'sign-up'
+    
+    emailInput.placeholder = 'Enter Email'
+    passwordInput.placeholder = 'Enter Password'
+    
+    passwordInput.type = 'password'
+    submit.innerText = 'Submit'
+    signUpButton.innerText = "Not Registered Yet? Sign Up Here"
+    
+    userSignInForm.appendChild(emailInput)
+    userSignInForm.appendChild(passwordInput)
+    userSignInForm.appendChild(submit)
+    userSignInForm.appendChild(signUpButton)
 
-  signUpButton.addEventListener('click', () => {
-    beersTable.remove()
-    emailInput.remove()
-    passwordInput.remove()
-    submit.remove()
-    signUpButton.remove()
-    userSignInForm.remove()
-    userSignUpPortal()
-  })
+    signUpButton.addEventListener('click', () => {
+      profileContainer.remove()
+      userSignUpPortal()
+    })
 
-  submit.addEventListener('click', (e) => {
-    e.preventDefault()
-    // fetch to sessions#new and get user id. set user id to session id
-    if (passwordInput.value === '') {
-      alert('Please check your password inputs and try again.')
-      passwordInput.value = ''
-    } else if (emailInput.value == ''){
-      alert('You must fill in the entire form to continue.')
-    } else {
-      let configObject = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          email: emailInput.value,
-        })
+    submit.addEventListener('click', (e) => {
+      e.preventDefault()
+      // fetch to sessions#new and get user id. set user id to session id
+      if (passwordInput.value === '') {
+        alert('Please check your password inputs and try again.')
+        passwordInput.value = ''
+      } else if (emailInput.value == ''){
+        alert('You must fill in the entire form to continue.')
+      } else {
+        let configObject = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailInput.value,
+          })
+        }
+        
+        fetch('http://localhost:3000/', configObject)
+          .then(response => response.json())
+          .then(jsonResponse => {
+            sessionStorage.setItem('user_id', jsonResponse.id)
+            showUser(jsonResponse)
+          })
+          .catch(error => {
+            console.log(error.message)
+            passwordInput.value = ''
+            emailInput.value = ''
+            alert('The user you are looking for could not be found. Please check your inputs and try again.')
+          })
       }
-      
-      fetch('http://localhost:3000/', configObject)
-        .then(response => response.json())
-        .then(jsonResponse => {
-          sessionStorage.setItem('user_id', jsonResponse.id)
-          showUser(jsonResponse)
-        })
-        .catch(error => {
-          console.log(error.message)
-          passwordInput.value = ''
-          emailInput.value = ''
-          alert('The user you are looking for could not be found. Please check your inputs and try again.')
-        })
-    }
-  })
+    })
+  }
 }

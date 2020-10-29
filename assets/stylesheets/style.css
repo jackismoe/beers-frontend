@@ -65,16 +65,17 @@
     z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   h2 {
     position: absolute;
-    top: 10%;
+    top: -1000%;
   }
   
   .menu-container {
     margin-left: 5px;
+    align-self: left;
   }
 
   div.menu-icons:hover {
@@ -158,4 +159,10 @@
     box-shadow: 25px 25px 25px 25px black;
   }
 
+  #profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
 }

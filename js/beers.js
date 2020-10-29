@@ -81,11 +81,7 @@ function createBeerTable() {
 }
 
 function renderAll() {
-  userSignUpForm.replaceWith()
-  userSignInForm.replaceWith()
-  signInBtn.replaceWith()
-  signUpBtn.replaceWith() 
-  generateBtn.replaceWith()
+  profileContainer.remove()  
   createBeerTable()
   // beers
   fetch(`http://localhost:3000/all_beers`)
@@ -141,8 +137,10 @@ function renderAll() {
   })
 }
 
-function fetchGenerateBeer() {
-    fetch(`http://localhost:3000/user_beers`, { 
+// need user parameter
+function fetchGenerateBeer() {  
+  // fetch post to user/user_id/beers for beers#create 
+    fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`, { 
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +148,7 @@ function fetchGenerateBeer() {
         }
       })
       .then(response => response.json())
-      .then(fetchedBeer => showRandom(fetchedBeer))
+      .then(fetchedBeer => console.log(fetchedBeer))
 }
 
 function setBeerRow(beer) {
