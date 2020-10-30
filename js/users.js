@@ -30,7 +30,6 @@ function createUserObj(user) {
 
 function showUser(user) {
   console.log(user)
-  profileLink.style.color = 'white'
 
   userSignInForm.remove()
   userSignUpForm.remove()
@@ -44,6 +43,9 @@ function showUser(user) {
   profileLink.style.visibility = 'visible'
   homeLink.style.visibility = 'visible'
   aboutLink.style.visibility = 'visible'
+  aboutLink.style.visibility = 'visible'
+  userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
+  logoutButtonContainer.innerHTML = '<button id="logout-button">Logout</button>'
   fetchUserBeers(user)
 }
 
@@ -195,8 +197,8 @@ function userSignUpPortal() {
     e.preventDefault()
     if (passwordConfirm.value !== passwordInput.value || passwordConfirm.value == '' || passwordInput.value === '' ) {
       alert('Please check your password inputs and try again.')
-      passwordInput.value = ''
-      passwordConfirm.value = ''
+      passwordInput.reset()
+      passwordConfirm.reset()
     } else if (nameInput.value == '' || emailInput.value == ''){
       alert('You must fill in the entire form to continue.')
     } else {
@@ -208,7 +210,7 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() {  
-  if (userSignInForm.innerHTML != '') {
+  // if (userSignInForm.innerHTML != '') {
     mainContainer.appendChild(profileContainer)
     userSignInForm.id = 'sign-in'
     profileContainer.appendChild(userSignInForm)
@@ -246,7 +248,7 @@ function userSignInPortal() {
       if (passwordInput.value === '') {
         alert('Please check your password inputs and try again.')
         passwordInput.value = ''
-      } else if (emailInput.value == ''){
+      } else if (emailInput.value === ''){
         alert('You must fill in the entire form to continue.')
       } else {
         let configObject = {
@@ -268,11 +270,11 @@ function userSignInPortal() {
           })
           .catch(error => {
             console.log(error.message)
-            passwordInput.value = ''
-            emailInput.value = ''
+            passwordInput.reset
+            emailInput.reset
             alert('The user you are looking for could not be found. Please check your inputs and try again.')
           })
       }
     })
-  }
+  // }
 }

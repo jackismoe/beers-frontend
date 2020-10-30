@@ -8,6 +8,7 @@ let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 let userButtonContainer = document.querySelector('#user-button-container')
+let logoutButtonContainer = document.querySelector('#logout-button-container')
 
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
@@ -44,9 +45,7 @@ document.addEventListener('click', (e) => {
 browseButton.addEventListener('click', () => {  
   renderAll()
 })
-userButtonContainer.addEventListener('click', () => {
 
-})
 homeLink.addEventListener('click', () => {
   location.reload()
 })
