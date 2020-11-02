@@ -23,16 +23,6 @@ function createBeerObj(beer) {
       'Accept': 'application/json'
     },
     body: JSON.stringify(newBeer)
-      // beerId: beer.id,
-      // beerBrand: beer.brand,
-      // beerName: beer.name,
-      // beerStyle: beer.style,
-      // beerHop: beer.hop,
-      // beerYeast: beer.yeast,
-      // beerMalts: beer.malts,
-      // beerIbu: beer.ibu,
-      // beerAlcohol: beer.alcohol,
-      // beerBlg: beer.blg
   }
   fetch('http://localhost:3000/beers', configObject)
     .then(response => response.json())
@@ -82,59 +72,61 @@ function createBeerTable() {
 
 function renderAll() {
   profileContainer.remove()  
-  createBeerTable()
-  // beers
-  fetch(`http://localhost:3000/all_beers`)
-  .then(response => response.json())
-  .then(jsonResponse => {
-    for (let x of jsonResponse) {
-      let newRow = document.createElement('tr')
-      beersTable.appendChild(newRow)
-      let idCell = document.createElement('td')
-      let brandCell = document.createElement('td')
-      let nameCell = document.createElement('td')
-      let styleCell = document.createElement('td')
-      let hopCell = document.createElement('td')
-      let yeastCell = document.createElement('td')
-      let maltsCell = document.createElement('td')
-      let ibuCell = document.createElement('td')
-      let abvCell = document.createElement('td')
-      let blgCell = document.createElement('td')
-      
-      idCell.className = 'beer-id'
-      brandCell.className = 'beer-brand'
-      nameCell.className = 'beer-name'
-      styleCell.className = 'beer-style'
-      hopCell.className = 'beer-hop'
-      yeastCell.className = 'beer-yeast'
-      maltsCell.className = 'beer-malts'
-      ibuCell.className = 'beer-ibu'
-      abvCell.className = 'beer-abv'
-      blgCell.className = 'beer-blg'
-      
-      idCell.innerText = x.id
-      brandCell.innerText = x.brand
-      nameCell.innerText = x.name
-      styleCell.innerText = x.style
-      hopCell.innerText = x.hop
-      yeastCell.innerText = x.yeast
-      maltsCell.innerText = x.malts
-      ibuCell.innerText = x.ibu
-      abvCell.innerText = x.alcohol
-      blgCell.innerText = x.blg
-      
-      newRow.appendChild(idCell)
-      newRow.appendChild(brandCell) 
-      newRow.appendChild(nameCell) 
-      newRow.appendChild(styleCell) 
-      newRow.appendChild(hopCell) 
-      newRow.appendChild(yeastCell) 
-      newRow.appendChild(maltsCell) 
-      newRow.appendChild(ibuCell)
-      newRow.appendChild(abvCell) 
-      newRow.appendChild(blgCell)
-    }
-  })
+  if (beersTable.innerHTML == '') {
+    createBeerTable()
+    // beers
+    fetch(`http://localhost:3000/all_beers`)
+    .then(response => response.json())
+    .then(jsonResponse => {
+      for (let x of jsonResponse) {
+        let newRow = document.createElement('tr')
+        beersTable.appendChild(newRow)
+        let idCell = document.createElement('td')
+        let brandCell = document.createElement('td')
+        let nameCell = document.createElement('td')
+        let styleCell = document.createElement('td')
+        let hopCell = document.createElement('td')
+        let yeastCell = document.createElement('td')
+        let maltsCell = document.createElement('td')
+        let ibuCell = document.createElement('td')
+        let abvCell = document.createElement('td')
+        let blgCell = document.createElement('td')
+        
+        idCell.className = 'beer-id'
+        brandCell.className = 'beer-brand'
+        nameCell.className = 'beer-name'
+        styleCell.className = 'beer-style'
+        hopCell.className = 'beer-hop'
+        yeastCell.className = 'beer-yeast'
+        maltsCell.className = 'beer-malts'
+        ibuCell.className = 'beer-ibu'
+        abvCell.className = 'beer-abv'
+        blgCell.className = 'beer-blg'
+        
+        idCell.innerText = x.id
+        brandCell.innerText = x.brand
+        nameCell.innerText = x.name
+        styleCell.innerText = x.style
+        hopCell.innerText = x.hop
+        yeastCell.innerText = x.yeast
+        maltsCell.innerText = x.malts
+        ibuCell.innerText = x.ibu
+        abvCell.innerText = x.alcohol
+        blgCell.innerText = x.blg
+        
+        newRow.appendChild(idCell)
+        newRow.appendChild(brandCell) 
+        newRow.appendChild(nameCell) 
+        newRow.appendChild(styleCell) 
+        newRow.appendChild(hopCell) 
+        newRow.appendChild(yeastCell) 
+        newRow.appendChild(maltsCell) 
+        newRow.appendChild(ibuCell)
+        newRow.appendChild(abvCell) 
+        newRow.appendChild(blgCell)
+      }
+    })
+  }
 }
 
 // need user parameter

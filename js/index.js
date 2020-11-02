@@ -19,6 +19,9 @@ let signInBtn = document.createElement('button')
 let signUpBtn = document.createElement('button')
 let profileContainer = document.createElement('div')
 
+let userButton
+let logoutButton
+
 signInBtn.class = 'button'
 signUpBtn.class = 'button'
 profileContainer.id = 'profile-container'
@@ -29,12 +32,11 @@ signUpBtn.innerText = 'Sign-Up'
 function closeNav() {
   document.getElementById("mySideNav").style.width = "0";
 }
+
 function openNav() {
   document.getElementById("mySideNav").style.width = "250px";
 }
 
-// show buttons for sign up/ sign in
-// menu links
 document.addEventListener('click', (e) => {
   if (e.target === menuIcons) {
     openNav()
@@ -42,42 +44,57 @@ document.addEventListener('click', (e) => {
     closeNav()
   }
 })
+
 browseButton.addEventListener('click', () => {  
   renderAll()
 })
 
 homeLink.addEventListener('click', () => {
+  // maybe scroll through images of different beers??
+  showHomePage()
 })
-aboutLink.addEventListener('click', () => {
-})
-profileLink.addEventListener('click', () => {
-  fetch('http://localhost:3000/', {
-    method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          session: sessionStorage
-        })
-      })
-      .then(response => response.json())
-      .then(user => {
-        console.log(sessionStorage)
-        if (user.id == sessionStorage['user_id']) {
-          if (profileContainer.innerHTML == '') {
-            showUser(user)
-          } else {
-            closeNav()
-          }
-        }
-      })
-    })
 
-// home page links
+aboutLink.addEventListener('click', () => {
+  // create about page
+})
+
+profileLink.addEventListener('click', () => {
+    fetchSession()
+    .then(response => response.json())
+    .then(user => {
+      console.log(sessionStorage)
+      if (user.id == sessionStorage['user_id']) {
+        if (profileContainer.innerHTML == '') {
+          showUser(user)
+        } else {
+          closeNav()
+        }
+      }
+    })
+})
 loginLink.addEventListener('click', () => {
-  profileContainer.remove()
-  beersTable.remove()
-  closeNav()
   userSignInPortal()
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.length == 1) {
+    fetch('http://localhost:3000', {
+      
+    })
+    console.log('You are logged in.')
+    loginUser()
+  }
+})
+
+function fetchSession() {
+  fetch('http://localhost:3000/', {
+  method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        session: sessionStorage
+      })
+    })
+}

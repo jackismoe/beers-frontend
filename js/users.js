@@ -39,6 +39,11 @@ function showUser(user) {
   mainContainer.appendChild(profileContainer)
   profileContainer.appendChild(nameH2)
 
+  loginUser()
+  fetchUserBeers(user)
+}
+
+function loginUser() {
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
   homeLink.style.visibility = 'visible'
@@ -47,19 +52,12 @@ function showUser(user) {
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
   logoutButtonContainer.innerHTML = '<button id="logout-button">Logout</button>'
 
-  let userButton = document.querySelector('#user-button')
-  let logoutButton = document.querySelector('#logout-button')
+  userButton = document.querySelector('#user-button')
+  logoutButton = document.querySelector('#logout-button')
 
   userButton.addEventListener('click', () => {
   })
-  logoutButton.addEventListener('click', () => {
-    console.log(sessionStorage)
-    sessionStorage.clear()
-    console.log(sessionStorage)
-
-  })
-
-  fetchUserBeers(user)
+  logoutButton.addEventListener('click', logoutUser)
 }
 
 function fetchUserBeers(user) {
@@ -83,7 +81,9 @@ function fetchUserBeers(user) {
         let maltsHeader = document.createElement('th')
         let ibuHeader = document.createElement('th')
         let abvHeader = document.createElement('th')
-        let blgHeader = document.createElement('th') 
+        let blgHeader = document.createElement('th')
+        
+        beersTable.id = 'beers-table'
 
         idHeader.innerText = 'Beer ID'
         brandHeader.innerText = 'Brand' 
@@ -223,7 +223,6 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() {  
-  // if (userSignInForm.innerHTML != '') {
     mainContainer.appendChild(profileContainer)
     userSignInForm.id = 'sign-in'
     profileContainer.appendChild(userSignInForm)
@@ -257,7 +256,7 @@ function userSignInPortal() {
 
     submit.addEventListener('click', (e) => {
       e.preventDefault()
-      // fetch to sessions#new and get user id. set user id to session id
+// fetch to sessions#new and get user id. set user id to session id
       if (passwordInput.value === '') {
         alert('Please check your password inputs and try again.')
         passwordInput.value = ''
@@ -279,6 +278,9 @@ function userSignInPortal() {
           .then(response => response.json())
           .then(jsonResponse => {
             sessionStorage.setItem('user_id', jsonResponse.id)
+// doesnt reset correctly
+            passwordInput.reset
+            emailInput.reset
             showUser(jsonResponse)
           })
           .catch(error => {
@@ -289,5 +291,36 @@ function userSignInPortal() {
           })
       }
     })
-  // }
 }
+
+function logoutUser() {
+  console.log(`before: ` + sessionStorage['user_id'])
+  sessionStorage.clear()
+  console.log(`after: ` + sessionStorage['user_id'])
+  fetchSession()
+
+  profileContainer.remove()
+  logoutButton.remove()
+  userButton.remove()
+  beersTable.remove()
+
+
+  loginLink.style.visibility = 'visible'
+  profileLink.style.visibility = 'hidden'
+  homeLink.style.visibility = 'hidden'
+  aboutLink.style.visibility = 'hidden'
+  aboutLink.style.visibility = 'hidden'
+  showHomePage()
+}
+
+function showHomePage() {
+// need to check to see if slider exists
+
+  // profileContainer.remove()
+  // // if (mainContainer.children.)
+  // let sliderContainer = document.createElement('div')
+  // sliderContainer.id = 'slider-container'
+  // mainContainer.appendChild(sliderContainer)
+  // console.log(mainContainer.children)
+}
+
