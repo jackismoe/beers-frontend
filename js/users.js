@@ -46,6 +46,19 @@ function showUser(user) {
   aboutLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
   logoutButtonContainer.innerHTML = '<button id="logout-button">Logout</button>'
+
+  let userButton = document.querySelector('#user-button')
+  let logoutButton = document.querySelector('#logout-button')
+
+  userButton.addEventListener('click', () => {
+  })
+  logoutButton.addEventListener('click', () => {
+    console.log(sessionStorage)
+    sessionStorage.clear()
+    console.log(sessionStorage)
+
+  })
+
   fetchUserBeers(user)
 }
 

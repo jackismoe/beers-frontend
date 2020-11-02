@@ -47,10 +47,32 @@ browseButton.addEventListener('click', () => {
 })
 
 homeLink.addEventListener('click', () => {
-  location.reload()
 })
-// about link
-// home link
+aboutLink.addEventListener('click', () => {
+})
+profileLink.addEventListener('click', () => {
+  fetch('http://localhost:3000/', {
+    method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          session: sessionStorage
+        })
+      })
+      .then(response => response.json())
+      .then(user => {
+        console.log(sessionStorage)
+        if (user.id == sessionStorage['user_id']) {
+          if (profileContainer.innerHTML == '') {
+            showUser(user)
+          } else {
+            closeNav()
+          }
+        }
+      })
+    })
 
 // home page links
 loginLink.addEventListener('click', () => {
