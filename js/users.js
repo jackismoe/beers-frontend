@@ -34,13 +34,10 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  let nameH2 = document.createElement('h2')
-  nameH2.innerText = user.name
   mainContainer.appendChild(profileContainer)
-  profileContainer.appendChild(nameH2)
-
   loginUser()
   fetchUserBeers(user)
+  profileContainer.appendChild(userBeersTable)
 }
 
 function loginUser() {
@@ -56,6 +53,7 @@ function loginUser() {
   logoutButton = document.querySelector('#logout-button')
 
   userButton.addEventListener('click', () => {
+// generate button
   })
   logoutButton.addEventListener('click', logoutUser)
 }
@@ -71,7 +69,6 @@ function fetchUserBeers(user) {
         welcome.innerText = `Welcome ${user.name}! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above.`
         profileContainer.appendChild(welcome)
       } else {
-        let beersTable = document.createElement('table')
         let idHeader = document.createElement('th')
         let brandHeader = document.createElement('th')
         let nameHeader = document.createElement('th')
@@ -83,7 +80,7 @@ function fetchUserBeers(user) {
         let abvHeader = document.createElement('th')
         let blgHeader = document.createElement('th')
         
-        beersTable.id = 'beers-table'
+        userBeersTable.id = 'beers-table'
 
         idHeader.innerText = 'Beer ID'
         brandHeader.innerText = 'Brand' 
@@ -96,21 +93,21 @@ function fetchUserBeers(user) {
         abvHeader.innerText = 'ABV%' 
         blgHeader.innerText = 'BLG°'
 
-        beersTable.appendChild(idHeader)
-        beersTable.appendChild(brandHeader)
-        beersTable.appendChild(nameHeader)
-        beersTable.appendChild(styleHeader)
-        beersTable.appendChild(hopHeader)
-        beersTable.appendChild(yeastHeader)
-        beersTable.appendChild(maltsHeader)
-        beersTable.appendChild(ibuHeader)
-        beersTable.appendChild(abvHeader)
-        beersTable.appendChild(blgHeader)
+        userBeersTable.appendChild(idHeader)
+        userBeersTable.appendChild(brandHeader)
+        userBeersTable.appendChild(nameHeader)
+        userBeersTable.appendChild(styleHeader)
+        userBeersTable.appendChild(hopHeader)
+        userBeersTable.appendChild(yeastHeader)
+        userBeersTable.appendChild(maltsHeader)
+        userBeersTable.appendChild(ibuHeader)
+        userBeersTable.appendChild(abvHeader)
+        userBeersTable.appendChild(blgHeader)
 
-        profileContainer.appendChild(beersTable)
+        profileContainer.appendChild(userBeersTable)
         for (let x of jsonResponse) {
           let newRow = document.createElement('tr')
-          beersTable.appendChild(newRow)
+          userBeersTable.appendChild(newRow)
           
           let idCell = document.createElement('td')
           let brandCell = document.createElement('td')
@@ -222,94 +219,96 @@ function userSignUpPortal() {
   })
 }
 
-function userSignInPortal() {  
+function userSignInPortal() { 
+  let emailInput = document.createElement('input')
+  let passwordInput = document.createElement('input')
+  let submit = document.createElement('button')
+  let signUpButton = document.createElement('button')
+  emailInput.id = 'email'
+  passwordInput.id = 'password'
+  submit.id = 'submit'
+  signUpButton.id = 'sign-up'
+  
+  emailInput.placeholder = 'Enter Email'
+  passwordInput.placeholder = 'Enter Password'
+  
+  passwordInput.type = 'password'
+  submit.innerText = 'Submit'
+  signUpButton.innerText = "Not Registered Yet? Sign Up Here"
+  signUpButton.addEventListener('click', () => {
+    profileContainer.remove()
+    userSignUpPortal()
+  })
+  
+  submit.addEventListener('click', (e) => {
+    e.preventDefault()
+// fetch to sessions#new and get user id. set user id to session id
+    if (passwordInput.value === '') {
+      alert('Please check your password inputs and try again.')
+      passwordInput.value = ''
+    } else if (emailInput.value === ''){
+      alert('You must fill in the entire form to continue.')
+    } else {
+      let configObject = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: emailInput.value,
+        })
+      }
+      
+      fetch('http://localhost:3000/', configObject)
+        .then(response => response.json())
+        .then(jsonResponse => {
+          sessionStorage.setItem('user_id', jsonResponse.id)
+          userSignInForm.reset()
+          showUser(jsonResponse)
+        })
+        .catch(error => {
+          console.log(error.message)
+          passwordInput.reset
+          emailInput.reset
+          alert('The user you are looking for could not be found. Please check your inputs and try again.')
+        })
+    }
+  })
+  userSignInForm.id = 'sign-in'
+  if (profileContainer.innerHTML !== '') {
+    console.log('yes')
+    userSignInForm.reset()
+    userBeersTable.remove()
     mainContainer.appendChild(profileContainer)
-    userSignInForm.id = 'sign-in'
     profileContainer.appendChild(userSignInForm)
-    
-    let emailInput = document.createElement('input')
-    let passwordInput = document.createElement('input')
-    let submit = document.createElement('button')
-    let signUpButton = document.createElement('button')
-    
-    emailInput.id = 'email'
-    passwordInput.id = 'password'
-    submit.id = 'submit'
-    signUpButton.id = 'sign-up'
-    
-    emailInput.placeholder = 'Enter Email'
-    passwordInput.placeholder = 'Enter Password'
-    
-    passwordInput.type = 'password'
-    submit.innerText = 'Submit'
-    signUpButton.innerText = "Not Registered Yet? Sign Up Here"
-    
+  } else {
     userSignInForm.appendChild(emailInput)
     userSignInForm.appendChild(passwordInput)
     userSignInForm.appendChild(submit)
     userSignInForm.appendChild(signUpButton)
-
-    signUpButton.addEventListener('click', () => {
-      profileContainer.remove()
-      userSignUpPortal()
-    })
-
-    submit.addEventListener('click', (e) => {
-      e.preventDefault()
-// fetch to sessions#new and get user id. set user id to session id
-      if (passwordInput.value === '') {
-        alert('Please check your password inputs and try again.')
-        passwordInput.value = ''
-      } else if (emailInput.value === ''){
-        alert('You must fill in the entire form to continue.')
-      } else {
-        let configObject = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            email: emailInput.value,
-          })
-        }
-        
-        fetch('http://localhost:3000/', configObject)
-          .then(response => response.json())
-          .then(jsonResponse => {
-            sessionStorage.setItem('user_id', jsonResponse.id)
-// doesnt reset correctly
-            passwordInput.reset
-            emailInput.reset
-            showUser(jsonResponse)
-          })
-          .catch(error => {
-            console.log(error.message)
-            passwordInput.reset
-            emailInput.reset
-            alert('The user you are looking for could not be found. Please check your inputs and try again.')
-          })
-      }
-    })
+    mainContainer.appendChild(profileContainer)
+    profileContainer.appendChild(userSignInForm)
+  }
 }
 
 function logoutUser() {
-  console.log(`before: ` + sessionStorage['user_id'])
+  console.log(`sessions before: ` + sessionStorage['user_id'])
   sessionStorage.clear()
-  console.log(`after: ` + sessionStorage['user_id'])
-  fetchSession()
+  console.log(`sessions after: ` + sessionStorage['user_id'])
 
   profileContainer.remove()
   logoutButton.remove()
   userButton.remove()
-  beersTable.remove()
+  allBeersTable.remove()
 
-
+  fetchedBeers = 0
   loginLink.style.visibility = 'visible'
   profileLink.style.visibility = 'hidden'
   homeLink.style.visibility = 'hidden'
   aboutLink.style.visibility = 'hidden'
   aboutLink.style.visibility = 'hidden'
+  location.reload()
   showHomePage()
 }
 

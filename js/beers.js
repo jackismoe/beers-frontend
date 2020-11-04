@@ -56,23 +56,23 @@ function createBeerTable() {
   abvHeader.innerText = 'ABV%' 
   blgHeader.innerText = 'BLG°'
   
-  beersTable.appendChild(idHeader)
-  beersTable.appendChild(brandHeader)
-  beersTable.appendChild(nameHeader)
-  beersTable.appendChild(styleHeader)
-  beersTable.appendChild(hopHeader)
-  beersTable.appendChild(yeastHeader)
-  beersTable.appendChild(maltsHeader)
-  beersTable.appendChild(ibuHeader)
-  beersTable.appendChild(abvHeader)
-  beersTable.appendChild(blgHeader)
+  allBeersTable.appendChild(idHeader)
+  allBeersTable.appendChild(brandHeader)
+  allBeersTable.appendChild(nameHeader)
+  allBeersTable.appendChild(styleHeader)
+  allBeersTable.appendChild(hopHeader)
+  allBeersTable.appendChild(yeastHeader)
+  allBeersTable.appendChild(maltsHeader)
+  allBeersTable.appendChild(ibuHeader)
+  allBeersTable.appendChild(abvHeader)
+  allBeersTable.appendChild(blgHeader)
   
-  main.appendChild(beersTable)
+  main.appendChild(allBeersTable)
 }
 
 function renderAll() {
   profileContainer.remove()  
-  if (beersTable.innerHTML == '') {
+  if (allBeersTable.innerHTML == '') {
     createBeerTable()
     // beers
     fetch(`http://localhost:3000/all_beers`)
@@ -80,7 +80,7 @@ function renderAll() {
     .then(jsonResponse => {
       for (let x of jsonResponse) {
         let newRow = document.createElement('tr')
-        beersTable.appendChild(newRow)
+        allBeersTable.appendChild(newRow)
         let idCell = document.createElement('td')
         let brandCell = document.createElement('td')
         let nameCell = document.createElement('td')
@@ -126,12 +126,12 @@ function renderAll() {
         newRow.appendChild(blgCell)
       }
     })
+  } else {
+    mainContainer.appendChild(allBeersTable)
   }
 }
 
-// need user parameter
 function fetchGenerateBeer() {  
-  // fetch post to user/user_id/beers for beers#create 
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`, { 
       method: 'POST',
         headers: {
@@ -178,7 +178,7 @@ function setBeerRow(beer) {
       abvCell.innerText = beer.alcohol
       blgCell.innerText = beer.blg
       
-      beersTable.appendChild(newRow)
+      allBeersTable.appendChild(newRow)
       newRow.appendChild(idCell)
       newRow.appendChild(brandCell) 
       newRow.appendChild(nameCell) 

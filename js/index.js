@@ -13,7 +13,9 @@ let logoutButtonContainer = document.querySelector('#logout-button-container')
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
 let mainContainer = document.querySelector('.main')
-let beersTable = document.createElement('table')
+let allBeersTable = document.createElement('table')
+let userBeersTable = document.createElement('table')
+
 
 let signInBtn = document.createElement('button')
 let signUpBtn = document.createElement('button')
@@ -45,8 +47,8 @@ document.addEventListener('click', (e) => {
   }
 })
 
-browseButton.addEventListener('click', () => {  
-  renderAll()
+browseButton.addEventListener('click', () => {
+  renderAll()         
 })
 
 homeLink.addEventListener('click', () => {
@@ -59,42 +61,57 @@ aboutLink.addEventListener('click', () => {
 })
 
 profileLink.addEventListener('click', () => {
-    fetchSession()
-    .then(response => response.json())
-    .then(user => {
-      console.log(sessionStorage)
-      if (user.id == sessionStorage['user_id']) {
-        if (profileContainer.innerHTML == '') {
-          showUser(user)
-        } else {
-          closeNav()
-        }
-      }
+  allBeersTable.remove()
+  if (sessionStorage.length == 1) {
+    fetch('http://localhost:3000', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          session: sessionStorage,
+        })
     })
+    .then(response => response.json())
+    .then(jsonResponse => {
+      console.log('You are logged in.')
+      closeNav()
+      loginUser()
+      showUser(jsonResponse)
+    })
+  } else {
+    closeNav()
+  }
 })
 loginLink.addEventListener('click', () => {
-  userSignInPortal()
+  if (mainContainer.innerHTML == '') {
+    closeNav()
+    userSignInPortal()
+  } else {
+    closeNav()
+    allBeersTable.remove()
+    userSignInPortal()
+  }
 })
 
 document.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.length == 1) {
     fetch('http://localhost:3000', {
-      
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          session: sessionStorage,
+        })
     })
-    console.log('You are logged in.')
-    loginUser()
+    .then(response => response.json())
+    .then(jsonResponse => {
+      console.log('You are logged in.')
+      loginUser()
+      showUser(jsonResponse)
+    })
   }
 })
-
-function fetchSession() {
-  fetch('http://localhost:3000/', {
-  method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        session: sessionStorage
-      })
-    })
-}
