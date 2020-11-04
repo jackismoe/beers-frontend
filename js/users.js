@@ -309,17 +309,33 @@ function logoutUser() {
   aboutLink.style.visibility = 'hidden'
   aboutLink.style.visibility = 'hidden'
   location.reload()
-  showHomePage()
 }
 
 function showHomePage() {
-// need to check to see if slider exists
+  let sliderContainer = document.createElement('div')
+  sliderContainer.id = 'image-slider'  
+  mainContainer.appendChild(sliderContainer)
+  let delayInSeconds = 3
+  let counter = 0
 
-  // profileContainer.remove()
-  // // if (mainContainer.children.)
-  // let sliderContainer = document.createElement('div')
-  // sliderContainer.id = 'slider-container'
-  // mainContainer.appendChild(sliderContainer)
-  // console.log(mainContainer.children)
+  function changeImage() {
+    counter++
+    if (counter <= 4) {
+      sliderContainer.innerHTML = `<img src="./assets/images/rotating-images/beer${counter}.jpg" width="700" height="500" id="rotator"></img>`
+    } else {
+      counter = 0
+      changeImage()
+    }
+  }
+  changeImage()
+  setInterval(changeImage, delayInSeconds * 1000);
+
+  let homeDescriptionContainer = document.createElement('div')
+  let welcomeMessage = document.createElement('h2')
+  let welcomeParagraph = document.createElement('p')
+
+  homeDescriptionContainer.id = 'home-description-container'
+  welcomeMessage.id = 'welcome-message'
+  welcomeParagraph.id = 'welcome-paragraph'
 }
 

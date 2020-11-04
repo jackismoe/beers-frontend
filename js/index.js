@@ -113,5 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loginUser()
       showUser(jsonResponse)
     })
+  } else {
+    showHomePage()
   }
 })
