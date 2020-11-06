@@ -72,6 +72,7 @@ function createBeerTable() {
 
 function renderAll() {
   profileContainer.remove()  
+  sliderContainer.remove()
   if (allBeersTable.innerHTML == '') {
     createBeerTable()
     // beers

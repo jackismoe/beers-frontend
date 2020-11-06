@@ -54,7 +54,7 @@
     box-sizing: border-box;
   }
 
-  #id, #profile, #home, #about {
+  #id, #profile, #about {
     visibility: hidden;
   }
   
@@ -176,4 +176,6 @@
     height: 50%;
     background-color: red;
   }
+
+
 }

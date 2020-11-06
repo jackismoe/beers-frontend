@@ -43,7 +43,6 @@ function showUser(user) {
 function loginUser() {
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
-  homeLink.style.visibility = 'visible'
   aboutLink.style.visibility = 'visible'
   aboutLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
@@ -220,6 +219,7 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() { 
+  sliderContainer.remove()
   let emailInput = document.createElement('input')
   let passwordInput = document.createElement('input')
   let submit = document.createElement('button')
@@ -312,8 +312,8 @@ function logoutUser() {
 }
 
 function showHomePage() {
-  let sliderContainer = document.createElement('div')
-  sliderContainer.id = 'image-slider'  
+  allBeersTable.remove()
+  userBeersTable.remove()
   mainContainer.appendChild(sliderContainer)
   let delayInSeconds = 3
   let counter = 0

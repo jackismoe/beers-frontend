@@ -20,9 +20,12 @@ let userBeersTable = document.createElement('table')
 let signInBtn = document.createElement('button')
 let signUpBtn = document.createElement('button')
 let profileContainer = document.createElement('div')
+let sliderContainer = document.createElement('div')
+sliderContainer.id = 'image-slider'  
 
 let userButton
 let logoutButton
+
 
 signInBtn.class = 'button'
 signUpBtn.class = 'button'
@@ -52,8 +55,8 @@ browseButton.addEventListener('click', () => {
 })
 
 homeLink.addEventListener('click', () => {
-  // maybe scroll through images of different beers??
   showHomePage()
+  closeNav()
 })
 
 aboutLink.addEventListener('click', () => {
@@ -62,6 +65,7 @@ aboutLink.addEventListener('click', () => {
 
 profileLink.addEventListener('click', () => {
   allBeersTable.remove()
+  sliderContainer.remove()
   if (sessionStorage.length == 1) {
     fetch('http://localhost:3000', {
         method: 'POST',
@@ -78,7 +82,12 @@ profileLink.addEventListener('click', () => {
       console.log('You are logged in.')
       closeNav()
       loginUser()
-      showUser(jsonResponse)
+      if (profileContainer.innerHTML = '') {
+        showUser(jsonResponse)
+      } else {
+        mainContainer.appendChild(profileContainer)
+        profileContainer.appendChild(userBeersTable)
+      }
     })
   } else {
     closeNav()
