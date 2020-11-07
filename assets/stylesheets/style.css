@@ -159,12 +159,21 @@
   .footer {
     background-color: white;
     opacity: .9;
-    width: 100%;
+    width: 180px;
     height: 30px;
     position: fixed;
     z-index: 2;
     bottom: 0;
+    right: 0;
     box-shadow: 25px 25px 25px 25px black;
+    border-top-left-radius: 25px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .footer-message {
+    padding-right: 15px;
   }
 
   #profile-container {
@@ -227,9 +236,9 @@
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
   }
+
   table, td {
     border: 1px solid black;
-    border
   }
 
   td {

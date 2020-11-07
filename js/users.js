@@ -102,6 +102,10 @@ function fetchUserBeers() {
         abvHeader.innerText = 'ABV%' 
         blgHeader.innerText = 'BLG°'
 
+        idHeader.id = 'id-header'
+        blgHeader.id = 'blg-header'
+
+
         userBeersTable.appendChild(idHeader)
         userBeersTable.appendChild(brandHeader)
         userBeersTable.appendChild(nameHeader)
@@ -113,7 +117,7 @@ function fetchUserBeers() {
         userBeersTable.appendChild(abvHeader)
         userBeersTable.appendChild(blgHeader)
 
-        profileContainer.appendChild(userBeersTable)
+        mainContainer.appendChild(userBeersTable)
         for (let x of jsonResponse) {
           let newRow = document.createElement('tr')
           userBeersTable.appendChild(newRow)
