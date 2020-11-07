@@ -13,27 +13,6 @@ class Beer {
   }
 }
 
-function createBeerObj(beer) {
-  let newBeer = new Beer(beer.id, beer.brand, beer.name, beer.style, beer.hop, beer.yeast, beer.malts, beer.ibu, beer.alcohol, beer.blg)
-
-  let configObject = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(newBeer)
-  }
-// fetch to sessions to get user, send user into fetch for create for beers
-  // fetch(`http://localhost:3000/users/${user.id}/beers`, configObject)
-    .then(response => response.json())
-    .then(jsonResponse => console.log(jsonResponse))
-    .catch(error => {
-      alert(error.message)
-    })
-
-}
-
 function createBeerTable() {
   let idHeader = document.createElement('th')
   let brandHeader = document.createElement('th')
@@ -133,7 +112,7 @@ function renderAll() {
   }
 }
 
-function fetchGenerateBeer(user) {  
+function fetchGenerateBeer() {  
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`, { 
       method: 'POST',
         headers: {
@@ -142,7 +121,10 @@ function fetchGenerateBeer(user) {
         }
       })
       .then(response => response.json())
-      .then(fetchedBeer => createBeerObj(fetchedBeer, user))
+      .then(fetchedBeer => {
+// show just the recently created beer
+        console.log(fetchedBeer)
+      })
 }
 
 function setBeerRow(beer) {

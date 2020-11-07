@@ -36,8 +36,12 @@ function showUser(user) {
 
   mainContainer.appendChild(profileContainer)
   loginUser()
-  fetchUserBeers(user)
-  profileContainer.appendChild(userBeersTable)
+  // profileContainer.appendChild(userBeersTable)
+  if (!document.querySelector('#beers-table')) {
+    fetchUserBeers(user)
+  } else {
+    profileContainer.appendChild(userBeersTable)
+  }
 }
 
 function loginUser() {

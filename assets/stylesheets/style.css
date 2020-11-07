@@ -171,10 +171,8 @@
     position: relative;
   }
 
-  #slider-container {
-    width: 50%;
-    height: 50%;
-    background-color: red;
+  #image-slider {
+    margin-right: 20px;
   }
 
   #home-description-container {

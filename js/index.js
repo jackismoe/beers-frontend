@@ -113,17 +113,13 @@ profileLink.addEventListener('click', () => {
       console.log('You are logged in.')
       closeNav()
       loginUser()
-      if (profileContainer.innerHTML = '' || '<table></table') {
-        showUser(jsonResponse)
-      } else {
-        mainContainer.appendChild(profileContainer)
-        profileContainer.appendChild(userBeersTable)
-      }
+      showUser(jsonResponse)
     })
   } else {
     closeNav()
   }
 })
+
 loginLink.addEventListener('click', () => {
   homeDescriptionContainer.remove()
   if (mainContainer.innerHTML == '') {
