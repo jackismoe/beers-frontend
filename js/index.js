@@ -167,27 +167,22 @@ profileLink.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
   viewSubNav.style.visibility = 'visible'
 })
-
-profileLink.addEventListener('mouseout', () => {
-  editSubNav.style.visibility = 'hidden'
-  viewSubNav.style.visibility = 'hidden'
-})
-
 editSubNav.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
   viewSubNav.style.visibility = 'visible'
 })
-
 viewSubNav.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
   viewSubNav.style.visibility = 'visible'
 })
-
 viewSubNav.addEventListener('mouseout', () => {
   editSubNav.style.visibility = 'hidden'
   viewSubNav.style.visibility = 'hidden'
 })
-
+profileLink.addEventListener('mouseout', () => {
+  editSubNav.style.visibility = 'hidden'
+  viewSubNav.style.visibility = 'hidden'
+})
 editSubNav.addEventListener('mouseout', () => {
   editSubNav.style.visibility = 'hidden'
   viewSubNav.style.visibility = 'hidden'

@@ -35,6 +35,9 @@ function createBeerTable() {
   ibuHeader.innerText = 'IBU' 
   abvHeader.innerText = 'ABV%' 
   blgHeader.innerText = 'BLG°'
+
+  idHeader.id = 'id-header'
+  blgHeader.id = 'blg-header'
   
   allBeersTable.appendChild(idHeader)
   allBeersTable.appendChild(brandHeader)

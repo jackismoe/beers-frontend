@@ -405,6 +405,10 @@ function editUser() {
     .then(user => {
       editNameInput.placeholder = user.name
       editEmailInput.placeholder = user.email
-      editPhoneInput.placeholder = user.phone
+      if (user.phone) {
+        editPhoneInput.placeholder = user.phone
+      } else {
+        editPhoneInput.placeholder = 'Phone'
+      }
     })
 }
