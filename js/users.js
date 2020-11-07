@@ -24,7 +24,10 @@ function createUserObj(user) {
 
   fetch('http://localhost:3000/users', configObject)
     .then(response => response.json())
-    .then(jsonResponse => console.log(jsonResponse))
+    .then(jsonResponse => {
+      sessionStorage.setItem('user_id', jsonResponse.id)
+      console.log(jsonResponse)
+    })
     .catch(error => alert(error.message))
 }
 
@@ -36,9 +39,8 @@ function showUser(user) {
 
   mainContainer.appendChild(profileContainer)
   loginUser()
-  // profileContainer.appendChild(userBeersTable)
   if (!document.querySelector('#beers-table')) {
-    fetchUserBeers(user)
+    fetchUserBeers()
   } else {
     profileContainer.appendChild(userBeersTable)
   }
@@ -56,22 +58,26 @@ function loginUser() {
   logoutButton = document.querySelector('#logout-button')
 
   userButton.addEventListener('click', () => {
+    closeNav()
     fetchGenerateBeer()
   })
-  logoutButton.addEventListener('click', logoutUser)
+  logoutButton.addEventListener('click', () => {
+    closeNav()
+    logoutUser()
+  })
 }
 
-function fetchUserBeers(user) {
-    fetch(`http://localhost:3000/users/${user.id}/beers`)
+function fetchUserBeers() {
+    fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
       console.log(jsonResponse)
       if (jsonResponse.length < 1) {
-        let welcome = document.createElement('p')
         welcome.id = 'welcome-message'
-        welcome.innerText = `Welcome ${user.name}! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above.`
+        welcome.innerText = `Welcome! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above.`
         profileContainer.appendChild(welcome)
       } else {
+        welcome.remove()
         let idHeader = document.createElement('th')
         let brandHeader = document.createElement('th')
         let nameHeader = document.createElement('th')
@@ -353,3 +359,52 @@ function showHomePage() {
   }
 }
 
+function editUser() {
+  profileContainer.remove()
+  homeDescriptionContainer.remove()
+  sliderContainer.remove()
+
+  mainContainer.appendChild(editUserContainer)
+  
+  let editNameInput = document.createElement('input')
+  let editEmailInput = document.createElement('input')
+  let editPhoneInput = document.createElement('input')
+  let editPasswordInput = document.createElement('input')
+  let editPasswordConfirm = document.createElement('input')
+  let editSubmit = document.createElement('button')
+  
+  editNameInput.id = 'name'
+  editEmailInput.id = 'email'
+  editPhoneInput.id = 'phone'
+  editPasswordInput.id = 'password'
+  editPasswordConfirm.id = 'password-confirm'
+  editSubmit.id = 'submit'
+
+  editPasswordInput.placeholder = 'Password'
+  editPasswordConfirm.placeholder = 'Confirm Password'
+  editSubmit.innerText = 'Submit Changes'
+  
+  editUserForm.appendChild(editNameInput)
+  editUserForm.appendChild(editEmailInput)
+  editUserForm.appendChild(editPhoneInput)
+  editUserForm.appendChild(editPasswordInput)
+  editUserForm.appendChild(editPasswordConfirm)
+  editUserForm.appendChild(editSubmit)
+  editUserContainer.appendChild(editUserForm)
+  fetch('http://localhost:3000', {
+     method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          session: sessionStorage,
+        })
+    })
+    .then(response => response.json())
+    .then(user => {
+      editNameInput.placeholder = user.name
+      editEmailInput.placeholder = user.email
+      editPhoneInput.placeholder = user.phone
+    })
+}

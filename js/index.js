@@ -9,47 +9,49 @@ let homeLink = document.querySelector('#home')
 let aboutLink = document.querySelector('#about')
 let userButtonContainer = document.querySelector('#user-button-container')
 let logoutButtonContainer = document.querySelector('#logout-button-container')
+let ctaLink = document.querySelector('#cta-link')
+let mainContainer = document.querySelector('.main')
 
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
-let mainContainer = document.querySelector('.main')
+let editUserForm = document.createElement('form')
 let allBeersTable = document.createElement('table')
 let userBeersTable = document.createElement('table')
+let editUserContainer = document.createElement('div')
 let homeDescriptionContainer = document.createElement('div')
 let welcomeMessage = document.createElement('h2')
 let welcomeParagraph = document.createElement('p')
 let cta = document.createElement('button')
+let welcome = document.createElement('p')
+let signInBtn = document.createElement('button')
+let signUpBtn = document.createElement('button')
+let profileContainer = document.createElement('div')
+let sliderContainer = document.createElement('div')
+let viewSubNav = document.querySelector('#view')
+let editSubNav = document.querySelector('#edit')
+let userButton
+let logoutButton
 
 welcomeMessage.id = 'welcome-message'
 welcomeParagraph.id = 'welcome-paragraph'
 cta.id = 'call-to-action'
+sliderContainer.id = 'image-slider'  
+profileContainer.id = 'profile-container'
+homeDescriptionContainer.id = 'home-description-container'
+
+signInBtn.class = 'button'
+signUpBtn.class = 'button'
 
 welcomeMessage.innerText = 'Welcome to MyNextBeer!'
 welcomeParagraph.innerText = `Here we can help you decide which beer you can order next time you go to the bar or brewery, or even order on amazon. Whether it be a stout, IPA, pilsner, or even something a litte more exotic, we've got you covered!`
 cta.innerText = `To get started, login or sign up here`
+signInBtn.innerText = 'Sign-In'
+signUpBtn.innerText = 'Sign-Up'
 
 cta.addEventListener('click', () => {
   homeDescriptionContainer.remove()
   userSignInPortal()
 })
-
-let signInBtn = document.createElement('button')
-let signUpBtn = document.createElement('button')
-let profileContainer = document.createElement('div')
-let sliderContainer = document.createElement('div')
-sliderContainer.id = 'image-slider'  
-
-let ctaLink = document.querySelector('#cta-link')
-let userButton
-let logoutButton
-
-signInBtn.class = 'button'
-signUpBtn.class = 'button'
-profileContainer.id = 'profile-container'
-homeDescriptionContainer.id = 'home-description-container'
-
-signInBtn.innerText = 'Sign-In'
-signUpBtn.innerText = 'Sign-Up'
 
 function closeNav() {
   document.getElementById("mySideNav").style.width = "0";
@@ -69,6 +71,7 @@ document.addEventListener('click', (e) => {
 
 browseButton.addEventListener('click', () => {
   homeDescriptionContainer.remove()
+  closeNav()
   renderAll()         
 })
 
@@ -120,6 +123,11 @@ profileLink.addEventListener('click', () => {
   }
 })
 
+editSubNav.addEventListener('click', () => {
+  closeNav()
+  editUser()
+})
+
 loginLink.addEventListener('click', () => {
   homeDescriptionContainer.remove()
   if (mainContainer.innerHTML == '') {
@@ -135,7 +143,7 @@ loginLink.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.length == 1) {
     fetch('http://localhost:3000', {
-        method: 'POST',
+      method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -143,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           session: sessionStorage,
         })
-    })
+      })
     .then(response => response.json())
     .then(jsonResponse => {
       console.log('You are logged in.')
@@ -153,4 +161,34 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     showHomePage()
   }
+})
+
+profileLink.addEventListener('mouseover', () => {
+  editSubNav.style.visibility = 'visible'
+  viewSubNav.style.visibility = 'visible'
+})
+
+profileLink.addEventListener('mouseout', () => {
+  editSubNav.style.visibility = 'hidden'
+  viewSubNav.style.visibility = 'hidden'
+})
+
+editSubNav.addEventListener('mouseover', () => {
+  editSubNav.style.visibility = 'visible'
+  viewSubNav.style.visibility = 'visible'
+})
+
+viewSubNav.addEventListener('mouseover', () => {
+  editSubNav.style.visibility = 'visible'
+  viewSubNav.style.visibility = 'visible'
+})
+
+viewSubNav.addEventListener('mouseout', () => {
+  editSubNav.style.visibility = 'hidden'
+  viewSubNav.style.visibility = 'hidden'
+})
+
+editSubNav.addEventListener('mouseout', () => {
+  editSubNav.style.visibility = 'hidden'
+  viewSubNav.style.visibility = 'hidden'
 })
