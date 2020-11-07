@@ -24,7 +24,8 @@ function createBeerObj(beer) {
     },
     body: JSON.stringify(newBeer)
   }
-  fetch('http://localhost:3000/beers', configObject)
+// fetch to sessions to get user, send user into fetch for create for beers
+  // fetch(`http://localhost:3000/users/${user.id}/beers`, configObject)
     .then(response => response.json())
     .then(jsonResponse => console.log(jsonResponse))
     .catch(error => {
@@ -132,7 +133,7 @@ function renderAll() {
   }
 }
 
-function fetchGenerateBeer() {  
+function fetchGenerateBeer(user) {  
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`, { 
       method: 'POST',
         headers: {
@@ -141,7 +142,7 @@ function fetchGenerateBeer() {
         }
       })
       .then(response => response.json())
-      .then(fetchedBeer => console.log(fetchedBeer))
+      .then(fetchedBeer => createBeerObj(fetchedBeer, user))
 }
 
 function setBeerRow(beer) {

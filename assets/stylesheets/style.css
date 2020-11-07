@@ -177,5 +177,21 @@
     background-color: red;
   }
 
+  #home-description-container {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    display: inline-table;
+  }
 
+  #welcome-message {
+    position: relative;
+  }
+
+  #call-to-action {
+    position: relative;
+    width: 350px;
+    height: 50px;
+    display: initial;
+  }
 }

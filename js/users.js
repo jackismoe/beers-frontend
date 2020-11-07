@@ -52,7 +52,7 @@ function loginUser() {
   logoutButton = document.querySelector('#logout-button')
 
   userButton.addEventListener('click', () => {
-// generate button
+    fetchGenerateBeer()
   })
   logoutButton.addEventListener('click', logoutUser)
 }
@@ -189,8 +189,11 @@ function userSignUpPortal() {
   signInButton.innerText = 'Already Registered? Sign In Here.'
 
   signInButton.addEventListener('click', () => {
-    profileContainer.remove()
-    userSignInPortal()
+    if (profileContainer.innerHTML = '' || '<form></form') {
+      userSignInPortal()
+    } else {
+      mainContainer.appendChild(profileContainer)
+    }
   })
     
   userSignUpForm.appendChild(nameInput)
@@ -200,7 +203,6 @@ function userSignUpPortal() {
   userSignUpForm.appendChild(passwordConfirm)
   userSignUpForm.appendChild(submit)
   userSignUpForm.appendChild(signInButton)
-
   
   submit.addEventListener('click', (e) => {
     e.preventDefault()
@@ -216,6 +218,7 @@ function userSignUpPortal() {
       showUser(newUser)
     }
   })
+
 }
 
 function userSignInPortal() { 
@@ -236,8 +239,13 @@ function userSignInPortal() {
   submit.innerText = 'Submit'
   signUpButton.innerText = "Not Registered Yet? Sign Up Here"
   signUpButton.addEventListener('click', () => {
-    profileContainer.remove()
-    userSignUpPortal()
+    userSignInForm.remove()
+// need to fix signup form loading twice
+    // if (profileContainer.innerHTML = '') {
+    //   profileContainer.appendChild(userSignUpForm)
+    // } else {
+      userSignUpPortal()
+    // }
   })
   
   submit.addEventListener('click', (e) => {
@@ -277,7 +285,6 @@ function userSignInPortal() {
   })
   userSignInForm.id = 'sign-in'
   if (profileContainer.innerHTML !== '') {
-    console.log('yes')
     userSignInForm.reset()
     userBeersTable.remove()
     mainContainer.appendChild(profileContainer)
@@ -311,13 +318,10 @@ function logoutUser() {
   location.reload()
 }
 
-function showHomePage() {
-  allBeersTable.remove()
-  userBeersTable.remove()
-  mainContainer.appendChild(sliderContainer)
+function createSlider() {
   let delayInSeconds = 3
   let counter = 0
-
+  
   function changeImage() {
     counter++
     if (counter <= 4) {
@@ -329,13 +333,19 @@ function showHomePage() {
   }
   changeImage()
   setInterval(changeImage, delayInSeconds * 1000);
+}
 
-  let homeDescriptionContainer = document.createElement('div')
-  let welcomeMessage = document.createElement('h2')
-  let welcomeParagraph = document.createElement('p')
-
-  homeDescriptionContainer.id = 'home-description-container'
-  welcomeMessage.id = 'welcome-message'
-  welcomeParagraph.id = 'welcome-paragraph'
+function showHomePage() {
+  allBeersTable.remove()
+  userBeersTable.remove()
+  createSlider()
+  
+  mainContainer.appendChild(homeDescriptionContainer)
+  mainContainer.appendChild(sliderContainer)
+  homeDescriptionContainer.appendChild(welcomeMessage)
+  homeDescriptionContainer.appendChild(welcomeParagraph)
+  if (sessionStorage.length !== 1) {
+    homeDescriptionContainer.appendChild(cta)
+  }
 }
 
