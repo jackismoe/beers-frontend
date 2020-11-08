@@ -37,12 +37,11 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  mainContainer.appendChild(profileContainer)
   loginUser()
   if (!document.querySelector('#beers-table')) {
     fetchUserBeers()
   } else {
-    profileContainer.appendChild(userBeersTable)
+    mainContainer.appendChild(userBeersTable)
   }
 }
 
@@ -91,7 +90,7 @@ function fetchUserBeers() {
         
         userBeersTable.id = 'beers-table'
 
-        idHeader.innerText = 'Beer ID'
+        // idHeader.innerText = 'Beer ID'
         brandHeader.innerText = 'Brand' 
         nameHeader.innerText = 'Name'
         styleHeader.innerText = 'Style' 

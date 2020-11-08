@@ -25,7 +25,7 @@ function createBeerTable() {
   let abvHeader = document.createElement('th')
   let blgHeader = document.createElement('th') 
   
-  idHeader.innerText = 'Beer ID'
+  // idHeader.innerText = 'Beer ID'
   brandHeader.innerText = 'Brand' 
   nameHeader.innerText = 'Name'
   styleHeader.innerText = 'Style' 

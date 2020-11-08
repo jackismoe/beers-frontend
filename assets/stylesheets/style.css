@@ -110,7 +110,7 @@
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black*/
+    background-color: black;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -267,5 +267,26 @@
 
   #view:hover, #edit:hover {
     cursor: pointer;
+  }
+
+  #page-header-container {
+    /* position: absolute;
+    top: 0;
+    left: 8;
+    margin: 20px; */
+
+    position: absolute;
+    top: 64;
+    left: 0;
+  }
+  
+  h2#page-header {
+    width: 250px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    opacity: .9;
+    border-bottom-right-radius: 25px;
+    transition: .5s;
   }
 }

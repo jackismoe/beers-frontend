@@ -11,7 +11,7 @@ let userButtonContainer = document.querySelector('#user-button-container')
 let logoutButtonContainer = document.querySelector('#logout-button-container')
 let ctaLink = document.querySelector('#cta-link')
 let mainContainer = document.querySelector('.main')
-
+let pageHeader = document.querySelector('#page-header')
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
 let editUserForm = document.createElement('form')
@@ -54,17 +54,19 @@ cta.addEventListener('click', () => {
 })
 
 function closeNav() {
+  pageHeader.style.left = '0'
   document.getElementById("mySideNav").style.width = "0";
 }
 
 function openNav() {
   document.getElementById("mySideNav").style.width = "250px";
+  pageHeader.style.left = '250'
 }
 
 document.addEventListener('click', (e) => {
   if (e.target === menuIcons) {
     openNav()
-  } else if (e.target === closeBtn || e.target === body) {
+  } else if (e.target === closeBtn) {
     closeNav()
   }
 })
