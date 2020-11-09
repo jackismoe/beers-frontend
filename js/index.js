@@ -1,4 +1,5 @@
 let menuIcons = document.querySelector('.menu-icons')
+let sideNav = document.querySelector('.sidenav')
 let body = document.querySelector('body')
 let closeBtn = document.querySelector('.closeBtn')
 let main = document.querySelector('.main')
@@ -31,6 +32,7 @@ let viewSubNav = document.querySelector('#view')
 let editSubNav = document.querySelector('#edit')
 let userButton
 let logoutButton
+let currentUserName
 
 welcomeMessage.id = 'welcome-message'
 welcomeParagraph.id = 'welcome-paragraph'
@@ -78,6 +80,8 @@ browseButton.addEventListener('click', () => {
 })
 
 homeLink.addEventListener('click', () => {
+  editUserContainer.remove()
+  pageHeader.innerText = 'Home'
   if (homeDescriptionContainer.innerHTML = '') {
     showHomePage()
   } else {
@@ -127,7 +131,13 @@ profileLink.addEventListener('click', () => {
 
 editSubNav.addEventListener('click', () => {
   closeNav()
-  editUser()
+  allBeersTable.remove()
+  profileContainer.remove()
+  if (document.querySelector('form')) {
+    mainContainer.appendChild(editUserContainer)
+  } else {
+    editUser()
+  }
 })
 
 loginLink.addEventListener('click', () => {
@@ -159,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('You are logged in.')
       loginUser()
       showHomePage()
+      currentUserName = jsonResponse.name
     })
   } else {
     showHomePage()

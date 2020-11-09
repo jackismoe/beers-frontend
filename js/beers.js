@@ -56,6 +56,7 @@ function createBeerTable() {
 function renderAll() {
   profileContainer.remove()  
   sliderContainer.remove()
+  pageHeader.innerText = 'All Beers'
   if (allBeersTable.innerHTML == '') {
     createBeerTable()
     // beers

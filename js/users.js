@@ -37,6 +37,8 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
+  pageHeader.innerText = currentUserName
+
   loginUser()
   if (!document.querySelector('#beers-table')) {
     fetchUserBeers()
@@ -235,6 +237,8 @@ function userSignUpPortal() {
 }
 
 function userSignInPortal() { 
+  pageHeader.innerText = 'Login'
+
   sliderContainer.remove()
   let emailInput = document.createElement('input')
   let passwordInput = document.createElement('input')
@@ -252,13 +256,14 @@ function userSignInPortal() {
   submit.innerText = 'Submit'
   signUpButton.innerText = "Not Registered Yet? Sign Up Here"
   signUpButton.addEventListener('click', () => {
+    pageHeader.innerText = 'Sign Up'
     userSignInForm.remove()
 // need to fix signup form loading twice
-    // if (profileContainer.innerHTML = '') {
-    //   profileContainer.appendChild(userSignUpForm)
-    // } else {
-      userSignUpPortal()
-    // }
+  if (document.querySelector('form')) {
+    profileContainer.appendChild(userSignUpForm)
+  } else {
+    userSignUpPortal()
+  }
   })
   
   submit.addEventListener('click', (e) => {
@@ -287,6 +292,8 @@ function userSignInPortal() {
           sessionStorage.setItem('user_id', jsonResponse.id)
           userSignInForm.reset()
           showUser(jsonResponse)
+          currentUserName = jsonResponse.name
+          pageHeader.innerText = currentUserName
         })
         .catch(error => {
           console.log(error.message)
@@ -351,6 +358,7 @@ function createSlider() {
 function showHomePage() {
   allBeersTable.remove()
   userBeersTable.remove()
+  pageHeader.innerText = 'Home'
   createSlider()
   
   mainContainer.appendChild(homeDescriptionContainer)
@@ -365,8 +373,11 @@ function showHomePage() {
 function editUser() {
   profileContainer.remove()
   homeDescriptionContainer.remove()
+  userBeersTable.remove()
+  allBeersTable.remove()
   sliderContainer.remove()
 
+  pageHeader.innerText = `Edit ${currentUserName}'s Profile`
   mainContainer.appendChild(editUserContainer)
   
   let editNameInput = document.createElement('input')
@@ -375,6 +386,18 @@ function editUser() {
   let editPasswordInput = document.createElement('input')
   let editPasswordConfirm = document.createElement('input')
   let editSubmit = document.createElement('button')
+
+  let editNameLabel = document.createElement('label')
+  let editEmailLabel = document.createElement('label')
+  let editPhoneLabel = document.createElement('label')
+  let editPasswordLabel = document.createElement('label')
+  let editPasswordConfirmLabel = document.createElement('label')
+
+  editNameLabel.innerText = 'Name:'
+  editEmailLabel.innerText = 'Email:'
+  editPhoneLabel.innerText = 'Phone Number:'
+  editPasswordLabel.innerText = 'Password:'
+  editPasswordConfirmLabel.innerText = 'Confirm Password:'
   
   editNameInput.id = 'name'
   editEmailInput.id = 'email'
@@ -387,10 +410,15 @@ function editUser() {
   editPasswordConfirm.placeholder = 'Confirm Password'
   editSubmit.innerText = 'Submit Changes'
   
+  editUserForm.appendChild(editNameLabel)
   editUserForm.appendChild(editNameInput)
+  editUserForm.appendChild(editEmailLabel)
   editUserForm.appendChild(editEmailInput)
+  editUserForm.appendChild(editPhoneLabel)
   editUserForm.appendChild(editPhoneInput)
+  editUserForm.appendChild(editPasswordLabel)
   editUserForm.appendChild(editPasswordInput)
+  editUserForm.appendChild(editPasswordConfirmLabel)
   editUserForm.appendChild(editPasswordConfirm)
   editUserForm.appendChild(editSubmit)
   editUserContainer.appendChild(editUserForm)
@@ -414,4 +442,9 @@ function editUser() {
         editPhoneInput.placeholder = 'Phone'
       }
     })
+
+  editSubmit.addEventListener('click', (e) => {
+    e.preventDefault()
+    
+  })
 }
