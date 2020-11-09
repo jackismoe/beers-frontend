@@ -33,6 +33,7 @@ let editSubNav = document.querySelector('#edit')
 let editNameInput = document.createElement('input')
 let editEmailInput = document.createElement('input')
 let editPhoneInput = document.createElement('input')
+
 let userButton
 let logoutButton
 let currentUser

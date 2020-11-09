@@ -40,6 +40,7 @@ function showUser(user) {
   pageHeader.innerText = currentUser.name
 
   loginUser()
+// fix beers table double render
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
     console.log('yes')
@@ -123,8 +124,22 @@ function fetchUserBeers() {
         mainContainer.appendChild(userBeersTable)
         for (let x of jsonResponse) {
           let newRow = document.createElement('tr')
+          newRow.addEventListener('mouseover', () => {
+            newRow.style.color = 'white'
+            newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+            newRow.style.cursor = 'pointer'
+          })
+
+          newRow.addEventListener('mouseout', () => {
+            newRow.style.color = 'black'
+            newRow.style.cursor = 'default'
+            newRow.style.backgroundColor = 'white'
+          })
+
+          newRow.addEventListener('click', () => {
+            //show beer
+          })
           userBeersTable.appendChild(newRow)
-          
           let idCell = document.createElement('td')
           let brandCell = document.createElement('td')
           let nameCell = document.createElement('td')

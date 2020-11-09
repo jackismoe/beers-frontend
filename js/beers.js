@@ -65,6 +65,21 @@ function renderAll() {
     .then(jsonResponse => {
       for (let x of jsonResponse) {
         let newRow = document.createElement('tr')
+        newRow.addEventListener('mouseover', () => {
+            newRow.style.color = 'white'
+            newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+            newRow.style.cursor = 'pointer'
+          })
+
+        newRow.addEventListener('mouseout', () => {
+          newRow.style.color = 'black'
+          newRow.style.cursor = 'default'
+          newRow.style.backgroundColor = 'white'
+        })
+
+        newRow.addEventListener('click', () => {
+          //show beer
+        })
         allBeersTable.appendChild(newRow)
         let idCell = document.createElement('td')
         let brandCell = document.createElement('td')
