@@ -81,6 +81,7 @@ document.addEventListener('click', (e) => {
 
 browseButton.addEventListener('click', () => {
   homeDescriptionContainer.remove()
+  showBeerContainer.remove()
   closeNav()
   renderAll()         
 })
@@ -88,6 +89,8 @@ browseButton.addEventListener('click', () => {
 homeLink.addEventListener('click', () => {
   editUserContainer.remove()
   pageHeader.innerText = 'Home'
+  showBeerContainer.remove()
+
   if (homeDescriptionContainer.innerHTML = '') {
     showHomePage()
   } else {
@@ -141,6 +144,7 @@ editSubNav.addEventListener('click', () => {
   allBeersTable.remove()
   userBeersTable.remove()
   profileContainer.remove()
+  showBeerContainer.remove()
   if (document.querySelector('form')) {      
     editNameInput.placeholder = currentUser.name
     editEmailInput.placeholder = currentUser.email

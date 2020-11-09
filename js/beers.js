@@ -202,8 +202,7 @@ function showBeer(beer) {
   homeDescriptionContainer.remove()
   profileContainer.remove()
   sliderContainer.remove()
-
-  console.log(beer)
+  
   let beerBrand
   let beerName 
   let beerStyle
@@ -213,7 +212,7 @@ function showBeer(beer) {
   let beerIbu 
   let beerAbv 
   let beerBlg
-
+  
   if (beer.id == undefined) {
     let beerArray = []
     for (let x of beer) {
@@ -229,7 +228,7 @@ function showBeer(beer) {
     beerAbv = beerArray[8]
     beerBlg = beerArray[9]
   } else {
-    beerBrand = beer.id
+    beerBrand = beer.brand
     beerName = beer.name
     beerStyle = beer.style
     beerHop = beer.hop
@@ -239,8 +238,9 @@ function showBeer(beer) {
     beerAbv = beer.alcohol
     beerBlg = beer.blg
   }
-
-  let beerBrandH2 = document.createElement('h2')
+  
+  pageHeader.innerText = `${beerBrand} ${beerName}`
+  let beerBrandH3 = document.createElement('h3')
   let beerNameH3 = document.createElement('h3')
   let beerStyleH4 = document.createElement('h4')
   let beerHopP = document.createElement('p')
@@ -250,7 +250,7 @@ function showBeer(beer) {
   let beerAbvP = document.createElement('p')
   let beerBlgP = document.createElement('p')
 
-  beerBrandH2.innerText = beerBrand
+  beerBrandH3.innerText = beerBrand
   beerNameH3.innerText = beerName
   beerStyleH4.innerText = beerStyle
   beerHopP.innerText = `Hop: ${beerHop}`
@@ -265,7 +265,7 @@ function showBeer(beer) {
 
   mainContainer.appendChild(showBeerContainer)
   showBeerContainer.appendChild(beerImageContainer)
-  showBeerContainer.appendChild(beerBrandH2)
+  showBeerContainer.appendChild(beerBrandH3)
   showBeerContainer.appendChild(beerNameH3)
   showBeerContainer.appendChild(beerStyleH4)
   showBeerContainer.appendChild(beerHopP)
