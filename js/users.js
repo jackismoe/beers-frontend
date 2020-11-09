@@ -136,8 +136,9 @@ function fetchUserBeers() {
             newRow.style.backgroundColor = 'white'
           })
 
-          newRow.addEventListener('click', () => {
-            //show beer
+          newRow.addEventListener('click', (e) => {
+            row = e.target.parentElement.childNodes
+            showBeer(row)
           })
           userBeersTable.appendChild(newRow)
           let idCell = document.createElement('td')

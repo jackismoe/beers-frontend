@@ -77,8 +77,9 @@ function renderAll() {
           newRow.style.backgroundColor = 'white'
         })
 
-        newRow.addEventListener('click', () => {
-          //show beer
+        newRow.addEventListener('click', (e) => {
+          row = e.target.parentElement.childNodes
+          showBeer(row)
         })
         allBeersTable.appendChild(newRow)
         let idCell = document.createElement('td')
@@ -142,7 +143,7 @@ function fetchGenerateBeer() {
       .then(response => response.json())
       .then(fetchedBeer => {
 // show just the recently created beer
-        console.log(fetchedBeer)
+        showBeer(fetchedBeer)
       })
 }
 
@@ -192,4 +193,85 @@ function setBeerRow(beer) {
       newRow.appendChild(ibuCell)
       newRow.appendChild(abvCell) 
       newRow.appendChild(blgCell)
+}
+
+function showBeer(beer) {
+  // generate random beer image
+  allBeersTable.remove()
+  userBeersTable.remove()
+  homeDescriptionContainer.remove()
+  profileContainer.remove()
+  sliderContainer.remove()
+
+  console.log(beer)
+  let beerBrand
+  let beerName 
+  let beerStyle
+  let beerHop 
+  let beerYeast
+  let beerMalts
+  let beerIbu 
+  let beerAbv 
+  let beerBlg
+
+  if (beer.id == undefined) {
+    let beerArray = []
+    for (let x of beer) {
+      beerArray.push(x.innerText)
+    }
+    beerBrand = beerArray[1]
+    beerName = beerArray[2]
+    beerStyle = beerArray[3]
+    beerHop = beerArray[4]
+    beerYeast = beerArray[5]
+    beerMalts = beerArray[6]
+    beerIbu = beerArray[7]
+    beerAbv = beerArray[8]
+    beerBlg = beerArray[9]
+  } else {
+    beerBrand = beer.id
+    beerName = beer.name
+    beerStyle = beer.style
+    beerHop = beer.hop
+    beerYeast = beer.yeast
+    beerMalts = beer.malts
+    beerIbu = beer.ibu
+    beerAbv = beer.alcohol
+    beerBlg = beer.blg
+  }
+
+  let beerBrandH2 = document.createElement('h2')
+  let beerNameH3 = document.createElement('h3')
+  let beerStyleH4 = document.createElement('h4')
+  let beerHopP = document.createElement('p')
+  let beerYeastP = document.createElement('p')
+  let beerMaltsP = document.createElement('p')
+  let beerIbuP = document.createElement('p')
+  let beerAbvP = document.createElement('p')
+  let beerBlgP = document.createElement('p')
+
+  beerBrandH2.innerText = beerBrand
+  beerNameH3.innerText = beerName
+  beerStyleH4.innerText = beerStyle
+  beerHopP.innerText = `Hop: ${beerHop}`
+  beerYeastP.innerText = `Yeast: ${beerYeast}`
+  beerMaltsP.innerText = `Malts: ${beerMalts}`
+  beerIbuP.innerText = `IBU: ${beerIbu}`
+  beerAbvP.innerText = `ABV%: ${beerAbv}`
+  beerBlgP.innerText = `BLG: ${beerBlg}`
+
+  let beerImageContainer = document.createElement('img')
+  beerImageContainer.innerHTML = `<img src="./assets/images/beers/beer1.jpg" width='auto'></img>`
+
+  mainContainer.appendChild(showBeerContainer)
+  showBeerContainer.appendChild(beerImageContainer)
+  showBeerContainer.appendChild(beerBrandH2)
+  showBeerContainer.appendChild(beerNameH3)
+  showBeerContainer.appendChild(beerStyleH4)
+  showBeerContainer.appendChild(beerHopP)
+  showBeerContainer.appendChild(beerYeastP)
+  showBeerContainer.appendChild(beerMaltsP)
+  showBeerContainer.appendChild(beerIbuP)
+  showBeerContainer.appendChild(beerAbvP)
+  showBeerContainer.appendChild(beerBlgP)
 }

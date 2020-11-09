@@ -33,6 +33,7 @@ let editSubNav = document.querySelector('#edit')
 let editNameInput = document.createElement('input')
 let editEmailInput = document.createElement('input')
 let editPhoneInput = document.createElement('input')
+let showBeerContainer = document.createElement('div')
 
 let userButton
 let logoutButton
@@ -44,6 +45,7 @@ cta.id = 'call-to-action'
 sliderContainer.id = 'image-slider'  
 profileContainer.id = 'profile-container'
 homeDescriptionContainer.id = 'home-description-container'
+showBeerContainer.id = 'show-beer-container'
 
 signInBtn.class = 'button'
 signUpBtn.class = 'button'
