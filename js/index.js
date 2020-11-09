@@ -30,9 +30,12 @@ let profileContainer = document.createElement('div')
 let sliderContainer = document.createElement('div')
 let viewSubNav = document.querySelector('#view')
 let editSubNav = document.querySelector('#edit')
+let editNameInput = document.createElement('input')
+let editEmailInput = document.createElement('input')
+let editPhoneInput = document.createElement('input')
 let userButton
 let logoutButton
-let currentUserName
+let currentUser
 
 welcomeMessage.id = 'welcome-message'
 welcomeParagraph.id = 'welcome-paragraph'
@@ -131,9 +134,18 @@ profileLink.addEventListener('click', () => {
 
 editSubNav.addEventListener('click', () => {
   closeNav()
+  editUserForm.reset()
   allBeersTable.remove()
+  userBeersTable.remove()
   profileContainer.remove()
-  if (document.querySelector('form')) {
+  if (document.querySelector('form')) {      
+    editNameInput.placeholder = currentUser.name
+    editEmailInput.placeholder = currentUser.email
+    if (user.phone) {
+      editPhoneInput.placeholder = currentUser.phone
+    } else {
+      editPhoneInput.placeholder = 'Phone'
+    }
     mainContainer.appendChild(editUserContainer)
   } else {
     editUser()
@@ -169,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('You are logged in.')
       loginUser()
       showHomePage()
-      currentUserName = jsonResponse.name
+      currentUser = jsonResponse
     })
   } else {
     showHomePage()

@@ -37,13 +37,15 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  pageHeader.innerText = currentUserName
+  pageHeader.innerText = currentUser.name
 
   loginUser()
-  if (!document.querySelector('#beers-table')) {
-    fetchUserBeers()
-  } else {
+  if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
+    console.log('yes')
+  } else {
+    fetchUserBeers()
+    console.log('no')
   }
 }
 
@@ -292,8 +294,8 @@ function userSignInPortal() {
           sessionStorage.setItem('user_id', jsonResponse.id)
           userSignInForm.reset()
           showUser(jsonResponse)
-          currentUserName = jsonResponse.name
-          pageHeader.innerText = currentUserName
+          currentUser = jsonResponse
+          pageHeader.innerText = currentUser.name
         })
         .catch(error => {
           console.log(error.message)
@@ -373,16 +375,15 @@ function showHomePage() {
 function editUser() {
   profileContainer.remove()
   homeDescriptionContainer.remove()
-  userBeersTable.remove()
   allBeersTable.remove()
   sliderContainer.remove()
 
-  pageHeader.innerText = `Edit ${currentUserName}'s Profile`
+  pageHeader.innerText = `Edit ${currentUser.name}'s Profile`
   mainContainer.appendChild(editUserContainer)
   
-  let editNameInput = document.createElement('input')
-  let editEmailInput = document.createElement('input')
-  let editPhoneInput = document.createElement('input')
+  editNameInput = document.createElement('input')
+  editEmailInput = document.createElement('input')
+  editPhoneInput = document.createElement('input')
   let editPasswordInput = document.createElement('input')
   let editPasswordConfirm = document.createElement('input')
   let editSubmit = document.createElement('button')
@@ -434,17 +435,38 @@ function editUser() {
     })
     .then(response => response.json())
     .then(user => {
-      editNameInput.placeholder = user.name
-      editEmailInput.placeholder = user.email
+      editNameInput.placeholder = currentUser.name
+      editEmailInput.placeholder = currentUser.email
       if (user.phone) {
-        editPhoneInput.placeholder = user.phone
+        editPhoneInput.placeholder = currentUser.phone
       } else {
         editPhoneInput.placeholder = 'Phone'
       }
-    })
 
-  editSubmit.addEventListener('click', (e) => {
-    e.preventDefault()
-    
-  })
+      editSubmit.addEventListener('click', (e) => {
+        e.preventDefault()
+        if (editPasswordInput.value !== editPasswordConfirm.value) {
+          alert(`Sorry ${user.name}, your passwords do not match. Please try again.`)
+        } else {
+          fetch(`http://localhost:3000/users/${user.id}`, {
+            method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                name: editNameInput.value,
+                email: editEmailInput.value,
+                phone: editPhoneInput.value,
+                password_digest: editPasswordInput.value,
+              })
+          })
+            .then(response => response.json())
+            .then(jsonResponse => {
+              currentUser = jsonResponse
+              showUser(jsonResponse)
+            })
+        }
+      })
+    })
 }
