@@ -34,6 +34,8 @@ let editNameInput = document.createElement('input')
 let editEmailInput = document.createElement('input')
 let editPhoneInput = document.createElement('input')
 let showBeerContainer = document.createElement('div')
+let addRemoveButton = document.createElement('button')
+
 
 let userButton
 let logoutButton

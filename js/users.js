@@ -32,11 +32,10 @@ function createUserObj(user) {
 }
 
 function showUser(user) {
-  console.log(user)
-
   userSignInForm.remove()
   userSignUpForm.remove()
 
+  pageHeader.innerText = currentUser.name
   loginUser()
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
@@ -79,7 +78,6 @@ function fetchUserBeers() {
         profileContainer.appendChild(welcome)
       } else {
         welcome.remove()
-        let idHeader = document.createElement('th')
         let brandHeader = document.createElement('th')
         let nameHeader = document.createElement('th')
         let styleHeader = document.createElement('th')
@@ -92,7 +90,6 @@ function fetchUserBeers() {
         
         userBeersTable.id = 'beers-table'
 
-        // idHeader.innerText = 'Beer ID'
         brandHeader.innerText = 'Brand' 
         nameHeader.innerText = 'Name'
         styleHeader.innerText = 'Style' 
@@ -103,11 +100,9 @@ function fetchUserBeers() {
         abvHeader.innerText = 'ABV%' 
         blgHeader.innerText = 'BLG°'
 
-        idHeader.id = 'id-header'
         blgHeader.id = 'blg-header'
 
 
-        userBeersTable.appendChild(idHeader)
         userBeersTable.appendChild(brandHeader)
         userBeersTable.appendChild(nameHeader)
         userBeersTable.appendChild(styleHeader)
@@ -138,7 +133,6 @@ function fetchUserBeers() {
             showBeer(row)
           })
           userBeersTable.appendChild(newRow)
-          let idCell = document.createElement('td')
           let brandCell = document.createElement('td')
           let nameCell = document.createElement('td')
           let styleCell = document.createElement('td')
@@ -149,7 +143,6 @@ function fetchUserBeers() {
           let abvCell = document.createElement('td')
           let blgCell = document.createElement('td')
           
-          idCell.className = 'beer-id'
           brandCell.className = 'beer-brand'
           nameCell.className = 'beer-name'
           styleCell.className = 'beer-style'
@@ -160,7 +153,6 @@ function fetchUserBeers() {
           abvCell.className = 'beer-abv'
           blgCell.className = 'beer-blg'
           
-          idCell.innerText = x.id
           brandCell.innerText = x.brand
           nameCell.innerText = x.name
           styleCell.innerText = x.style
@@ -171,7 +163,6 @@ function fetchUserBeers() {
           abvCell.innerText = x.alcohol
           blgCell.innerText = x.blg
           
-          newRow.appendChild(idCell)
           newRow.appendChild(brandCell) 
           newRow.appendChild(nameCell) 
           newRow.appendChild(styleCell) 

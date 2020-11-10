@@ -14,7 +14,6 @@ class Beer {
 }
 
 function createBeerTable() {
-  let idHeader = document.createElement('th')
   let brandHeader = document.createElement('th')
   let nameHeader = document.createElement('th')
   let styleHeader = document.createElement('th')
@@ -36,10 +35,8 @@ function createBeerTable() {
   abvHeader.innerText = 'ABV%' 
   blgHeader.innerText = 'BLG°'
 
-  idHeader.id = 'id-header'
   blgHeader.id = 'blg-header'
   
-  allBeersTable.appendChild(idHeader)
   allBeersTable.appendChild(brandHeader)
   allBeersTable.appendChild(nameHeader)
   allBeersTable.appendChild(styleHeader)
@@ -82,7 +79,6 @@ function renderAll() {
           showBeer(row)
         })
         allBeersTable.appendChild(newRow)
-        let idCell = document.createElement('td')
         let brandCell = document.createElement('td')
         let nameCell = document.createElement('td')
         let styleCell = document.createElement('td')
@@ -93,7 +89,6 @@ function renderAll() {
         let abvCell = document.createElement('td')
         let blgCell = document.createElement('td')
         
-        idCell.className = 'beer-id'
         brandCell.className = 'beer-brand'
         nameCell.className = 'beer-name'
         styleCell.className = 'beer-style'
@@ -104,7 +99,6 @@ function renderAll() {
         abvCell.className = 'beer-abv'
         blgCell.className = 'beer-blg'
         
-        idCell.innerText = x.id
         brandCell.innerText = x.brand
         nameCell.innerText = x.name
         styleCell.innerText = x.style
@@ -115,7 +109,6 @@ function renderAll() {
         abvCell.innerText = x.alcohol
         blgCell.innerText = x.blg
         
-        newRow.appendChild(idCell)
         newRow.appendChild(brandCell) 
         newRow.appendChild(nameCell) 
         newRow.appendChild(styleCell) 
@@ -149,7 +142,6 @@ function fetchGenerateBeer() {
 
 function setBeerRow(beer) {
       let newRow = document.createElement('tr')
-      let idCell = document.createElement('td')
       let brandCell = document.createElement('td')
       let nameCell = document.createElement('td')
       let styleCell = document.createElement('td')
@@ -160,7 +152,6 @@ function setBeerRow(beer) {
       let abvCell = document.createElement('td')
       let blgCell = document.createElement('td')
       
-      idCell.className = 'beer-id'
       brandCell.className = 'beer-brand'
       nameCell.className = 'beer-name'
       styleCell.className = 'beer-style'
@@ -171,7 +162,6 @@ function setBeerRow(beer) {
       abvCell.className = 'beer-abv'
       blgCell.className = 'beer-blg'
       
-      idCell.innerText = beer.id
       brandCell.innerText = beer.brand
       nameCell.innerText = beer.name
       styleCell.innerText = beer.style
@@ -183,7 +173,6 @@ function setBeerRow(beer) {
       blgCell.innerText = beer.blg
       
       allBeersTable.appendChild(newRow)
-      newRow.appendChild(idCell)
       newRow.appendChild(brandCell) 
       newRow.appendChild(nameCell) 
       newRow.appendChild(styleCell) 
@@ -322,8 +311,6 @@ function showBeer(beer) {
 
   beerImageContainer.innerHTML = `<img src='./assets/images/beers/beer${number}.jpg'></img>`
 
-  let addRemoveButton = document.createElement('button')
-
   addRemoveButton.id = 'action-button'
 
   fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
@@ -332,14 +319,44 @@ function showBeer(beer) {
       for (let x of jsonResponse) {
         if (!!(x.id == beer.id) == true) {
           addRemoveButton.innerText = 'Remove Beer From Your List'
-          // addRemoveButton.addEventListener('click', () => {
-          //   fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers/beer.id`)
-          })
         } else {
           addRemoveButton.innerText = 'Add Beer To Your List'
         }
       }
+      if (addRemoveButton.innerText == 'Remove Beer From Your List') {
+          addRemoveButton.addEventListener('click', () => {
+            fetch(`http://localhost:3000/beers_users/${beer.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      beer: beerName,
+                      session: sessionStorage.user_id
+                  })
+            })
+          })
+        } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
+          addRemoveButton.addEventListener('click', () => {
+            fetch(`http://localhost:3000/beers_users`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                beer: beerName,
+                session: sessionStorage
+              })
+            })
+            .then(response => response.json())
+            .then(jsonResponse => showUser(jsonResponse))
+          })
+        }
     })
+
+
   mainContainer.appendChild(showBeerContainer)
   showBeerContainer.appendChild(showBeerTable)
   showBeerContainer.appendChild(beerImageContainer)
