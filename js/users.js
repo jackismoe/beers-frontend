@@ -35,7 +35,7 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  pageHeader.innerText = currentUser.name
+  pageHeader.innerText = `${currentUser.name}'s Beer Log`
   loginUser()
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
