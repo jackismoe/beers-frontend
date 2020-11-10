@@ -37,10 +37,7 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  pageHeader.innerText = currentUser.name
-
   loginUser()
-// fix beers table double render
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
     console.log('yes')
@@ -307,6 +304,7 @@ function userSignInPortal() {
       fetch('http://localhost:3000/', configObject)
         .then(response => response.json())
         .then(jsonResponse => {
+          // console.log(jsonResponse)
           sessionStorage.setItem('user_id', jsonResponse.id)
           userSignInForm.reset()
           showUser(jsonResponse)
@@ -347,7 +345,6 @@ function logoutUser() {
   userButton.remove()
   allBeersTable.remove()
 
-  fetchedBeers = 0
   loginLink.style.visibility = 'visible'
   profileLink.style.visibility = 'hidden'
   homeLink.style.visibility = 'hidden'

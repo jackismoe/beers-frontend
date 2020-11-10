@@ -222,23 +222,6 @@
     height: 28px;
   }
 
-  #id-header {
-    border-top-left-radius: 25px;
-  }
-
-  #blg-header {
-    border-top-right-radius: 25px;
-  }
-
-  .beer-blg {
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-  }
-
-  .beer-id {
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-  }
 
   table, td {
     border: 1px solid black;
@@ -256,7 +239,6 @@
     height: 100%;  
     background-color: white;
     margin-bottom: 100px;
-    border-radius: 25px;
   }
 
   #subnav {
@@ -293,5 +275,20 @@
     top: 40;
     display: inline-block;
     text-align: right;
+  }
+
+  #show-beer-container > table {
+   position: relative;
+  }
+  #show-beer-container {
+    display: flex;
+    position: absolute;
+    padding: 100px;  
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #beer-img {
+    height: 35%;
   }
 }
