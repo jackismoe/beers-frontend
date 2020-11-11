@@ -120,6 +120,7 @@ function renderAll() {
       }
     })
   } else {
+    allBeersTable.remove()
     mainContainer.appendChild(allBeersTable)
   }
 }
@@ -178,7 +179,7 @@ function fetchGenerateBeer() {
         newRow.appendChild(blgCell)        
 
         allBeersTable.appendChild(newRow)
-        userBeersTable.appendChild(newRow)
+        // userBeersTable.appendChild(newRow)
         showBeer(fetchedBeer)
       })
 }

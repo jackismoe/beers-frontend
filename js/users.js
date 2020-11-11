@@ -78,42 +78,7 @@ function fetchUserBeers() {
         profileContainer.appendChild(welcome)
       } else {
         welcome.remove()
-        let brandHeader = document.createElement('th')
-        let nameHeader = document.createElement('th')
-        let styleHeader = document.createElement('th')
-        let hopHeader = document.createElement('th')
-        let yeastHeader = document.createElement('th')
-        let maltsHeader = document.createElement('th')
-        let ibuHeader = document.createElement('th')
-        let abvHeader = document.createElement('th')
-        let blgHeader = document.createElement('th')
-        
-        userBeersTable.id = 'beers-table'
-
-        brandHeader.innerText = 'Brand' 
-        nameHeader.innerText = 'Name'
-        styleHeader.innerText = 'Style' 
-        hopHeader.innerText = 'Hop' 
-        yeastHeader.innerText = 'Yeast' 
-        maltsHeader.innerText = 'Malts' 
-        ibuHeader.innerText = 'IBU' 
-        abvHeader.innerText = 'ABV%' 
-        blgHeader.innerText = 'BLG°'
-
-        blgHeader.id = 'blg-header'
-
-        userBeersTable.appendChild(brandHeader)
-        userBeersTable.appendChild(nameHeader)
-        userBeersTable.appendChild(styleHeader)
-        userBeersTable.appendChild(hopHeader)
-        userBeersTable.appendChild(yeastHeader)
-        userBeersTable.appendChild(maltsHeader)
-        userBeersTable.appendChild(ibuHeader)
-        userBeersTable.appendChild(abvHeader)
-        userBeersTable.appendChild(blgHeader)
-
-        mainContainer.appendChild(userBeersTable)
-        for (let x of jsonResponse) {
+        if ((userBeersTable.rows.length > 0) && (counter < 1)) {
           let newRow = document.createElement('tr')
           newRow.addEventListener('mouseover', () => {
             newRow.style.color = 'white'
@@ -131,7 +96,7 @@ function fetchUserBeers() {
             row = e.target.parentElement.childNodes
             showBeer(row)
           })
-          userBeersTable.appendChild(newRow)
+
           let brandCell = document.createElement('td')
           let nameCell = document.createElement('td')
           let styleCell = document.createElement('td')
@@ -152,15 +117,15 @@ function fetchUserBeers() {
           abvCell.className = 'beer-abv'
           blgCell.className = 'beer-blg'
           
-          brandCell.innerText = x.brand
-          nameCell.innerText = x.name
-          styleCell.innerText = x.style
-          hopCell.innerText = x.hop
-          yeastCell.innerText = x.yeast
-          maltsCell.innerText = x.malts
-          ibuCell.innerText = x.ibu
-          abvCell.innerText = x.alcohol
-          blgCell.innerText = x.blg
+          brandCell.innerText = jsonResponse[jsonResponse.length-1].brand
+          nameCell.innerText = jsonResponse[jsonResponse.length-1].name
+          styleCell.innerText = jsonResponse[jsonResponse.length-1].style
+          hopCell.innerText = jsonResponse[jsonResponse.length-1].hop
+          yeastCell.innerText = jsonResponse[jsonResponse.length-1].yeast
+          maltsCell.innerText = jsonResponse[jsonResponse.length-1].malts
+          ibuCell.innerText = jsonResponse[jsonResponse.length-1].ibu
+          abvCell.innerText = jsonResponse[jsonResponse.length-1].alcohol
+          blgCell.innerText = jsonResponse[jsonResponse.length-1].blg
           
           newRow.appendChild(brandCell) 
           newRow.appendChild(nameCell) 
@@ -171,6 +136,108 @@ function fetchUserBeers() {
           newRow.appendChild(ibuCell)
           newRow.appendChild(abvCell) 
           newRow.appendChild(blgCell)
+
+          userBeersTable.appendChild(newRow)
+          showBeerContainer.remove()
+          mainContainer.appendChild(userBeersTable)
+          counter++
+        } else if (userBeersTable.rows.length <= 0){
+          let brandHeader = document.createElement('th')
+          let nameHeader = document.createElement('th')
+          let styleHeader = document.createElement('th')
+          let hopHeader = document.createElement('th')
+          let yeastHeader = document.createElement('th')
+          let maltsHeader = document.createElement('th')
+          let ibuHeader = document.createElement('th')
+          let abvHeader = document.createElement('th')
+          let blgHeader = document.createElement('th')
+          
+          userBeersTable.id = 'beers-table'
+
+          brandHeader.innerText = 'Brand' 
+          nameHeader.innerText = 'Name'
+          styleHeader.innerText = 'Style' 
+          hopHeader.innerText = 'Hop' 
+          yeastHeader.innerText = 'Yeast' 
+          maltsHeader.innerText = 'Malts' 
+          ibuHeader.innerText = 'IBU' 
+          abvHeader.innerText = 'ABV%' 
+          blgHeader.innerText = 'BLG°'
+
+          blgHeader.id = 'blg-header'
+
+          userBeersTable.appendChild(brandHeader)
+          userBeersTable.appendChild(nameHeader)
+          userBeersTable.appendChild(styleHeader)
+          userBeersTable.appendChild(hopHeader)
+          userBeersTable.appendChild(yeastHeader)
+          userBeersTable.appendChild(maltsHeader)
+          userBeersTable.appendChild(ibuHeader)
+          userBeersTable.appendChild(abvHeader)
+          userBeersTable.appendChild(blgHeader)
+
+          mainContainer.appendChild(userBeersTable)
+          for (let x of jsonResponse) {
+            let newRow = document.createElement('tr')
+            newRow.addEventListener('mouseover', () => {
+              newRow.style.color = 'white'
+              newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+              newRow.style.cursor = 'pointer'
+            })
+
+            newRow.addEventListener('mouseout', () => {
+              newRow.style.color = 'black'
+              newRow.style.cursor = 'default'
+              newRow.style.backgroundColor = 'white'
+            })
+
+            newRow.addEventListener('click', (e) => {
+              row = e.target.parentElement.childNodes
+              showBeer(row)
+            })
+            userBeersTable.appendChild(newRow)
+            let brandCell = document.createElement('td')
+            let nameCell = document.createElement('td')
+            let styleCell = document.createElement('td')
+            let hopCell = document.createElement('td')
+            let yeastCell = document.createElement('td')
+            let maltsCell = document.createElement('td')
+            let ibuCell = document.createElement('td')
+            let abvCell = document.createElement('td')
+            let blgCell = document.createElement('td')
+            
+            brandCell.className = 'beer-brand'
+            nameCell.className = 'beer-name'
+            styleCell.className = 'beer-style'
+            hopCell.className = 'beer-hop'
+            yeastCell.className = 'beer-yeast'
+            maltsCell.className = 'beer-malts'
+            ibuCell.className = 'beer-ibu'
+            abvCell.className = 'beer-abv'
+            blgCell.className = 'beer-blg'
+            
+            brandCell.innerText = x.brand
+            nameCell.innerText = x.name
+            styleCell.innerText = x.style
+            hopCell.innerText = x.hop
+            yeastCell.innerText = x.yeast
+            maltsCell.innerText = x.malts
+            ibuCell.innerText = x.ibu
+            abvCell.innerText = x.alcohol
+            blgCell.innerText = x.blg
+            
+            newRow.appendChild(brandCell) 
+            newRow.appendChild(nameCell) 
+            newRow.appendChild(styleCell) 
+            newRow.appendChild(hopCell) 
+            newRow.appendChild(yeastCell) 
+            newRow.appendChild(maltsCell) 
+            newRow.appendChild(ibuCell)
+            newRow.appendChild(abvCell) 
+            newRow.appendChild(blgCell)
+          }
+        } else {
+          mainContainer.appendChild(userBeersTable)
         }
       }
     })

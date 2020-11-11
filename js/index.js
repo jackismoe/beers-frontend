@@ -38,6 +38,8 @@ let addRemoveButton = document.createElement('button')
 let beerImageContainer = document.createElement('div')
 let showBeerTable = document.createElement('table')
 
+let counter = 0
+
 
 let userButton
 let logoutButton
@@ -50,6 +52,7 @@ sliderContainer.id = 'image-slider'
 profileContainer.id = 'profile-container'
 homeDescriptionContainer.id = 'home-description-container'
 showBeerContainer.id = 'show-beer-container'
+userBeersTable.id = 'user-beer-table'
 
 signInBtn.class = 'button'
 signUpBtn.class = 'button'
@@ -86,6 +89,7 @@ document.addEventListener('click', (e) => {
 browseButton.addEventListener('click', () => {
   homeDescriptionContainer.remove()
   showBeerContainer.remove()
+  userBeersTable.remove()
   closeNav()
   renderAll()         
 })
