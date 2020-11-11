@@ -229,7 +229,6 @@ function showBeer(beer) {
   
   pageHeader.innerText = `${beerBrand} ${beerName}`
 
-  let showBeerTable = document.createElement('table')
   let brandHeader = document.createElement('th')
   let nameHeader = document.createElement('th')
   let styleHeader = document.createElement('th')
@@ -251,16 +250,7 @@ function showBeer(beer) {
   blgHeader.innerText = 'BLG°'
 
   
-  showBeerTable.appendChild(brandHeader)
-  showBeerTable.appendChild(nameHeader)
-  showBeerTable.appendChild(styleHeader)
-  showBeerTable.appendChild(hopHeader)
-  showBeerTable.appendChild(yeastHeader)
-  showBeerTable.appendChild(maltsHeader)
-  showBeerTable.appendChild(ibuHeader)
-  showBeerTable.appendChild(abvHeader)
-  showBeerTable.appendChild(blgHeader)
-
+  
   let newRow = document.createElement('tr')
   let brandCell = document.createElement('td')
   let nameCell = document.createElement('td')
@@ -292,72 +282,118 @@ function showBeer(beer) {
   abvCell.innerText = beerAbv
   blgCell.innerText = beerBlg
   
-  showBeerTable.appendChild(newRow)
-  newRow.appendChild(brandCell) 
-  newRow.appendChild(nameCell) 
-  newRow.appendChild(styleCell) 
-  newRow.appendChild(hopCell) 
-  newRow.appendChild(yeastCell) 
-  newRow.appendChild(maltsCell) 
-  newRow.appendChild(ibuCell)
-  newRow.appendChild(abvCell) 
-  newRow.appendChild(blgCell)
-
-  let beerImageContainer = document.createElement('div')
-  beerImageContainer.id = 'beer-img'
-
+  
   let number = Math.floor(Math.random() * 4) + 1
-
+  
   beerImageContainer.innerHTML = `<img src='./assets/images/beers/beer${number}.jpg'></img>`
-
+  
   addRemoveButton.id = 'action-button'
-
-  fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
+  
+  if (sessionStorage.length == 1) {
+    fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
       for (let x of jsonResponse) {
         if (!!(x.id == beer.id) == true) {
           addRemoveButton.innerText = 'Remove Beer From Your List'
-        } else {
-          addRemoveButton.innerText = 'Add Beer To Your List'
-        }
+        } else if (sessionStorage.length > 1) {
+          addRemoveButton.innerText = 'Login To Add Beer To Your List'
+        } 
       }
       if (addRemoveButton.innerText == 'Remove Beer From Your List') {
-          addRemoveButton.addEventListener('click', () => {
-            fetch(`http://localhost:3000/beers_users/${beer.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      beer: beerName,
-                      session: sessionStorage.user_id
-                  })
+        addRemoveButton.addEventListener('click', () => {
+          fetch(`http://localhost:3000/beers_users/${beer.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              beer: beerName,
+              session: sessionStorage.user_id
             })
           })
-        } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
-          addRemoveButton.addEventListener('click', () => {
-            fetch(`http://localhost:3000/beers_users`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                beer: beerName,
-                session: sessionStorage
-              })
+        })
+      } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
+        addRemoveButton.addEventListener('click', () => {
+          fetch(`http://localhost:3000/beers_users`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              beer: beerName,
+              session: sessionStorage
             })
-            .then(response => response.json())
-            .then(jsonResponse => showUser(jsonResponse))
           })
-        }
+          .then(response => response.json())
+          .then(jsonResponse => showUser(jsonResponse))
+        })
+      }
     })
-
+  } else {
+    addRemoveButton.innerText = 'Sign In To Add Beer To Your List'
+    
+    addRemoveButton.addEventListener('click', () => {
+      showBeerContainer.remove()
+      userSignInPortal()
+    })
+  }
+  
 
   mainContainer.appendChild(showBeerContainer)
-  showBeerContainer.appendChild(showBeerTable)
-  showBeerContainer.appendChild(beerImageContainer)
-  showBeerContainer.appendChild(addRemoveButton)
+  if (showBeerContainer.children[1] == undefined) {
+    console.log('yes')
+    showBeerTable.appendChild(brandHeader)
+    showBeerTable.appendChild(nameHeader)
+    showBeerTable.appendChild(styleHeader)
+    showBeerTable.appendChild(hopHeader)
+    showBeerTable.appendChild(yeastHeader)
+    showBeerTable.appendChild(maltsHeader)
+    showBeerTable.appendChild(ibuHeader)
+    showBeerTable.appendChild(abvHeader)
+    showBeerTable.appendChild(blgHeader)
+
+    showBeerTable.appendChild(newRow)
+    newRow.appendChild(brandCell) 
+    newRow.appendChild(nameCell) 
+    newRow.appendChild(styleCell) 
+    newRow.appendChild(hopCell) 
+    newRow.appendChild(yeastCell) 
+    newRow.appendChild(maltsCell) 
+    newRow.appendChild(ibuCell)
+    newRow.appendChild(abvCell) 
+    newRow.appendChild(blgCell)
+
+    console.log(newRow)
+    showBeerContainer.appendChild(showBeerTable)
+    showBeerContainer.appendChild(beerImageContainer)
+    showBeerContainer.appendChild(addRemoveButton)
+  } else {
+    brandCell.innerText = beerBrand
+    nameCell.innerText = beerName
+    styleCell.innerText = beerStyle
+    hopCell.innerText = beerHop
+    yeastCell.innerText = beerYeast
+    maltsCell.innerText = beerMalts
+    ibuCell.innerText = beerIbu
+    abvCell.innerText = beerAbv
+    blgCell.innerText = beerBlg
+    
+    newRow.appendChild(brandCell) 
+    newRow.appendChild(nameCell) 
+    newRow.appendChild(styleCell) 
+    newRow.appendChild(hopCell) 
+    newRow.appendChild(yeastCell) 
+    newRow.appendChild(maltsCell) 
+    newRow.appendChild(ibuCell)
+    newRow.appendChild(abvCell) 
+    newRow.appendChild(blgCell)
+
+    showBeerTable.appendChild(newRow)
+    showBeerTable.rows[0].remove()
+    // showBeerContainer.appendChild(beerImageContainer)
+    // showBeerContainer.appendChild(addRemoveButton)
+  }
 }

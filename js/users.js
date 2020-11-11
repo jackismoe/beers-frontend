@@ -35,7 +35,7 @@ function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
 
-  pageHeader.innerText = `${currentUser.name}'s Beer Log`
+  pageHeader.innerText = `${user.name}'s Beer Log`
   loginUser()
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
@@ -295,12 +295,10 @@ function userSignInPortal() {
       fetch('http://localhost:3000/', configObject)
         .then(response => response.json())
         .then(jsonResponse => {
-          // console.log(jsonResponse)
           sessionStorage.setItem('user_id', jsonResponse.id)
           userSignInForm.reset()
           showUser(jsonResponse)
           currentUser = jsonResponse
-          pageHeader.innerText = currentUser.name
         })
         .catch(error => {
           console.log(error.message)

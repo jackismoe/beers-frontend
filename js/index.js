@@ -35,12 +35,14 @@ let editEmailInput = document.createElement('input')
 let editPhoneInput = document.createElement('input')
 let showBeerContainer = document.createElement('div')
 let addRemoveButton = document.createElement('button')
+let beerImageContainer = document.createElement('div')
+let showBeerTable = document.createElement('table')
 
 
 let userButton
 let logoutButton
-let currentUser
 
+beerImageContainer.id = 'beer-img'
 welcomeMessage.id = 'welcome-message'
 welcomeParagraph.id = 'welcome-paragraph'
 cta.id = 'call-to-action'
@@ -92,6 +94,7 @@ homeLink.addEventListener('click', () => {
   editUserContainer.remove()
   pageHeader.innerText = 'Home'
   showBeerContainer.remove()
+  profileContainer.remove()
 
   if (homeDescriptionContainer.innerHTML = '') {
     showHomePage()
