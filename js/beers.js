@@ -135,6 +135,50 @@ function fetchGenerateBeer() {
       .then(response => response.json())
       .then(fetchedBeer => {
 // show just the recently created beer
+        let newRow = document.createElement('tr')
+
+        let brandCell = document.createElement('td')
+        let nameCell = document.createElement('td')
+        let styleCell = document.createElement('td')
+        let hopCell = document.createElement('td')
+        let yeastCell = document.createElement('td')
+        let maltsCell = document.createElement('td')
+        let ibuCell = document.createElement('td')
+        let abvCell = document.createElement('td')
+        let blgCell = document.createElement('td')
+        
+        brandCell.className = 'beer-brand'
+        nameCell.className = 'beer-name'
+        styleCell.className = 'beer-style'
+        hopCell.className = 'beer-hop'
+        yeastCell.className = 'beer-yeast'
+        maltsCell.className = 'beer-malts'
+        ibuCell.className = 'beer-ibu'
+        abvCell.className = 'beer-abv'
+        blgCell.className = 'beer-blg'
+        
+        brandCell.innerText = fetchedBeer.brand
+        nameCell.innerText = fetchedBeer.name
+        styleCell.innerText = fetchedBeer.style
+        hopCell.innerText = fetchedBeer.hop
+        yeastCell.innerText = fetchedBeer.yeast
+        maltsCell.innerText = fetchedBeer.malts
+        ibuCell.innerText = fetchedBeer.ibu
+        abvCell.innerText = fetchedBeer.alcohol
+        blgCell.innerText = fetchedBeer.blg
+        
+        newRow.appendChild(brandCell) 
+        newRow.appendChild(nameCell) 
+        newRow.appendChild(styleCell) 
+        newRow.appendChild(hopCell) 
+        newRow.appendChild(yeastCell) 
+        newRow.appendChild(maltsCell) 
+        newRow.appendChild(ibuCell)
+        newRow.appendChild(abvCell) 
+        newRow.appendChild(blgCell)        
+
+        allBeersTable.appendChild(newRow)
+        userBeersTable.appendChild(newRow)
         showBeer(fetchedBeer)
       })
 }
@@ -296,13 +340,23 @@ function showBeer(beer) {
       let trueCount = 0
       let falseCount = 0
       for (let x of jsonResponse) {
-        if (x.brand == beer[0].innerText) {
-          trueCount++
+        if (beer[0]) {
+          console.log('a')
+          if ((beer[0].innerText == x.brand) && (beer[1].innerText == x.name)) {
+            console.log('aa')
+            trueCount++
+          }
+        } else if (x.brand == beer.brand) {
+          console.log('b')
+          trueCount++ 
         } else {
+          console.log('c')
           falseCount++
         } 
       }
-      if (trueCount) {
+      console.log('true' + trueCount)
+      console.log('false' + falseCount)
+      if (trueCount >= 1) {
         addRemoveButton.innerText = 'Remove Beer From Your List'
       } else {
         addRemoveButton.innerText = 'Add Beer To Your List'
