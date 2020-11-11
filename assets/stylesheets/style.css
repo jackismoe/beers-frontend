@@ -222,7 +222,6 @@
     height: 28px;
   }
 
-
   table, td {
     border: 1px solid black;
   }
@@ -290,5 +289,9 @@
 
   #beer-img {
     height: 35%;
+  }
+
+  #page-header {
+    left: 0;
   }
 }

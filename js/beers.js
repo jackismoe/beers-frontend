@@ -316,12 +316,14 @@ function showBeer(beer) {
               'Accept': 'application/json'
             },
             body: JSON.stringify({
-              beer: beerName,
+              beer: beerBrand,
               session: sessionStorage.user_id
             })
           })
+          .then(response => response.json())
+          .then(jsonResponse => showUser(jsonResponse))
         })
-      } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
+      } else {
         addRemoveButton.addEventListener('click', () => {
           fetch(`http://localhost:3000/beers_users`, {
             method: 'POST',

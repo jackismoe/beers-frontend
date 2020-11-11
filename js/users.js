@@ -102,7 +102,6 @@ function fetchUserBeers() {
 
         blgHeader.id = 'blg-header'
 
-
         userBeersTable.appendChild(brandHeader)
         userBeersTable.appendChild(nameHeader)
         userBeersTable.appendChild(styleHeader)
