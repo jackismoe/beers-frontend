@@ -53,19 +53,20 @@ function renderAll() {
   profileContainer.remove()  
   sliderContainer.remove()
   pageHeader.innerText = 'All Beers'
-  if (allBeersTable.innerHTML == '') {
-    createBeerTable()
-    // beers
-    fetch(`http://localhost:3000/all_beers`)
-    .then(response => response.json())
-    .then(jsonResponse => {
+  // beers
+  fetch(`http://localhost:3000/all_beers`)
+  .then(response => response.json())
+  .then(jsonResponse => {
+    function populateTable() {
       for (let x of jsonResponse) {
         let newRow = document.createElement('tr')
+        allBeersTable.appendChild(newRow)
+
         newRow.addEventListener('mouseover', () => {
-            newRow.style.color = 'white'
-            newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
-            newRow.style.cursor = 'pointer'
-          })
+          newRow.style.color = 'white'
+          newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+          newRow.style.cursor = 'pointer'
+        })
 
         newRow.addEventListener('mouseout', () => {
           newRow.style.color = 'black'
@@ -77,7 +78,7 @@ function renderAll() {
           row = e.target.parentElement.childNodes
           showBeer(row)
         })
-        allBeersTable.appendChild(newRow)
+
         let brandCell = document.createElement('td')
         let nameCell = document.createElement('td')
         let styleCell = document.createElement('td')
@@ -118,11 +119,75 @@ function renderAll() {
         newRow.appendChild(abvCell) 
         newRow.appendChild(blgCell)
       }
-    })
-  } else {
-    allBeersTable.remove()
-    mainContainer.appendChild(allBeersTable)
-  }
+    }
+      if ((allBeersTable.rows.length == 0) && (allCounter < 1)) {
+        populateTable()
+        let newRow = document.createElement('tr')
+        newRow.addEventListener('mouseover', () => {
+            newRow.style.color = 'white'
+            newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+            newRow.style.cursor = 'pointer'
+          })
+
+        newRow.addEventListener('mouseout', () => {
+          newRow.style.color = 'black'
+          newRow.style.cursor = 'default'
+          newRow.style.backgroundColor = 'white'
+        })
+
+        newRow.addEventListener('click', (e) => {
+          row = e.target.parentElement.childNodes
+          showBeer(row)
+        })
+        let brandCell = document.createElement('td')
+        let nameCell = document.createElement('td')
+        let styleCell = document.createElement('td')
+        let hopCell = document.createElement('td')
+        let yeastCell = document.createElement('td')
+        let maltsCell = document.createElement('td')
+        let ibuCell = document.createElement('td')
+        let abvCell = document.createElement('td')
+        let blgCell = document.createElement('td')
+        
+        brandCell.className = 'beer-brand'
+        nameCell.className = 'beer-name'
+        styleCell.className = 'beer-style'
+        hopCell.className = 'beer-hop'
+        yeastCell.className = 'beer-yeast'
+        maltsCell.className = 'beer-malts'
+        ibuCell.className = 'beer-ibu'
+        abvCell.className = 'beer-abv'
+        blgCell.className = 'beer-blg'
+        
+        brandCell.innerText = jsonResponse[jsonResponse.length-1].brand
+        nameCell.innerText = jsonResponse[jsonResponse.length-1].name
+        styleCell.innerText = jsonResponse[jsonResponse.length-1].style
+        hopCell.innerText = jsonResponse[jsonResponse.length-1].hop
+        yeastCell.innerText = jsonResponse[jsonResponse.length-1].yeast
+        maltsCell.innerText = jsonResponse[jsonResponse.length-1].malts
+        ibuCell.innerText = jsonResponse[jsonResponse.length-1].ibu
+        abvCell.innerText = jsonResponse[jsonResponse.length-1].alcohol
+        blgCell.innerText = jsonResponse[jsonResponse.length-1].blg
+        
+        newRow.appendChild(brandCell) 
+        newRow.appendChild(nameCell) 
+        newRow.appendChild(styleCell) 
+        newRow.appendChild(hopCell) 
+        newRow.appendChild(yeastCell) 
+        newRow.appendChild(maltsCell) 
+        newRow.appendChild(ibuCell)
+        newRow.appendChild(abvCell) 
+        newRow.appendChild(blgCell)
+
+        mainContainer.appendChild(allBeersTable)
+        allCounter++
+      } else if (allBeersTable.rows.length >= 1) {
+        createBeerTable()
+        populateTable()
+      } else {
+        mainContainer.appendChild(allBeersTable)
+      }
+  })
 }
 
 function fetchGenerateBeer() {  
@@ -178,8 +243,25 @@ function fetchGenerateBeer() {
         newRow.appendChild(abvCell) 
         newRow.appendChild(blgCell)        
 
+        console.log('here')
+        newRow.addEventListener('mouseover', () => {
+          newRow.style.color = 'white'
+          newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+          newRow.style.cursor = 'pointer'
+        })
+        
+        newRow.addEventListener('mouseout', () => {
+          newRow.style.color = 'black'
+          newRow.style.cursor = 'default'
+          newRow.style.backgroundColor = 'white'
+        })
+        
+        newRow.addEventListener('click', (e) => {
+          row = e.target.parentElement.childNodes
+          showBeer(row)
+        })   
+// new beer shows up before th and at bottom of beers & loads table twice
         allBeersTable.appendChild(newRow)
-        // userBeersTable.appendChild(newRow)
         showBeer(fetchedBeer)
       })
 }
@@ -342,21 +424,15 @@ function showBeer(beer) {
       let falseCount = 0
       for (let x of jsonResponse) {
         if (beer[0]) {
-          console.log('a')
           if ((beer[0].innerText == x.brand) && (beer[1].innerText == x.name)) {
-            console.log('aa')
             trueCount++
           }
         } else if (x.brand == beer.brand) {
-          console.log('b')
           trueCount++ 
         } else {
-          console.log('c')
           falseCount++
         } 
       }
-      console.log('true' + trueCount)
-      console.log('false' + falseCount)
       if (trueCount >= 1) {
         addRemoveButton.innerText = 'Remove Beer From Your List'
       } else {

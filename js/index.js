@@ -13,6 +13,9 @@ let logoutButtonContainer = document.querySelector('#logout-button-container')
 let ctaLink = document.querySelector('#cta-link')
 let mainContainer = document.querySelector('.main')
 let pageHeader = document.querySelector('#page-header')
+let viewSubNav = document.querySelector('#view')
+let editSubNav = document.querySelector('#edit')
+
 let userSignInForm = document.createElement('form')
 let userSignUpForm = document.createElement('form')
 let editUserForm = document.createElement('form')
@@ -28,8 +31,6 @@ let signInBtn = document.createElement('button')
 let signUpBtn = document.createElement('button')
 let profileContainer = document.createElement('div')
 let sliderContainer = document.createElement('div')
-let viewSubNav = document.querySelector('#view')
-let editSubNav = document.querySelector('#edit')
 let editNameInput = document.createElement('input')
 let editEmailInput = document.createElement('input')
 let editPhoneInput = document.createElement('input')
@@ -37,10 +38,8 @@ let showBeerContainer = document.createElement('div')
 let addRemoveButton = document.createElement('button')
 let beerImageContainer = document.createElement('div')
 let showBeerTable = document.createElement('table')
-
-let counter = 0
-
-
+let userCounter = 0
+let allCounter = 0
 let userButton
 let logoutButton
 

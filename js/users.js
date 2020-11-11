@@ -78,7 +78,7 @@ function fetchUserBeers() {
         profileContainer.appendChild(welcome)
       } else {
         welcome.remove()
-        if ((userBeersTable.rows.length > 0) && (counter < 1)) {
+        if ((userBeersTable.rows.length > 0) && (userCounter < 1)) {
           let newRow = document.createElement('tr')
           newRow.addEventListener('mouseover', () => {
             newRow.style.color = 'white'
@@ -138,10 +138,9 @@ function fetchUserBeers() {
           newRow.appendChild(blgCell)
 
           userBeersTable.appendChild(newRow)
-          showBeerContainer.remove()
           mainContainer.appendChild(userBeersTable)
-          counter++
-        } else if (userBeersTable.rows.length <= 0){
+          userCounter++
+        } else if (userBeersTable.rows.length <= 0) {
           let brandHeader = document.createElement('th')
           let nameHeader = document.createElement('th')
           let styleHeader = document.createElement('th')
