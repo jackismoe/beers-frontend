@@ -293,12 +293,19 @@ function showBeer(beer) {
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
+      let trueCount = 0
+      let falseCount = 0
       for (let x of jsonResponse) {
-        if (!!(x.id == beer.id) == true) {
-          addRemoveButton.innerText = 'Remove Beer From Your List'
-        } else if (sessionStorage.length > 1) {
-          addRemoveButton.innerText = 'Login To Add Beer To Your List'
+        if (x.brand == beer[0].innerText) {
+          trueCount++
+        } else {
+          falseCount++
         } 
+      }
+      if (trueCount) {
+        addRemoveButton.innerText = 'Remove Beer From Your List'
+      } else {
+        addRemoveButton.innerText = 'Add Beer To Your List'
       }
       if (addRemoveButton.innerText == 'Remove Beer From Your List') {
         addRemoveButton.addEventListener('click', () => {
@@ -344,7 +351,6 @@ function showBeer(beer) {
 
   mainContainer.appendChild(showBeerContainer)
   if (showBeerContainer.children[1] == undefined) {
-    console.log('yes')
     showBeerTable.appendChild(brandHeader)
     showBeerTable.appendChild(nameHeader)
     showBeerTable.appendChild(styleHeader)
@@ -366,7 +372,6 @@ function showBeer(beer) {
     newRow.appendChild(abvCell) 
     newRow.appendChild(blgCell)
 
-    console.log(newRow)
     showBeerContainer.appendChild(showBeerTable)
     showBeerContainer.appendChild(beerImageContainer)
     showBeerContainer.appendChild(addRemoveButton)
@@ -393,7 +398,7 @@ function showBeer(beer) {
 
     showBeerTable.appendChild(newRow)
     showBeerTable.rows[0].remove()
-    // showBeerContainer.appendChild(beerImageContainer)
-    // showBeerContainer.appendChild(addRemoveButton)
+    showBeerContainer.appendChild(beerImageContainer)
+    showBeerContainer.appendChild(addRemoveButton)
   }
 }
