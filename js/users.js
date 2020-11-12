@@ -446,52 +446,8 @@ function editUser() {
   pageHeader.innerText = `Edit ${currentUser.name}'s Profile`
   mainContainer.appendChild(editUserContainer)
   
-  editNameInput = document.createElement('input')
-  editEmailInput = document.createElement('input')
-  editPhoneInput = document.createElement('input')
-  let editPasswordInput = document.createElement('input')
-  let editPasswordConfirm = document.createElement('input')
-  let editSubmit = document.createElement('button')
-  let deleteUserBtn = document.createElement('button')
 
-  let editNameLabel = document.createElement('label')
-  let editEmailLabel = document.createElement('label')
-  let editPhoneLabel = document.createElement('label')
-  let editPasswordLabel = document.createElement('label')
-  let editPasswordConfirmLabel = document.createElement('label')
-
-  editNameLabel.innerText = 'Name:'
-  editEmailLabel.innerText = 'Email:'
-  editPhoneLabel.innerText = 'Phone Number:'
-  editPasswordLabel.innerText = 'Password:'
-  editPasswordConfirmLabel.innerText = 'Confirm Password:'
   
-  editNameInput.id = 'name'
-  editEmailInput.id = 'email'
-  editPhoneInput.id = 'phone'
-  editPasswordInput.id = 'password'
-  editPasswordConfirm.id = 'password-confirm'
-  editSubmit.id = 'submit'
-
-  editPasswordInput.placeholder = 'Password'
-  editPasswordConfirm.placeholder = 'Confirm Password'
-  editSubmit.innerText = 'Submit Changes'
-  deleteUserBtn.innerText = 'Delete User Account'
-  
-  editUserForm.appendChild(editNameLabel)
-  editUserForm.appendChild(editNameInput)
-  editUserForm.appendChild(editEmailLabel)
-  editUserForm.appendChild(editEmailInput)
-  editUserForm.appendChild(editPhoneLabel)
-  editUserForm.appendChild(editPhoneInput)
-  editUserForm.appendChild(editPasswordLabel)
-  editUserForm.appendChild(editPasswordInput)
-  editUserForm.appendChild(editPasswordConfirmLabel)
-  editUserForm.appendChild(editPasswordConfirm)
-  editUserForm.appendChild(editSubmit)
-  editUserForm.appendChild(deleteUserBtn)
-
-  editUserContainer.appendChild(editUserForm)
   fetch('http://localhost:3000', {
      method: 'POST',
         headers: {
@@ -503,46 +459,108 @@ function editUser() {
         })
     })
     .then(response => response.json())
-    .then(user => {
-      editNameInput.placeholder = currentUser.name
-      editEmailInput.placeholder = currentUser.email
-      if (user.phone) {
-        editPhoneInput.placeholder = currentUser.phone
+    .then(user => { 
+      if (editUserForm.children.length !== 0) {
+        if (editEmailInput.placeholder !== user.email) {
+          editEmailInput.placeholder = user.email
+        }
+        if (editNameInput.placeholder !== user.name) {
+          editNameInput.placeholder = user.name
+        }
+        if (user.phone) {
+          editPhoneInput.placeholder = user.phone
+        } else {
+          editPhoneInput.placeholder = 'Phone'
+        }
       } else {
-        editPhoneInput.placeholder = 'Phone'
+        editNameInput = document.createElement('input')
+        editEmailInput = document.createElement('input')
+        editPhoneInput = document.createElement('input')
+        let editPasswordInput = document.createElement('input')
+        let editPasswordConfirm = document.createElement('input')
+        let editSubmit = document.createElement('button')
+        let deleteUserBtn = document.createElement('button')
+
+        let editNameLabel = document.createElement('label')
+        let editEmailLabel = document.createElement('label')
+        let editPhoneLabel = document.createElement('label')
+        let editPasswordLabel = document.createElement('label')
+        let editPasswordConfirmLabel = document.createElement('label')
+
+        editNameLabel.innerText = 'Name:'
+        editEmailLabel.innerText = 'Email:'
+        editPhoneLabel.innerText = 'Phone Number:'
+        editPasswordLabel.innerText = 'Password:'
+        editPasswordConfirmLabel.innerText = 'Confirm Password:'
+        
+        editNameInput.id = 'name'
+        editEmailInput.id = 'email'
+        editPhoneInput.id = 'phone'
+        editPasswordInput.id = 'password'
+        editPasswordConfirm.id = 'password-confirm'
+        editSubmit.id = 'submit'
+
+        editNameInput.placeholder = user.name
+        editEmailInput.placeholder = user.email
+        if (user.phone) {
+          editPhoneInput.placeholder = user.phone
+        } else {
+          editPhoneInput.placeholder = 'Phone'
+        }
+        editPasswordInput.placeholder = 'Password'
+        editPasswordConfirm.placeholder = 'Confirm Password'
+        editSubmit.innerText = 'Submit Changes'
+        deleteUserBtn.innerText = 'Delete User Account'
+        
+        editUserForm.appendChild(editNameLabel)
+        editUserForm.appendChild(editNameInput)
+        editUserForm.appendChild(editEmailLabel)
+        editUserForm.appendChild(editEmailInput)
+        editUserForm.appendChild(editPhoneLabel)
+        editUserForm.appendChild(editPhoneInput)
+        editUserForm.appendChild(editPasswordLabel)
+        editUserForm.appendChild(editPasswordInput)
+        editUserForm.appendChild(editPasswordConfirmLabel)
+        editUserForm.appendChild(editPasswordConfirm)
+        editUserForm.appendChild(editSubmit)
+        editUserForm.appendChild(deleteUserBtn)
+
+        editUserContainer.appendChild(editUserForm)
+        deleteUserBtn.addEventListener('click', () => {
+          alert('Confirm Delete User?')
+          alert('Are you sure? This is an irreversible action.')
+          deleteUser(user)
+        })
+  
+        editSubmit.addEventListener('click', (e) => {
+          e.preventDefault()
+          if (editPasswordInput.value !== editPasswordConfirm.value) {
+            alert(`Sorry ${user.name}, your passwords do not match. Please try again.`)
+          } else {
+            fetch(`http://localhost:3000/users/${user.id}`, {
+              method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                  name: editNameInput.value,
+                  email: editEmailInput.value,
+                  phone: editPhoneInput.value,
+                  password_digest: editPasswordInput.value,
+                })
+            })
+              .then(response => response.json())
+              .then(jsonResponse => {
+                currentUser = jsonResponse
+                editUserForm.reset()
+                editUserContainer.remove()
+                showUser(jsonResponse)
+              })
+          }
+        })
       }
 
-      deleteUserBtn.addEventListener('click', () => {
-        alert('Confirm Delete User?')
-        alert('Are you sure? This is an irreversible action.')
-        deleteUser(user)
-      })
-
-      editSubmit.addEventListener('click', (e) => {
-        e.preventDefault()
-        if (editPasswordInput.value !== editPasswordConfirm.value) {
-          alert(`Sorry ${user.name}, your passwords do not match. Please try again.`)
-        } else {
-          fetch(`http://localhost:3000/users/${user.id}`, {
-            method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                name: editNameInput.value,
-                email: editEmailInput.value,
-                phone: editPhoneInput.value,
-                password_digest: editPasswordInput.value,
-              })
-          })
-            .then(response => response.json())
-            .then(jsonResponse => {
-              currentUser = jsonResponse
-              showUser(jsonResponse)
-            })
-        }
-      })
     })
 }
 

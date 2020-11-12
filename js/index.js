@@ -152,25 +152,7 @@ editSubNav.addEventListener('click', () => {
   userBeersTable.remove()
   profileContainer.remove()
   showBeerContainer.remove()
-  if (document.querySelector('form')) {   
-    console.log('a')   
-    editNameInput.placeholder = currentUser.name
-    editEmailInput.placeholder = currentUser.email
-    if (user.phone) {
-          console.log('b')   
-
-      editPhoneInput.placeholder = currentUser.phone
-    } else {
-          console.log('bb')   
-
-      editPhoneInput.placeholder = 'Phone'
-    }
-    mainContainer.appendChild(editUserContainer)
-  } else {
-        console.log('c')   
-
     editUser()
-  }
 })
 
 loginLink.addEventListener('click', () => {
