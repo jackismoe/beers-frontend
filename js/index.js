@@ -152,16 +152,23 @@ editSubNav.addEventListener('click', () => {
   userBeersTable.remove()
   profileContainer.remove()
   showBeerContainer.remove()
-  if (document.querySelector('form')) {      
+  if (document.querySelector('form')) {   
+    console.log('a')   
     editNameInput.placeholder = currentUser.name
     editEmailInput.placeholder = currentUser.email
     if (user.phone) {
+          console.log('b')   
+
       editPhoneInput.placeholder = currentUser.phone
     } else {
+          console.log('bb')   
+
       editPhoneInput.placeholder = 'Phone'
     }
     mainContainer.appendChild(editUserContainer)
   } else {
+        console.log('c')   
+
     editUser()
   }
 })
@@ -203,17 +210,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 profileLink.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
-  viewSubNav.style.visibility = 'visible'
 })
 editSubNav.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
-  viewSubNav.style.visibility = 'visible'
 })
 profileLink.addEventListener('mouseout', () => {
   editSubNav.style.visibility = 'hidden'
-  viewSubNav.style.visibility = 'hidden'
 })
 editSubNav.addEventListener('mouseout', () => {
   editSubNav.style.visibility = 'hidden'
-  viewSubNav.style.visibility = 'hidden'
 })

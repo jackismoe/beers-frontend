@@ -300,6 +300,7 @@ function userSignUpPortal() {
     } else {
       let newUser = new User(nameInput.value, emailInput.value, phoneInput.value, passwordInput.value)
       createUserObj(newUser)
+      currentUser = newUser
       // showUser(newUser)
     }
   })
