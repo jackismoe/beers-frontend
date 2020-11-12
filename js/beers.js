@@ -309,6 +309,7 @@ function setBeerRow(beer) {
 
 function showBeer(beer) {
   // generate random beer image
+  console.log(beer)
   allBeersTable.remove()
   userBeersTable.remove()
   homeDescriptionContainer.remove()
@@ -330,15 +331,15 @@ function showBeer(beer) {
     for (let x of beer) {
       beerArray.push(x.innerText)
     }
-    beerBrand = beerArray[1]
-    beerName = beerArray[2]
-    beerStyle = beerArray[3]
-    beerHop = beerArray[4]
-    beerYeast = beerArray[5]
-    beerMalts = beerArray[6]
-    beerIbu = beerArray[7]
-    beerAbv = beerArray[8]
-    beerBlg = beerArray[9]
+    beerBrand = beerArray[0]
+    beerName = beerArray[1]
+    beerStyle = beerArray[2]
+    beerHop = beerArray[3]
+    beerYeast = beerArray[4]
+    beerMalts = beerArray[5]
+    beerIbu = beerArray[6]
+    beerAbv = beerArray[7]
+    beerBlg = beerArray[8]
   } else {
     beerBrand = beer.brand
     beerName = beer.name
@@ -445,7 +446,8 @@ function showBeer(beer) {
               'Accept': 'application/json'
             },
             body: JSON.stringify({
-              beer: beerBrand,
+              beerBrand: beerBrand,
+              beerName: beerName,
               session: sessionStorage.user_id
             })
           })
@@ -461,7 +463,8 @@ function showBeer(beer) {
               'Accept': 'application/json'
             },
             body: JSON.stringify({
-              beer: beerName,
+              beerBrand: beerBrand,
+              beerName: beerName,
               session: sessionStorage
             })
           })

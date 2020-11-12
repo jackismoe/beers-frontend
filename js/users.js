@@ -576,7 +576,7 @@ function deleteUser(user) {
     })
   })
   .then(response => {
-    logoutUser()
-    showHomePage()
+    sessionStorage.clear()
+    location.reload()
   })
 }
