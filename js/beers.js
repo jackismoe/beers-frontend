@@ -198,6 +198,8 @@ function fetchGenerateBeer() {
       })
       .then(response => response.json())
       .then(fetchedBeer => {
+        let newBeer = new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.ibu, fetchedBeer.alcohol, fetchedBeer.blg)
+
 // show just the recently created beer
         let newRow = document.createElement('tr')
 
@@ -221,15 +223,15 @@ function fetchGenerateBeer() {
         abvCell.className = 'beer-abv'
         blgCell.className = 'beer-blg'
         
-        brandCell.innerText = fetchedBeer.brand
-        nameCell.innerText = fetchedBeer.name
-        styleCell.innerText = fetchedBeer.style
-        hopCell.innerText = fetchedBeer.hop
-        yeastCell.innerText = fetchedBeer.yeast
-        maltsCell.innerText = fetchedBeer.malts
-        ibuCell.innerText = fetchedBeer.ibu
-        abvCell.innerText = fetchedBeer.alcohol
-        blgCell.innerText = fetchedBeer.blg
+        brandCell.innerText = newBeer.brand
+        nameCell.innerText = newBeer.name
+        styleCell.innerText = newBeer.style
+        hopCell.innerText = newBeer.hop
+        yeastCell.innerText = newBeer.yeast
+        maltsCell.innerText = newBeer.malts
+        ibuCell.innerText = newBeer.ibu
+        abvCell.innerText = newBeer.alcohol
+        blgCell.innerText = newBeer.blg
         
         newRow.appendChild(brandCell) 
         newRow.appendChild(nameCell) 
@@ -259,7 +261,7 @@ function fetchGenerateBeer() {
         })   
 // new beer shows up before th and at bottom of beers & loads table twice
         allBeersTable.appendChild(newRow)
-        showBeer(fetchedBeer)
+        showBeer(newBeer)
       })
 }
 
@@ -315,6 +317,7 @@ function showBeer(beer) {
   homeDescriptionContainer.remove()
   profileContainer.remove()
   sliderContainer.remove()
+  editUserContainer.remove()
   
   let beerBrand
   let beerName 
@@ -330,7 +333,9 @@ function showBeer(beer) {
     let beerArray = []
     for (let x of beer) {
       beerArray.push(x.innerText)
+      console.log(x)
     }
+    console.log(beerArray)
     beerBrand = beerArray[0]
     beerName = beerArray[1]
     beerStyle = beerArray[2]
@@ -438,7 +443,6 @@ function showBeer(beer) {
       }
       if (addRemoveButton.innerText == 'Remove Beer From Your List') {
         addRemoveButton.addEventListener('click', () => {
-          alert('Are you sure you want to remove this beer from your list?')
           fetch(`http://localhost:3000/beers_users/${beer.id}`, {
             method: 'DELETE',
             headers: {
@@ -454,7 +458,7 @@ function showBeer(beer) {
           .then(response => response.json())
           .then(jsonResponse => showUser(jsonResponse))
         })
-      } else {
+      } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
         addRemoveButton.addEventListener('click', () => {
           fetch(`http://localhost:3000/beers_users`, {
             method: 'POST',

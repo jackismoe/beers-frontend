@@ -34,6 +34,8 @@ function createUserObj(user) {
 function showUser(user) {
   userSignInForm.remove()
   userSignUpForm.remove()
+  showBeerContainer.remove()
+  
 
   pageHeader.innerText = `${user.name}'s Beer Log`
   loginUser()
@@ -301,7 +303,6 @@ function userSignUpPortal() {
       let newUser = new User(nameInput.value, emailInput.value, phoneInput.value, passwordInput.value)
       createUserObj(newUser)
       currentUser = newUser
-      // showUser(newUser)
     }
   })
 
@@ -445,8 +446,6 @@ function editUser() {
 
   pageHeader.innerText = `Edit ${currentUser.name}'s Profile`
   mainContainer.appendChild(editUserContainer)
-  
-
   
   fetch('http://localhost:3000', {
      method: 'POST',
