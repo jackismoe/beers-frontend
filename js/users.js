@@ -78,7 +78,7 @@ function fetchUserBeers() {
         profileContainer.appendChild(welcome)
       } else {
         welcome.remove()
-        if ((userBeersTable.rows.length > 0) && (userCounter < 1)) {
+        if ((userBeersTable.rows.length > 0) && (!userBeersTable.rows[userBeersTable.rows.length-1].innerText.includes(jsonResponse[jsonResponse.length-1].brand)) && (userCounter >= 0)) {
           let newRow = document.createElement('tr')
           newRow.addEventListener('mouseover', () => {
             newRow.style.color = 'white'
@@ -141,6 +141,7 @@ function fetchUserBeers() {
           mainContainer.appendChild(userBeersTable)
           userCounter++
         } else if (userBeersTable.rows.length <= 0) {
+
           let brandHeader = document.createElement('th')
           let nameHeader = document.createElement('th')
           let styleHeader = document.createElement('th')
