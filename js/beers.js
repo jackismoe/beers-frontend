@@ -121,6 +121,7 @@ function renderAll() {
       }
     }
       if ((allBeersTable.rows.length == 0) && (allCounter < 1)) {
+        createBeerTable()
         populateTable()
         let newRow = document.createElement('tr')
         newRow.addEventListener('mouseover', () => {
@@ -181,9 +182,6 @@ function renderAll() {
 
         mainContainer.appendChild(allBeersTable)
         allCounter++
-      } else if (allBeersTable.rows.length >= 1) {
-        createBeerTable()
-        populateTable()
       } else {
         mainContainer.appendChild(allBeersTable)
       }
