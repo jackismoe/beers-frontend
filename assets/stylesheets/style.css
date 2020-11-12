@@ -205,6 +205,8 @@
 
   #welcome-message {
     position: relative;
+    font-size: 20pt;
+    text-align: center;
   }
 
   #call-to-action {

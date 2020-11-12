@@ -241,7 +241,6 @@ function fetchGenerateBeer() {
         newRow.appendChild(abvCell) 
         newRow.appendChild(blgCell)        
 
-        console.log('here')
         newRow.addEventListener('mouseover', () => {
           newRow.style.color = 'white'
           newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
@@ -438,6 +437,7 @@ function showBeer(beer) {
       }
       if (addRemoveButton.innerText == 'Remove Beer From Your List') {
         addRemoveButton.addEventListener('click', () => {
+          alert('Are you sure you want to remove this beer from your list?')
           fetch(`http://localhost:3000/beers_users/${beer.id}`, {
             method: 'DELETE',
             headers: {

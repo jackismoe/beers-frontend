@@ -26,7 +26,7 @@ function createUserObj(user) {
     .then(response => response.json())
     .then(jsonResponse => {
       sessionStorage.setItem('user_id', jsonResponse.id)
-      console.log(jsonResponse)
+      showUser(jsonResponse)    
     })
     .catch(error => alert(error.message))
 }
@@ -39,10 +39,8 @@ function showUser(user) {
   loginUser()
   if (document.querySelector('#beers-table')) {
     mainContainer.appendChild(userBeersTable)
-    console.log('yes')
   } else {
     fetchUserBeers()
-    console.log('no')
   }
 }
 
@@ -71,10 +69,10 @@ function fetchUserBeers() {
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
-      console.log(jsonResponse)
-      if (jsonResponse.length < 1) {
+      if (jsonResponse == 0) {
         welcome.id = 'welcome-message'
-        welcome.innerText = `Welcome! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above.`
+        welcome.innerText = `Welcome! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above, or generate your first beer with the button above!`
+        mainContainer.appendChild(profileContainer)
         profileContainer.appendChild(welcome)
       } else {
         welcome.remove()
@@ -302,7 +300,7 @@ function userSignUpPortal() {
     } else {
       let newUser = new User(nameInput.value, emailInput.value, phoneInput.value, passwordInput.value)
       createUserObj(newUser)
-      showUser(newUser)
+      // showUser(newUser)
     }
   })
 
@@ -391,9 +389,7 @@ function userSignInPortal() {
 }
 
 function logoutUser() {
-  console.log(`sessions before: ` + sessionStorage['user_id'])
   sessionStorage.clear()
-  console.log(`sessions after: ` + sessionStorage['user_id'])
 
   profileContainer.remove()
   logoutButton.remove()
@@ -455,6 +451,7 @@ function editUser() {
   let editPasswordInput = document.createElement('input')
   let editPasswordConfirm = document.createElement('input')
   let editSubmit = document.createElement('button')
+  let deleteUserBtn = document.createElement('button')
 
   let editNameLabel = document.createElement('label')
   let editEmailLabel = document.createElement('label')
@@ -478,6 +475,7 @@ function editUser() {
   editPasswordInput.placeholder = 'Password'
   editPasswordConfirm.placeholder = 'Confirm Password'
   editSubmit.innerText = 'Submit Changes'
+  deleteUserBtn.innerText = 'Delete User Account'
   
   editUserForm.appendChild(editNameLabel)
   editUserForm.appendChild(editNameInput)
@@ -490,6 +488,8 @@ function editUser() {
   editUserForm.appendChild(editPasswordConfirmLabel)
   editUserForm.appendChild(editPasswordConfirm)
   editUserForm.appendChild(editSubmit)
+  editUserForm.appendChild(deleteUserBtn)
+
   editUserContainer.appendChild(editUserForm)
   fetch('http://localhost:3000', {
      method: 'POST',
@@ -510,6 +510,12 @@ function editUser() {
       } else {
         editPhoneInput.placeholder = 'Phone'
       }
+
+      deleteUserBtn.addEventListener('click', () => {
+        alert('Confirm Delete User?')
+        alert('Are you sure? This is an irreversible action.')
+        deleteUser(user)
+      })
 
       editSubmit.addEventListener('click', (e) => {
         e.preventDefault()
@@ -537,4 +543,21 @@ function editUser() {
         }
       })
     })
+}
+
+function deleteUser(user) {
+  fetch(`http://localhost:3000/users/${user.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      user: user
+    })
+  })
+  .then(response => {
+    logoutUser()
+    showHomePage()
+  })
 }

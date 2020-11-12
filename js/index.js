@@ -136,7 +136,6 @@ profileLink.addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(jsonResponse => {
-      console.log('You are logged in.')
       closeNav()
       loginUser()
       showUser(jsonResponse)
@@ -193,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     .then(response => response.json())
     .then(jsonResponse => {
-      console.log('You are logged in.')
       loginUser()
       showHomePage()
       currentUser = jsonResponse
@@ -210,14 +208,6 @@ profileLink.addEventListener('mouseover', () => {
 editSubNav.addEventListener('mouseover', () => {
   editSubNav.style.visibility = 'visible'
   viewSubNav.style.visibility = 'visible'
-})
-viewSubNav.addEventListener('mouseover', () => {
-  editSubNav.style.visibility = 'visible'
-  viewSubNav.style.visibility = 'visible'
-})
-viewSubNav.addEventListener('mouseout', () => {
-  editSubNav.style.visibility = 'hidden'
-  viewSubNav.style.visibility = 'hidden'
 })
 profileLink.addEventListener('mouseout', () => {
   editSubNav.style.visibility = 'hidden'
