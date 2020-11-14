@@ -138,7 +138,7 @@ function fetchUserBeers() {
           userBeersTable.appendChild(newRow)
           mainContainer.appendChild(userBeersTable)
           userCounter++
-        } else if (userBeersTable.rows.length <= 0) {
+        } else if (userBeersTable.rows.length <= 1) {
 
           let brandHeader = document.createElement('th')
           let nameHeader = document.createElement('th')

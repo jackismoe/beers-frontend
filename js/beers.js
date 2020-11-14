@@ -120,7 +120,7 @@ function renderAll() {
         newRow.appendChild(blgCell)
       }
     }
-      if ((allBeersTable.rows.length == 0) && (allCounter < 1)) {
+      if ((allBeersTable.rows.length <= 1) && (allCounter < 1)) {
         console.log('a')
         createBeerTable()
         populateTable()
@@ -267,18 +267,12 @@ function fetchGenerateBeer() {
 }
 
 function checkNewRow(row, beer) {
-  console.log(row)
-  console.log(beer)
-
-  if (allBeersTable.rows[allBeersTable.rows.length-1] != undefined) {
-    if (allBeersTable.rows[allBeersTable.rows.length-1] != row) {
-      console.log('yes')
-      allBeersTable.appendChild(row)
-      row.style.backgroundColor = 'rgba(27, 8, 1, .7)'
-    }
-  } else {
-    renderAll()
-  }
+  showUser(currentUser)
+  allBeersTable.appendChild(row)
+  allBeersTable.remove()
+  userBeersTable.appendChild(row)
+  row.scrollIntoView(true)
+  row.style.backgroundColor = 'rgba(27, 8, 1, .7)'
 }
 
 function setBeerRow(beer) {
@@ -472,7 +466,15 @@ function showBeer(beer) {
           })
           .then(response => response.json())
           .then(jsonResponse => {
-
+            console.log(beer)
+            for (let x of allBeersTable.rows) {
+              if (beer[0] == x.cells[0]) {
+                  console.log('yes')
+                  console.log(x)
+                } else {
+                  console.log('no')
+                }
+            }
             showUser(jsonResponse)
           })
         })

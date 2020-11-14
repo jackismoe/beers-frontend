@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(jsonResponse => {
       loginUser()
-      showHomePage()
+      showUser(jsonResponse)
       currentUser = jsonResponse
     })
   } else {
