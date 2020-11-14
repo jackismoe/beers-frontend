@@ -571,7 +571,6 @@ function deleteUser(user) {
     })
   })
   .then(response => {
-    sessionStorage.clear()
-    location.reload()
+    logoutUser()
   })
 }
