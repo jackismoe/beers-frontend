@@ -337,9 +337,9 @@ function showBeer(beer) {
   let beerIbu 
   let beerAbv 
   let beerBlg
-  
+  let beerArray = []
+
   if (beer !== undefined) {
-    let beerArray = []
     for (let x of beer) {
       beerArray.push(x.innerText)
       console.log(x)
@@ -467,15 +467,15 @@ function showBeer(beer) {
           .then(response => response.json())
           .then(jsonResponse => {
             console.log(beer)
-            for (let x of allBeersTable.rows) {
-              if (beer[0] == x.cells[0]) {
-                  console.log('yes')
-                  console.log(x)
-                } else {
-                  console.log('no')
+            for (let x of userBeersTable.rows) {
+              for (let y of x.cells) {
+                if ((jsonResponse.brand == y.innerText)) {
+                  console.log(y)
+                  x.remove()
                 }
+              }
             }
-            showUser(jsonResponse)
+            showUser(currentUser)
           })
         })
       } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
