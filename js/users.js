@@ -49,8 +49,6 @@ function showUser(user) {
 function loginUser() {
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
-  aboutLink.style.visibility = 'visible'
-  aboutLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
   logoutButtonContainer.innerHTML = '<button id="logout-button">Logout</button>'
 
@@ -401,8 +399,6 @@ function logoutUser() {
   loginLink.style.visibility = 'visible'
   profileLink.style.visibility = 'hidden'
   homeLink.style.visibility = 'hidden'
-  aboutLink.style.visibility = 'hidden'
-  aboutLink.style.visibility = 'hidden'
   location.reload()
 }
 

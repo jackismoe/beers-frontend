@@ -121,6 +121,7 @@ function renderAll() {
       }
     }
       if ((allBeersTable.rows.length == 0) && (allCounter < 1)) {
+        console.log('a')
         createBeerTable()
         populateTable()
         let newRow = document.createElement('tr')
@@ -183,6 +184,7 @@ function renderAll() {
         mainContainer.appendChild(allBeersTable)
         allCounter++
       } else {
+        console.log('b')
         mainContainer.appendChild(allBeersTable)
       }
   })
@@ -259,10 +261,24 @@ function fetchGenerateBeer() {
           row = e.target.parentElement.childNodes
           showBeer(row)
         })   
-// new beer shows up before th and at bottom of beers & loads table twice
-        allBeersTable.appendChild(newRow)
-        showBeer(newBeer)
+
+        checkNewRow(newRow, newBeer)
       })
+}
+
+function checkNewRow(row, beer) {
+  console.log(row)
+  console.log(beer)
+
+  if (allBeersTable.rows[allBeersTable.rows.length-1] != undefined) {
+    if (allBeersTable.rows[allBeersTable.rows.length-1] != row) {
+      console.log('yes')
+      allBeersTable.appendChild(row)
+      row.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+    }
+  } else {
+    renderAll()
+  }
 }
 
 function setBeerRow(beer) {
@@ -311,7 +327,6 @@ function setBeerRow(beer) {
 
 function showBeer(beer) {
   // generate random beer image
-  console.log(beer)
   allBeersTable.remove()
   userBeersTable.remove()
   homeDescriptionContainer.remove()
@@ -329,7 +344,7 @@ function showBeer(beer) {
   let beerAbv 
   let beerBlg
   
-  if (beer.id == undefined) {
+  if (beer !== undefined) {
     let beerArray = []
     for (let x of beer) {
       beerArray.push(x.innerText)
@@ -456,7 +471,10 @@ function showBeer(beer) {
             })
           })
           .then(response => response.json())
-          .then(jsonResponse => showUser(jsonResponse))
+          .then(jsonResponse => {
+
+            showUser(jsonResponse)
+          })
         })
       } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
         addRemoveButton.addEventListener('click', () => {

@@ -7,7 +7,6 @@ let browseButton = document.querySelector('#browse')
 let loginLink = document.querySelector('#login')
 let profileLink = document.querySelector('#profile')
 let homeLink = document.querySelector('#home')
-let aboutLink = document.querySelector('#about')
 let userButtonContainer = document.querySelector('#user-button-container')
 let logoutButtonContainer = document.querySelector('#logout-button-container')
 let ctaLink = document.querySelector('#cta-link')
@@ -113,10 +112,6 @@ homeLink.addEventListener('click', () => {
     }
   }
   closeNav()
-})
-
-aboutLink.addEventListener('click', () => {
-  // create about page
 })
 
 profileLink.addEventListener('click', () => {
