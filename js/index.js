@@ -1,3 +1,4 @@
+const BASE_URL = 'http://localhost:3000'
 let menuIcons = document.querySelector('.menu-icons')
 let sideNav = document.querySelector('.sidenav')
 let body = document.querySelector('body')
@@ -163,6 +164,9 @@ loginLink.addEventListener('click', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (Beer.beerArray.length == 0) {
+    Beer.getAll()
+  }
   if (sessionStorage.length == 1) {
     fetch('http://localhost:3000', {
       method: 'POST',
