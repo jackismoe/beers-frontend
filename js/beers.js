@@ -29,9 +29,7 @@ class Beer {
     })
     return this.beerArray
   }
-
-
-
+  
   // instance
   seeName() {
     return this.name
