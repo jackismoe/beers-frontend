@@ -69,6 +69,7 @@ function fetchUserBeers() {
     fetch(`http://localhost:3000/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
+      console.log(Beer.getAll())
       if (jsonResponse == 0) {
         welcome.id = 'welcome-message'
         welcome.innerText = `Welcome! It looks like you don't have any beers in your log. If you'd like to see what we have available, check out our full log with the browse all button above, or generate your first beer with the button above!`

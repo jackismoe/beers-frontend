@@ -1,4 +1,5 @@
 class Beer {
+  static beerArray = []
   constructor(id, brand, name, style, hop, yeast, malts, ibu, alcohol, blg) {
     this.id = id
     this.brand = brand
@@ -10,7 +11,18 @@ class Beer {
     this.ibu = ibu
     this.alcohol = alcohol
     this.blg = blg
+    
+    Beer.beerArray.push(this)
   }
+
+  static getAll() {
+    return this.beerArray
+  }
+
+  // static
+    seeName() {
+      return this.name
+    }
 }
 
 function createBeerTable() {
@@ -356,7 +368,7 @@ function showBeer(beer) {
     beerBlg = beerArray[8]
   } else {
     beerBrand = beer.brand
-    beerName = beer.name
+    beerName = beer.seeName()
     beerStyle = beer.style
     beerHop = beer.hop
     beerYeast = beer.yeast
@@ -410,7 +422,7 @@ function showBeer(beer) {
   ibuCell.className = 'beer-ibu'
   abvCell.className = 'beer-abv'
   blgCell.className = 'beer-blg'
-  
+
   brandCell.innerText = beerBrand
   nameCell.innerText = beerName
   styleCell.innerText = beerStyle
