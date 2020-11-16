@@ -29,6 +29,46 @@ class Beer {
     })
     return this.beerArray
   }
+
+  static populateTable() {
+    createBeerTable()
+    for (let x of Beer.beerArray) {
+      let newRow = document.createElement('tr')
+
+      let brandCell = document.createElement('td')
+      let nameCell = document.createElement('td')
+      let styleCell = document.createElement('td')
+      let hopCell = document.createElement('td')
+      let yeastCell = document.createElement('td')
+      let maltsCell = document.createElement('td')
+      let ibuCell = document.createElement('td')
+      let abvCell = document.createElement('td')
+      let blgCell = document.createElement('td')
+      
+      
+      brandCell.innerText = x.brand
+      nameCell.innerText = x.name
+      styleCell.innerText = x.style
+      hopCell.innerText = x.hop
+      yeastCell.innerText = x.yeast
+      maltsCell.innerText = x.malts
+      ibuCell.innerText = x.ibu
+      abvCell.innerText = x.alcohol
+      blgCell.innerText = x.blg
+
+
+      newRow.appendChild(brandCell)
+      newRow.appendChild(nameCell)
+      newRow.appendChild(styleCell)
+      newRow.appendChild(hopCell)
+      newRow.appendChild(yeastCell)
+      newRow.appendChild(maltsCell)
+      newRow.appendChild(ibuCell)
+      newRow.appendChild(abvCell)
+      newRow.appendChild(blgCell)
+      allBeersTable.appendChild(newRow)
+    }
+  }
   
   // instance
   seeName() {
@@ -80,8 +120,6 @@ function createBeerTable() {
   ibuHeader.innerText = 'IBU' 
   abvHeader.innerText = 'ABV%' 
   blgHeader.innerText = 'BLG°'
-
-  blgHeader.id = 'blg-header'
   
   allBeersTable.appendChild(brandHeader)
   allBeersTable.appendChild(nameHeader)
@@ -101,7 +139,7 @@ function renderAll() {
   sliderContainer.remove()
   pageHeader.innerText = 'All Beers'
 
-  // Beer.populateTable()
+  Beer.populateTable()
 }
 
 function fetchGenerateBeer() {  
