@@ -89,8 +89,9 @@ browseButton.addEventListener('click', () => {
   homeDescriptionContainer.remove()
   showBeerContainer.remove()
   userBeersTable.remove()
+  sliderContainer.remove()
   closeNav()
-  renderAll()         
+  Beer.renderAll()      
 })
 
 homeLink.addEventListener('click', () => {
