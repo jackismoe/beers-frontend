@@ -164,8 +164,11 @@ loginLink.addEventListener('click', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (Beer.beerArray.length == 0) {
+  if (Beer.allBeers.length == 0) {
     Beer.getAll()
+  }
+  if (sessionStorage.length !== 0) {
+    Beer.getUserBeers()
   }
   if (sessionStorage.length == 1) {
     fetch('http://localhost:3000', {

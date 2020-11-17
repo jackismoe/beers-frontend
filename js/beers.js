@@ -1,5 +1,7 @@
 class Beer {
-  static beerArray = []
+  static allBeers = []
+  static currentUserBeers = []
+
   constructor(id, brand, name, style, hop, yeast, malts, ibu, alcohol, blg) {
     this.id = id
     this.brand = brand
@@ -11,8 +13,6 @@ class Beer {
     this.ibu = ibu
     this.alcohol = alcohol
     this.blg = blg
-    
-    Beer.beerArray.push(this)
   }
 
   // class
@@ -22,12 +22,24 @@ class Beer {
     .then(jsonResponse => {
       for (let x of jsonResponse) {
         let newBeer = new Beer(x.id, x.brand, x.name, x.style, x.hop, x.yeast, x.malts, x.ibu, x.alcohol, x.blg)
-        if (!Beer.beerArray.includes(newBeer)) {
-          Beer.beerArray.push(newBeer)
+        if (!Beer.allBeers.includes(newBeer)) {
+          Beer.allBeers.push(newBeer)
         }
       }
     })
-    return this.beerArray
+  }
+
+  static getUserBeers() {
+    fetch(`${BASE_URL}/users/${sessionStorage.user_id}/beers`)
+    .then(response => response.json())
+    .then(jsonResponse => {
+      for (let x of jsonResponse) {
+        let newBeer = new Beer(x.id, x.brand, x.name, x.style, x.hop, x.yeast, x.malts, x.ibu, x.alcohol, x.blg)
+        if (!Beer.currentUserBeers.includes(newBeer)) {
+          Beer.currentUserBeers.push(newBeer)
+        }
+      }
+    })
   }
 
   static populateTable() {
@@ -56,6 +68,21 @@ class Beer {
       abvCell.innerText = x.alcohol
       blgCell.innerText = x.blg
 
+      newRow.addEventListener('mouseover', () => {
+        newRow.style.color = 'white'
+        newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
+        newRow.style.cursor = 'pointer'
+      })
+
+      newRow.addEventListener('mouseout', () => {
+        newRow.style.color = 'black'
+        newRow.style.cursor = 'default'
+        newRow.style.backgroundColor = 'white'
+      })
+
+      newRow.addEventListener('click', () => {
+        x.show()
+      })
 
       newRow.appendChild(brandCell)
       newRow.appendChild(nameCell)
@@ -70,34 +97,139 @@ class Beer {
     }
   }
   
+  static generateBeer() {
+    fetch(`${BASE_URL}/users/${sessionStorage.user_id}/beers`, { 
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(fetchedBeer => {
+        let newBeer= new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.alcohol, fetchedBeer.blg)
+        Beer.currentUserBeers.push(newBeer)
+        Beer.allBeers.push(newBeer)
+      })
+    return Beer.allBeers[Beer.allBeers.length -1]
+  }
+
   // instance
-  seeName() {
-    return this.name
+  show() {
+    console.log(this)
+    allBeersTable.remove()
+    pageHeader.innerText = `${this.brand} ${this.name}`
+
+    let newRow = document.createElement('tr')
+
+    if (showBeerTable.rows.length == 0) {
+      let brandHeader = document.createElement('th')
+      let nameHeader = document.createElement('th')
+      let styleHeader = document.createElement('th')
+      let hopHeader = document.createElement('th')
+      let yeastHeader = document.createElement('th')
+      let maltsHeader = document.createElement('th')
+      let ibuHeader = document.createElement('th')
+      let abvHeader = document.createElement('th')
+      let blgHeader = document.createElement('th') 
+      
+      brandHeader.innerText = 'Brand' 
+      nameHeader.innerText = 'Name'
+      styleHeader.innerText = 'Style' 
+      hopHeader.innerText = 'Hop' 
+      yeastHeader.innerText = 'Yeast' 
+      maltsHeader.innerText = 'Malts' 
+      ibuHeader.innerText = 'IBU' 
+      abvHeader.innerText = 'ABV%' 
+      blgHeader.innerText = 'BLG°'
+        
+      showBeerTable.appendChild(brandHeader)
+      showBeerTable.appendChild(nameHeader)
+      showBeerTable.appendChild(styleHeader)
+      showBeerTable.appendChild(hopHeader)
+      showBeerTable.appendChild(yeastHeader)
+      showBeerTable.appendChild(maltsHeader)
+      showBeerTable.appendChild(ibuHeader)
+      showBeerTable.appendChild(abvHeader)
+      showBeerTable.appendChild(blgHeader)
+
+      let brandCell = document.createElement('td')
+      let nameCell = document.createElement('td')
+      let styleCell = document.createElement('td')
+      let hopCell = document.createElement('td')
+      let yeastCell = document.createElement('td')
+      let maltsCell = document.createElement('td')
+      let ibuCell = document.createElement('td')
+      let abvCell = document.createElement('td')
+      let blgCell = document.createElement('td')
+      
+      brandCell.innerText = this.brand
+      nameCell.innerText = this.name
+      styleCell.innerText = this.style
+      hopCell.innerText = this.hop
+      yeastCell.innerText = this.yeast
+      maltsCell.innerText = this.malts
+      ibuCell.innerText = this.ibu
+      abvCell.innerText = this.alcohol
+      blgCell.innerText = this.blg
+
+      newRow.appendChild(brandCell)
+      newRow.appendChild(nameCell)
+      newRow.appendChild(styleCell)
+      newRow.appendChild(hopCell)
+      newRow.appendChild(yeastCell)
+      newRow.appendChild(maltsCell)
+      newRow.appendChild(ibuCell)
+      newRow.appendChild(abvCell)
+      newRow.appendChild(blgCell)
+
+      showBeerTable.appendChild(newRow)
+    } else {
+      showBeerTable.rows[0].remove()
+
+      let brandCell = document.createElement('td')
+      let nameCell = document.createElement('td')
+      let styleCell = document.createElement('td')
+      let hopCell = document.createElement('td')
+      let yeastCell = document.createElement('td')
+      let maltsCell = document.createElement('td')
+      let ibuCell = document.createElement('td')
+      let abvCell = document.createElement('td')
+      let blgCell = document.createElement('td')
+      
+      brandCell.innerText = this.brand
+      nameCell.innerText = this.name
+      styleCell.innerText = this.style
+      hopCell.innerText = this.hop
+      yeastCell.innerText = this.yeast
+      maltsCell.innerText = this.malts
+      ibuCell.innerText = this.ibu
+      abvCell.innerText = this.alcohol
+      blgCell.innerText = this.blg
+
+      newRow.appendChild(brandCell)
+      newRow.appendChild(nameCell)
+      newRow.appendChild(styleCell)
+      newRow.appendChild(hopCell)
+      newRow.appendChild(yeastCell)
+      newRow.appendChild(maltsCell)
+      newRow.appendChild(ibuCell)
+      newRow.appendChild(abvCell)
+      newRow.appendChild(blgCell)
+
+      showBeerTable.appendChild(newRow)
+    }
+    mainContainer.appendChild(showBeerContainer)
+    showBeerContainer.appendChild(showBeerTable)
+
+    
+    let number = Math.floor(Math.random() * 4) + 1
+    beerImageContainer.innerHTML = `<img src='./assets/images/beers/beer${number}.jpg'></img>`
+    showBeerContainer.appendChild(beerImageContainer)
+
+    addRemoveButton.id = 'action-button'
   }
-  seeBrand() {
-    return this.brand
-  }
-  seeStyle() {
-    return this.style
-  }
-  seeHop() {
-    return this.hop
-  }
-  seeYeast() {
-    return this.yeast
-  }
-  seeMalts() {
-    return this.malts
-  }
-  seeIbu() {
-    return this.ibu
-  }
-  seeAbv() {
-    return this.alcohol
-  }
-  seeBlg() {
-    return this.blg
-  }
+
 }
 
 function createBeerTable() {
