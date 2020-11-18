@@ -42,6 +42,7 @@ let userCounter = 0
 let allCounter = 0
 let userButton
 let logoutButton
+let currentUser
 
 beerImageContainer.id = 'beer-img'
 welcomeMessage.id = 'welcome-message'
@@ -134,8 +135,8 @@ profileLink.addEventListener('click', () => {
     .then(response => response.json())
     .then(jsonResponse => {
       closeNav()
-      loginUser()
-      showUser(jsonResponse)
+      loginUser(jsonResponse)
+      currentUser = jsonResponse
     })
   } else {
     closeNav()
@@ -168,10 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Beer.allBeers.length == 0) {
     Beer.getAll()
   }
-  if (sessionStorage.length !== 0) {
-    Beer.getUserBeers()
-  }
   if (sessionStorage.length == 1) {
+    if (Beer.currentUserBeers.length == 0) {
+      Beer.getUserBeers()
+    }
     fetch('http://localhost:3000', {
       method: 'POST',
         headers: {
@@ -185,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(jsonResponse => {
       loginUser()
-      showUser(jsonResponse)
+      showHomePage()
       currentUser = jsonResponse
     })
   } else {

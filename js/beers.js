@@ -1,6 +1,7 @@
 class Beer {
   static allBeers = []
   static currentUserBeers = []
+  static viewed = []
 
   constructor(id, brand, name, style, hop, yeast, malts, ibu, alcohol, blg) {
     this.id = id
@@ -33,9 +34,9 @@ class Beer {
     fetch(`${BASE_URL}/users/${sessionStorage.user_id}/beers`)
     .then(response => response.json())
     .then(jsonResponse => {
-      for (let x of jsonResponse) {
-        let newBeer = new Beer(x.id, x.brand, x.name, x.style, x.hop, x.yeast, x.malts, x.ibu, x.alcohol, x.blg)
-        if (!Beer.currentUserBeers.includes(newBeer)) {
+      if (Beer.currentUserBeers.length == 0) {
+        for (let x of jsonResponse) {
+          let newBeer = new Beer(x.id, x.brand, x.name, x.style, x.hop, x.yeast, x.malts, x.ibu, x.alcohol, x.blg)
           Beer.currentUserBeers.push(newBeer)
         }
       }
@@ -43,13 +44,9 @@ class Beer {
   }
 
   static renderAll() {
+    pageHeader.innerText = 'All Beers'
     if (allBeersTable.rows.length == 0) {
-      createTableHeaders(allBeersTable)
-      for (let x of Beer.allBeers) {
-        x.createBeerRows(allBeersTable)
-
-
-      }
+      createTable(allBeersTable, Beer.allBeers)
     } else {
       mainContainer.appendChild(allBeersTable)
     }
@@ -68,27 +65,47 @@ class Beer {
         let newBeer= new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.alcohol, fetchedBeer.blg)
         Beer.currentUserBeers.push(newBeer)
         Beer.allBeers.push(newBeer)
+        newBeer.createBeerRows(userBeersTable)
       })
-    return Beer.allBeers[Beer.allBeers.length -1]
-  }
+      allBeersTable.remove()
+      homeDescriptionContainer.remove()
+      editUserContainer.remove()
+
+      showUser(currentUser)
+    }
 
   // instance
   show() {
     allBeersTable.remove()
+    userBeersTable.remove()
     pageHeader.innerText = `${this.brand} ${this.name}`
 
-    if (showBeerTable.rows.length == 0) {
-      console.log('a')
-      createTableHeaders(showBeerTable)
-      this.createBeerRows(showBeerTable)
-    } else {
-      console.log('b')
-      showBeerTable.rows[0].remove()
-      this.createBeerRows(showBeerTable)
-    }
+    Beer.viewed.push(this)
+    showBeerTable.innerHTML = `<th>ID</th>
+                              <th>Brand</th>
+                              <th>Name</th>
+                              <th>Style</th>
+                              <th>Hop</th>
+                              <th>Yeast</th>
+                              <th>Malts</th>
+                              <th>IBU</th>
+                              <th>ABV%</th>
+                              <th>BLG°</th>
+                              <tr>
+                                <td>${this.id}</td>
+                                <td>${this.brand}</td>
+                                <td>${this.name}</td>
+                                <td>${this.style}</td>
+                                <td>${this.hop}</td>
+                                <td>${this.yeast}</td>
+                                <td>${this.malts}</td>
+                                <td>${this.ibu}</td>
+                                <td>${this.alcohol}</td>
+                                <td>${this.blg}</td>
+                              </tr>`
+
     mainContainer.appendChild(showBeerContainer)
     showBeerContainer.appendChild(showBeerTable)
-
     
     let number = Math.floor(Math.random() * 4) + 1
     beerImageContainer.innerHTML = `<img src='./assets/images/beers/beer${number}.jpg'></img>`
@@ -117,15 +134,40 @@ class Beer {
         userSignInPortal()
       })
     } else if (addRemoveButton.innerText == 'Remove Beer From Your List') {
-      // delete
+      addRemoveButton.addEventListener('click', () => {
+        this.removeBeer()
+      })
     } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
       // create
     }
+  } 
+
+  removeBeer() {
+    fetch(`${BASE_URL}/beers_users/${this.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        beer: this
+      })
+    })
+    .then(response => {
+      Beer.currentUserBeers.find(beer => {
+        if (beer.id == this.id) {
+          this.id = null
+          console.log(this)
+        }
+      })
+      showUser(currentUser)
+    })
   }
 
-  createBeerRows(table) {
+  createNewRow(table) {
     let newRow = document.createElement('tr')
     
+    let idCell = document.createElement('td')
     let brandCell = document.createElement('td')
     let nameCell = document.createElement('td')
     let styleCell = document.createElement('td')
@@ -136,6 +178,7 @@ class Beer {
     let abvCell = document.createElement('td')
     let blgCell = document.createElement('td')
     
+    idCell.innerText = this.id
     brandCell.innerText = this.brand
     nameCell.innerText = this.name
     styleCell.innerText = this.style
@@ -146,6 +189,7 @@ class Beer {
     abvCell.innerText = this.alcohol
     blgCell.innerText = this.blg
 
+    newRow.appendChild(idCell)
     newRow.appendChild(brandCell)
     newRow.appendChild(nameCell)
     newRow.appendChild(styleCell)
@@ -156,30 +200,27 @@ class Beer {
     newRow.appendChild(abvCell)
     newRow.appendChild(blgCell)
 
-    table.appendChild(newRow)
-
     newRow.addEventListener('mouseover', () => {
       newRow.style.color = 'white'
       newRow.style.backgroundColor = 'rgba(27, 8, 1, .7)'
       newRow.style.cursor = 'pointer'
     })
-
+    
     newRow.addEventListener('mouseout', () => {
       newRow.style.color = 'black'
       newRow.style.cursor = 'default'
       newRow.style.backgroundColor = 'white'
     })
-
+    
     newRow.addEventListener('click', () => {
       this.show()
     })
+    table.appendChild(newRow)
   }
-
-  // create join id
-  // delete join id
 }
 
-function createTableHeaders(table) {
+function createTable(table, array) {
+  let idHeader = document.createElement('th')
   let brandHeader = document.createElement('th')
   let nameHeader = document.createElement('th')
   let styleHeader = document.createElement('th')
@@ -190,6 +231,7 @@ function createTableHeaders(table) {
   let abvHeader = document.createElement('th')
   let blgHeader = document.createElement('th') 
   
+  idHeader.innerText = 'ID'
   brandHeader.innerText = 'Brand' 
   nameHeader.innerText = 'Name'
   styleHeader.innerText = 'Style' 
@@ -200,6 +242,7 @@ function createTableHeaders(table) {
   abvHeader.innerText = 'ABV%' 
   blgHeader.innerText = 'BLG°'
   
+  table.appendChild(idHeader)
   table.appendChild(brandHeader)
   table.appendChild(nameHeader)
   table.appendChild(styleHeader)
@@ -211,7 +254,9 @@ function createTableHeaders(table) {
   table.appendChild(blgHeader)
   
   mainContainer.appendChild(table)
+
+  for (let x of array) {
+    x.createNewRow(table)
+  }
 }
-
-
 

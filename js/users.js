@@ -36,13 +36,14 @@ function showUser(user) {
   userSignUpForm.remove()
   showBeerContainer.remove()
   
-
   pageHeader.innerText = `${user.name}'s Beer Log`
-  loginUser()
-  if (document.querySelector('#beers-table')) {
-    mainContainer.appendChild(userBeersTable)
+  
+  if (userBeersTable.rows.length == 0) {
+    console.log('a')
+    createTable(userBeersTable, Beer.currentUserBeers)
   } else {
-    fetchUserBeers()
+    console.log('b')
+    mainContainer.appendChild(userBeersTable)
   }
 }
 
@@ -51,10 +52,10 @@ function loginUser() {
   profileLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
   logoutButtonContainer.innerHTML = '<button id="logout-button">Logout</button>'
-
+  
   userButton = document.querySelector('#user-button')
   logoutButton = document.querySelector('#logout-button')
-
+  
   userButton.addEventListener('click', () => {
     closeNav()
     Beer.generateBeer()
@@ -63,11 +64,6 @@ function loginUser() {
     closeNav()
     logoutUser()
   })
-}
-
-function fetchUserBeers() {
-  console.log(Beer.currentUserBeers)
-  console.log(Beer.beerArray)
 }
 
 function userSignUpPortal() {
@@ -167,7 +163,6 @@ function userSignInPortal() {
   
   submit.addEventListener('click', (e) => {
     e.preventDefault()
-// fetch to sessions#new and get user id. set user id to session id
     if (passwordInput.value === '') {
       alert('Please check your password inputs and try again.')
       passwordInput.value = ''
@@ -189,9 +184,11 @@ function userSignInPortal() {
         .then(response => response.json())
         .then(jsonResponse => {
           sessionStorage.setItem('user_id', jsonResponse.id)
-          Beer.getUserBeers()
           userSignInForm.reset()
-          showUser(jsonResponse)
+          userSignInForm.remove()
+          cta.remove()
+          loginUser()
+          showHomePage()
           currentUser = jsonResponse
         })
         .catch(error => {
@@ -229,6 +226,7 @@ function logoutUser() {
   loginLink.style.visibility = 'visible'
   profileLink.style.visibility = 'hidden'
   homeLink.style.visibility = 'hidden'
+  Beer.currentUserBeers = []
   location.reload()
 }
 
