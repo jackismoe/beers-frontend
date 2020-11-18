@@ -47,7 +47,7 @@ function showUser(user) {
   }
 }
 
-function loginUser() {
+function loginUser(user) {
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
@@ -64,6 +64,7 @@ function loginUser() {
     closeNav()
     logoutUser()
   })
+  showUser(user)
 }
 
 function userSignUpPortal() {
@@ -187,7 +188,7 @@ function userSignInPortal() {
           userSignInForm.reset()
           userSignInForm.remove()
           cta.remove()
-          loginUser()
+          loginUser(jsonResponse)
           showHomePage()
           currentUser = jsonResponse
         })
