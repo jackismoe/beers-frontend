@@ -65,7 +65,12 @@ class Beer {
         let newBeer= new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.alcohol, fetchedBeer.blg)
         Beer.currentUserBeers.push(newBeer)
         Beer.allBeers.push(newBeer)
-        newBeer.createBeerRows(userBeersTable)
+        if (userBeersTable.rows.length == 0) {
+          welcomeParagraph.remove()
+          createTable(userBeersTable, Beer.currentUserBeers)
+        } else {
+          newBeer.createNewRow(userBeersTable)
+        }
       })
       allBeersTable.remove()
       homeDescriptionContainer.remove()
@@ -122,7 +127,6 @@ class Beer {
     if (sessionStorage.length > 0) {
       for (let x of Beer.currentUserBeers) {
         if (this.id === x.id) {
-          console.log('yes')
           addRemoveButton.innerText = 'Remove Beer From Your List'
         }
       }
@@ -150,17 +154,29 @@ class Beer {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        beer: this
+        beer: this, 
+        session: sessionStorage
       })
     })
-    .then(response => {
-      Beer.currentUserBeers.find(beer => {
-        if (beer.id == this.id) {
-          this.id = null
-          console.log(this)
+    .then(response => response.json())
+    .then(jsonResponse => {
+      for (let x of userBeersTable.rows) {
+        if (x.innerText.includes(this.id)) {
+          x.remove()
         }
-      })
-      showUser(currentUser)
+      }
+
+      // for (let i=0; i < Beer.currentUserBeers.length; i++) {
+      //   if (this.id == Beer.currentUserBeers[i].id) {
+      //     Beer.currentUserBeers.splice(i, this, 1)
+      //   }
+      // }
+
+      if (userBeersTable.rows.length == 0) {
+        userBeersTable.remove()
+        mainContainer.appendChild(welcomeParagraph)
+      }
+      showUser(jsonResponse)
     })
   }
 

@@ -38,12 +38,15 @@ function showUser(user) {
   
   pageHeader.innerText = `${user.name}'s Beer Log`
   
-  if (userBeersTable.rows.length == 0) {
-    console.log('a')
+  if ((userBeersTable.rows.length == 0) && (Beer.currentUserBeers.length > 0)) {
+    console.log('path a')
     createTable(userBeersTable, Beer.currentUserBeers)
-  } else {
-    console.log('b')
+  } else if ((userBeersTable.rows.length !== 0) && (Beer.currentUserBeers.length !== 0)){
+    console.log('path b')
     mainContainer.appendChild(userBeersTable)
+  } else {
+    console.log('path c')
+    mainContainer.appendChild(welcomeParagraph)
   }
 }
 
