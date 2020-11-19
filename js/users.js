@@ -26,17 +26,18 @@ function createUserObj(user) {
     .then(response => response.json())
     .then(jsonResponse => {
       sessionStorage.setItem('user_id', jsonResponse.id)
-      showUser(jsonResponse)    
+      showUser()    
     })
     .catch(error => alert(error.message))
 }
 
-function showUser(user) {
+function showUser() {
   userSignInForm.remove()
   userSignUpForm.remove()
   showBeerContainer.remove()
   
-  pageHeader.innerText = `${user.name}'s Beer Log`
+  pageHeader.innerText = 'Your Beer Log'
+
   
   if ((userBeersTable.rows.length == 0) && (Beer.currentUserBeers.length > 0)) {
     console.log('path a')
@@ -50,7 +51,7 @@ function showUser(user) {
   }
 }
 
-function loginUser(user) {
+function loginUser() {
   loginLink.style.visibility = 'hidden'
   profileLink.style.visibility = 'visible'
   userButtonContainer.innerHTML = '<button id="user-button">Generate New Beer</button>'
@@ -67,7 +68,7 @@ function loginUser(user) {
     closeNav()
     logoutUser()
   })
-  showUser(user)
+  showUser()
 }
 
 function userSignUpPortal() {
@@ -191,7 +192,7 @@ function userSignInPortal() {
           userSignInForm.reset()
           userSignInForm.remove()
           cta.remove()
-          loginUser(jsonResponse)
+          loginUser()
           showHomePage()
           currentUser = jsonResponse
         })
@@ -382,7 +383,7 @@ function editUser() {
                 currentUser = jsonResponse
                 editUserForm.reset()
                 editUserContainer.remove()
-                showUser(jsonResponse)
+                showUser()
               })
           }
         })

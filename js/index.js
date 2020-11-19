@@ -135,7 +135,7 @@ profileLink.addEventListener('click', () => {
     .then(response => response.json())
     .then(jsonResponse => {
       closeNav()
-      loginUser(jsonResponse)
+      loginUser()
       currentUser = jsonResponse
     })
   } else {
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     .then(response => response.json())
     .then(jsonResponse => {
-      loginUser(jsonResponse)
+      loginUser()
       showHomePage()
       currentUser = jsonResponse
     })

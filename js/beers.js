@@ -62,7 +62,7 @@ class Beer {
       })
       .then(response => response.json())
       .then(fetchedBeer => {
-        let newBeer= new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.alcohol, fetchedBeer.blg)
+        let newBeer= new Beer(fetchedBeer.id, fetchedBeer.brand, fetchedBeer.name, fetchedBeer.style, fetchedBeer.hop, fetchedBeer.yeast, fetchedBeer.malts, fetchedBeer.alcohol, fetchedBeer.ibu, fetchedBeer.blg)
         Beer.currentUserBeers.push(newBeer)
         Beer.allBeers.push(newBeer)
         if (userBeersTable.rows.length == 0) {
@@ -76,7 +76,7 @@ class Beer {
       homeDescriptionContainer.remove()
       editUserContainer.remove()
 
-      showUser(currentUser)
+      showUser()
     }
 
   // instance
@@ -142,7 +142,9 @@ class Beer {
         this.removeBeer()
       })
     } else if (addRemoveButton.innerText == 'Add Beer To Your List') {
-      // create
+      addRemoveButton.addEventListener('click', () => {
+        this.addBeer()
+      })
     }
   } 
 
@@ -161,22 +163,44 @@ class Beer {
     .then(response => response.json())
     .then(jsonResponse => {
       for (let x of userBeersTable.rows) {
-        if (x.innerText.includes(this.id)) {
+        if ((x.innerText.includes(this.id)) && (x.innerText.includes(this.brand))) {
           x.remove()
+          let oneLess = Beer.currentUserBeers.filter(beer => beer.id !== this.id)
+          if (oneLess.length == (Beer.currentUserBeers.length -1)) {
+            Beer.currentUserBeers = oneLess
+          }
         }
       }
-
-      // for (let i=0; i < Beer.currentUserBeers.length; i++) {
-      //   if (this.id == Beer.currentUserBeers[i].id) {
-      //     Beer.currentUserBeers.splice(i, this, 1)
-      //   }
-      // }
-
       if (userBeersTable.rows.length == 0) {
         userBeersTable.remove()
         mainContainer.appendChild(welcomeParagraph)
       }
-      showUser(jsonResponse)
+      showUser()
+    })
+  }
+
+  addBeer() {
+    fetch(`${BASE_URL}/beers_users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        beer: this, 
+        session: sessionStorage
+      })
+    })
+    .then(response => response.json())
+    .then(jsonResponse => {
+      Beer.currentUserBeers.push(this)
+      if (userBeersTable.rows.length > 0) {
+        this.createNewRow(userBeersTable)
+      } else if (!userBeersTable.rows.length > 0) {
+        createTable(userBeersTable, Beer.currentUserBeers)
+        this.createNewRow(userBeersTable)
+      }
+      showUser()
     })
   }
 
