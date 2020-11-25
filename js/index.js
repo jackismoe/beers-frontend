@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Beer.currentUserBeers.length == 0) {
       Beer.getUserBeers()
     }
-    fetch('http://localhost:3000', {
+    fetch(BASE_URL, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',

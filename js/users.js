@@ -22,7 +22,7 @@ function createUserObj(user) {
     })
   }
 
-  fetch('http://localhost:3000/users', configObject)
+  fetch(`${BASE_URL}/users`, configObject)
     .then(response => response.json())
     .then(jsonResponse => {
       sessionStorage.setItem('user_id', jsonResponse.id)
@@ -184,7 +184,7 @@ function userSignInPortal() {
         })
       }
       
-      fetch('http://localhost:3000/', configObject)
+      fetch(BASE_URL, configObject)
         .then(response => response.json())
         .then(jsonResponse => {
           sessionStorage.setItem('user_id', jsonResponse.id)
@@ -276,7 +276,7 @@ function editUser() {
   pageHeader.innerText = `Edit ${currentUser.name}'s Profile`
   mainContainer.appendChild(editUserContainer)
   
-  fetch('http://localhost:3000', {
+  fetch(BASE_URL, {
      method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -365,7 +365,7 @@ function editUser() {
           if (editPasswordInput.value !== editPasswordConfirm.value) {
             alert(`Sorry ${user.name}, your passwords do not match. Please try again.`)
           } else {
-            fetch(`http://localhost:3000/users/${user.id}`, {
+            fetch(`${BASE_URL}/users/${user.id}`, {
               method: 'PATCH',
                 headers: {
                   'Content-Type': 'application/json',
@@ -393,7 +393,7 @@ function editUser() {
 }
 
 function deleteUser(user) {
-  fetch(`http://localhost:3000/users/${user.id}`, {
+  fetch(`${BASE_URL}/users/${user.id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

@@ -77,7 +77,7 @@ class Beer {
       editUserContainer.remove()
 
       showUser()
-    }
+  }
 
   // instance
   show() {
@@ -300,4 +300,3 @@ function createTable(table, array) {
     x.createNewRow(table)
   }
 }
-
