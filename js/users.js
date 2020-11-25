@@ -26,7 +26,7 @@ function createUserObj(user) {
     .then(response => response.json())
     .then(jsonResponse => {
       sessionStorage.setItem('user_id', jsonResponse.id)
-      showUser()    
+      loginUser()    
     })
     .catch(error => alert(error.message))
 }
@@ -158,7 +158,6 @@ function userSignInPortal() {
   signUpButton.addEventListener('click', () => {
     pageHeader.innerText = 'Sign Up'
     userSignInForm.remove()
-// need to fix signup form loading twice
   if (document.querySelector('form')) {
     profileContainer.appendChild(userSignUpForm)
   } else {
@@ -269,6 +268,7 @@ function showHomePage() {
 
 function editUser() {
   profileContainer.remove()
+  welcomeParagraph.remove()
   homeDescriptionContainer.remove()
   allBeersTable.remove()
   sliderContainer.remove()
@@ -404,6 +404,7 @@ function deleteUser(user) {
     })
   })
   .then(response => {
+    sessionStorage.clear()
     logoutUser()
   })
 }

@@ -83,6 +83,7 @@ class Beer {
   show() {
     allBeersTable.remove()
     userBeersTable.remove()
+    sliderContainer.remove()
     pageHeader.innerText = `${this.brand} ${this.name}`
 
     Beer.viewed.push(this)
