@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://beersbackend.herokuapp.com/'
 let menuIcons = document.querySelector('.menu-icons')
 let sideNav = document.querySelector('.sidenav')
 let body = document.querySelector('body')
@@ -122,7 +122,7 @@ profileLink.addEventListener('click', () => {
   sliderContainer.remove()
   homeDescriptionContainer.remove()
   if (sessionStorage.length == 1) {
-    fetch('http://localhost:3000', {
+    fetch(BASE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
