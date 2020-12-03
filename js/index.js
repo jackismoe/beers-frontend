@@ -1,4 +1,4 @@
-const BASE_URL = 'http://beersbackend.herokuapp.com'
+const BASE_URL = 'https://beersbackend.herokuapp.com'
 let menuIcons = document.querySelector('.menu-icons')
 let sideNav = document.querySelector('.sidenav')
 let body = document.querySelector('body')
