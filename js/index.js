@@ -1,4 +1,5 @@
 const BASE_URL = 'https://beersbackend.herokuapp.com/'
+
 // const BASE_URL = 'http://localhost:3000'
 let menuIcons = document.querySelector('.menu-icons')
 let sideNav = document.querySelector('.sidenav')
